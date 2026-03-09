@@ -686,12 +686,85 @@
       flex-shrink: 0;
     }
 
+    /* ── LEGAL MODAL ── */
+    .legal-modal {
+      display: flex; position: fixed; inset: 0;
+      z-index: 1100;
+      background: rgba(0,0,0,0);
+      align-items: center; justify-content: center;
+      padding: 2rem;
+      opacity: 0; pointer-events: none;
+      transition: background 380ms var(--ease-out), opacity 380ms var(--ease-out);
+    }
+    .legal-modal.is-open {
+      opacity: 1; pointer-events: all;
+      background: rgba(0,0,0,0.72);
+    }
+    .legal-modal__panel {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      width: 100%; max-width: 620px;
+      max-height: 85vh;
+      display: flex; flex-direction: column;
+      transform: scale(0.92) translateY(12px);
+      opacity: 0;
+      transition: transform 420ms var(--ease-out), opacity 380ms ease, var(--t-theme);
+    }
+    .legal-modal.is-open .legal-modal__panel {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    .legal-modal__header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+    .legal-modal__tabs {
+      display: flex; gap: 1.5rem;
+    }
+    .legal-modal__tab {
+      background: none; border: none; cursor: pointer;
+      color: var(--color-fg); font-family: var(--font-display);
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      opacity: 0.35; padding: 0.25rem 0;
+      border-bottom: 2px solid transparent;
+      transition: opacity 150ms ease, border-color 150ms ease;
+    }
+    .legal-modal__tab:hover { opacity: 0.7; }
+    .legal-modal__tab.is-active {
+      opacity: 1; border-bottom-color: var(--color-accent);
+    }
+    .legal-modal__close {
+      background: none; border: none; cursor: pointer;
+      color: var(--color-fg); font-size: 0.9rem; opacity: 0.45;
+      padding: 0.25rem; transition: opacity 150ms ease, transform 150ms ease;
+      flex-shrink: 0;
+    }
+    .legal-modal__close:hover { opacity: 1; transform: scale(1.2); }
+    .legal-modal__body {
+      overflow-y: auto; padding: 1.5rem 1.25rem;
+      font-size: 0.88rem; line-height: 1.7;
+    }
+    .legal-modal__section { display: none; }
+    .legal-modal__section.is-active { display: block; }
+    .legal-modal__body h3 {
+      font-family: var(--font-display);
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      opacity: 0.4; margin: 1.5rem 0 0.5rem;
+    }
+    .legal-modal__body h3:first-child { margin-top: 0; }
+    .legal-modal__body p { opacity: 0.75; margin-bottom: 0.5rem; }
+    .legal-modal__body a { border-bottom: 1px solid var(--color-border); }
+
     @media (max-width: 768px) {
       .schedule-row { grid-template-columns: 1fr 1fr; row-gap: 0.5rem; padding: 1.5rem 0; }
       .schedule-header { display: none; }
       .schedule-row__group { grid-column: 1 / -1; }
       .map-modal { padding: 1rem; }
       .map-modal__panel { height: 90vh; max-height: none; }
+      .legal-modal { padding: 1rem; }
+      .legal-modal__panel { max-height: 92vh; }
     }
 
     /* ═══════════════════════════════════════════
@@ -843,10 +916,6 @@
     .form-submit:active { transform: scale(0.98); }
     .form-submit--accent { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
     .form-submit--accent:hover { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
-    .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-    .form-msg { margin-top: 1.5rem; padding: 1rem 1.5rem; border-radius: 4px; font-size: 0.95rem; line-height: 1.5; }
-    .form-msg--ok { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
-    .form-msg--err { background: #fce4ec; color: #c62828; border: 1px solid #ef9a9a; }
 
     .form-divider {
       grid-column: 1 / -1;
@@ -867,9 +936,14 @@
       transition: var(--t-theme);
     }
     .footer__brand { grid-column: 1 / 2; }
-    .footer__brand h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); opacity: 0.9; margin-bottom: 1rem; }
+    .footer__brand-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .footer__brand h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); opacity: 0.9; }
     .footer__brand p  { opacity: 0.4; font-size: 0.9rem; }
-    .footer__brand-logo { width: 56px; height: 56px; opacity: 0.75; margin-top: 1.25rem; }
+    .footer__brand-logo { width: 56px; height: 56px; opacity: 0.75; }
+    .footer__social { display: flex; gap: 1rem; margin-top: 1.25rem; }
+    .footer__social a { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; opacity: 0.5; transition: opacity 150ms ease; }
+    .footer__social a:hover { opacity: 1; }
+    .footer__social svg { width: 22px; height: 22px; fill: currentColor; }
     .footer__col h3   { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.4; font-weight: 700; margin-bottom: 1.25rem; }
     .footer__col ul   { list-style: none; display: grid; row-gap: 0.75rem; }
     .footer__col ul li a { font-size: 0.95rem; opacity: 0.65; transition: opacity 150ms ease; }
@@ -1265,18 +1339,16 @@
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.history.title">Geschichte des Vereins</h3>
               <p data-i18n="about.history.p1">Fudoshin lehrt seit [Jahr] traditionelles Karate in Wien. Wir trainieren Kinder, Jugendliche und Erwachsene. Der Schwerpunkt liegt auf korrekter Technik, Respekt und Beständigkeit — nicht auf Wettkampfergebnissen oder Urkunden. Schauen Sie gerne vorbei, bevor Sie sich entscheiden.</p>
-              <p data-i18n="about.history.p2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </div>
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.values.title">Werte &amp; pädagogischer Ansatz</h3>
-              <p data-i18n="about.values.p1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <p data-i18n="about.values.p1">Unser Ansatz ist geduldig und direkt. Wir korrigieren die Technik früh und oft, denn gute Gewohnheiten lassen sich leichter aufbauen, als schlechte abzulegen. Wir halten Kinder und Erwachsene an die gleichen Maßstäbe von Aufmerksamkeit und Respekt — angepasst an das, was vernünftig ist, aber nie aus Bequemlichkeit herabgesetzt. Fortschritt wird hier in Monaten und Jahren gemessen, nicht in Gürteln.</p>
             </div>
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.style.title">Welche Stilrichtung?</h3>
-              <p data-i18n-html="about.style.p1">Wir unterrichten den traditionellen <strong>Shotokan-Karate-Stil.</strong> Im Training fördern wir körperliche und geistige Fitness sowie Werte wie Respekt, Disziplin und Durchhaltevermögen.</p>
+              <p data-i18n-html="about.style.p1">Wir unterrichten traditionelles <strong>Shotokan-Karate</strong> — einen Stil, der auf Präzision, Disziplin und korrekter Form aufbaut. Das Training fördert körperliche und geistige Fitness und entwickelt mit der Zeit Qualitäten, die weiter reichen: Respekt, Beständigkeit und die Fähigkeit, auch unter Druck ruhig zu bleiben.</p>
             </div>
           </div>
-          <p class="caption" data-i18n-html="caption.photos"><em>Aktivitaten</em> / Caption Credits<br><span class="text-span">Fotos – Firstname Lastname</span></p>
         </div>
       </section>
 
@@ -1401,13 +1473,13 @@
               <img src="images/thumb/photo-10.jpg" data-full="images/full/photo-10.jpg" alt="Emir Catic">
               <h2 class="heading-4">Emir Catic</h2>
               <p class="heading-3" data-i18n="team.emir.role">Staatlich geprüfter Karate-Instruktor · 2. Dan</p>
-              <p data-i18n="team.emir.bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+              <p data-i18n="team.emir.bio">Emir praktiziert seit [X] Jahren Karate und trägt den [X. Dan] Schwarzgurt im Shotokan. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Er leitet das Training mit ruhiger Autorität und einem genauen Blick für technische Details.</p>
             </div>
             <div class="team-card">
               <img src="images/thumb/photo-11.jpg" data-full="images/full/photo-11.jpg" alt="Samir Sijamija">
               <h2 class="heading-4">Samir Sijamija</h2>
               <p class="heading-3" data-i18n="team.samir.role">Staatlich geprüfter Karate-Instruktor · 4. Dan</p>
-              <p data-i18n="team.samir.bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+              <p data-i18n="team.samir.bio">Samir trainiert seit [X] Jahren Shotokan und trägt den [X. Dan] Schwarzgurt. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Sein Fokus im Dojo liegt auf dem Aufbau solider Grundlagen, unabhängig vom Alter oder Niveau der Schüler.</p>
             </div>
           </div>
         </div>
@@ -1419,7 +1491,7 @@
           <h2 class="reveal" data-i18n-html="activities.title">Projekte &amp; Aktivitäten</h2>
           <div class="aktivitaeten-grid reveal-group">
             <div class="aktivitaet-card">
-              <figure><img src="images/thumb/photo-12.jpg" data-full="images/full/photo-12.jpg" alt="Turniere"><figcaption>Photo by ?</figcaption></figure>
+              <img src="images/thumb/photo-12.jpg" data-full="images/full/photo-12.jpg" alt="Turniere">
               <h2 class="heading-4 _2" data-i18n="activities.tournaments">Turniere</h2>
             </div>
             <div class="aktivitaet-card">
@@ -1450,15 +1522,12 @@
             </div>
             <div>
               <p class="form-info__detail" data-i18n="contact.email.label">E-Mail</p>
-              <p><a href="/cdn-cgi/l/email-protection#335a5d555c735546575c405b5a5d1d5247" style="border-bottom:1px solid var(--color-border);"><span class="__cf_email__" data-cfemail="076e6961684761726368746f6e69296673">[email&nbsp;protected]</span></a></p>
+              <p><a href="mailto:office@fudoshin.at" style="border-bottom:1px solid var(--color-border);">office@fudoshin.at</a></p>
             </div>
           </div>
-          <form class="form-body reveal" name="kontakt" method="POST" action="https://formsubmit.co/ajax/5e22b81a08dbc507c27809f55303960b">
-            <input type="hidden" name="_subject" value="Fudoshin Karate — Kontaktformular">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="Open Spreadsheet" value="https://docs.google.com/spreadsheets/d/1jK0U-7jsn28zrsrx-rRlyb3lNGp9U2o-CNIlfm0dHtg/edit#gid=773346652">
-            <p style="display:none"><input name="_honey"></p>
+          <form class="form-body reveal" name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="kontakt">
+            <p style="display:none"><input name="bot-field"></p>
             <div class="form-grid">
               <div class="form-field">
                 <label for="k-name" data-i18n="contact.form.name.label">Name *</label>
@@ -1476,11 +1545,11 @@
                 <label for="k-betreff" data-i18n="contact.form.subject.label">Betreff</label>
                 <select id="k-betreff" data-i18n-options="contact.form.subject" name="betreff">
                   <option value="" disabled="" selected="">Bitte wählen</option>
-                  <option value="Schnupperstunde">Schnupperstunde</option>
-                  <option value="Anmeldung">Anmeldung</option>
-                  <option value="Fragen zu Preisen">Fragen zu Preisen</option>
-                  <option value="Trainingszeiten">Trainingszeiten</option>
-                  <option value="Sonstiges">Sonstiges</option>
+                  <option value="schnupper">Schnupperstunde</option>
+                  <option value="anmeldung">Anmeldung</option>
+                  <option value="preise">Fragen zu Preisen</option>
+                  <option value="training">Trainingszeiten</option>
+                  <option value="sonstiges">Sonstiges</option>
                 </select>
               </div>
               <div class="form-field form-grid--full">
@@ -1505,12 +1574,9 @@
               <p style="font-family:var(--font-display);font-size:2.5rem;line-height:1;"data-i18n-html="member.fee.amount">175€ <span style="font-size:1rem;opacity:0.5;">/ Semester</span></p>
             </div>
           </div>
-          <form class="form-body reveal" name="mitglied" method="POST" action="https://formsubmit.co/ajax/5e22b81a08dbc507c27809f55303960b">
-            <input type="hidden" name="_subject" value="Fudoshin Karate — Mitgliedsanmeldung">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="Open Spreadsheet" value="https://docs.google.com/spreadsheets/d/1jK0U-7jsn28zrsrx-rRlyb3lNGp9U2o-CNIlfm0dHtg/edit#gid=701910726">
-            <p style="display:none"><input name="_honey"></p>
+          <form class="form-body reveal" name="mitglied" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="mitglied">
+            <p style="display:none"><input name="bot-field"></p>
             <div class="form-grid">
               <p class="form-divider" data-i18n="member.form.div1">Persönliche Daten</p>
               <div class="form-field">
@@ -1541,28 +1607,28 @@
               <div class="form-field form-grid--full form-field--check">
                 <label data-i18n="member.form.group.label">Gewünschte Gruppe *</label>
                 <div class="check-group">
-                  <label class="check-item" data-i18n-after="member.form.group.children"><input type="radio" name="gruppe" value="Kinder Anfänger (6–10 Jahre)" required=""> Kinder Anfänger (6–10 Jahre)</label>
-                  <label class="check-item" data-i18n-after="member.form.group.youth"><input type="radio" name="gruppe" value="Jugendliche Fortgeschritten (11–18 Jahre)"> Jugendliche Fortgeschritten (11–18 Jahre)</label>
-                  <label class="check-item" data-i18n-after="member.form.group.adults"><input type="radio" name="gruppe" value="Erwachsene alle Level"> Erwachsene alle Level</label>
+                  <label class="check-item" data-i18n-after="member.form.group.children"><input type="radio" name="gruppe" value="kinder" required=""> Kinder Anfänger (6–10 Jahre)</label>
+                  <label class="check-item" data-i18n-after="member.form.group.youth"><input type="radio" name="gruppe" value="jugendliche"> Jugendliche Fortgeschritten (11–18 Jahre)</label>
+                  <label class="check-item" data-i18n-after="member.form.group.adults"><input type="radio" name="gruppe" value="erwachsene"> Erwachsene alle Level</label>
                 </div>
               </div>
               <div class="form-field">
                 <label for="m-erfahrung" data-i18n="member.form.exp.label">Karate-Erfahrung</label>
                 <select id="m-erfahrung" data-i18n-options="member.form.exp" name="erfahrung">
                   <option value="" disabled="" selected="">Bitte wählen</option>
-                  <option value="Keine Erfahrung">Keine Erfahrung</option>
-                  <option value="Anfänger (unter 1 Jahr)">Anfänger (unter 1 Jahr)</option>
-                  <option value="Fortgeschritten (1–5 Jahre)">Fortgeschritten (1–5 Jahre)</option>
-                  <option value="Erfahren (über 5 Jahre)">Erfahren (über 5 Jahre)</option>
+                  <option value="keine">Keine Erfahrung</option>
+                  <option value="anfaenger">Anfänger (unter 1 Jahr)</option>
+                  <option value="fortgeschritten">Fortgeschritten (1–5 Jahre)</option>
+                  <option value="erfahren">Erfahren (über 5 Jahre)</option>
                 </select>
               </div>
               <div class="form-field">
                 <label for="m-beitrag" data-i18n="member.form.fee.label">Gewünschter Beitrag</label>
                 <select id="m-beitrag" data-i18n-options="member.form.fee" name="beitrag">
                   <option value="" disabled="" selected="">Bitte wählen</option>
-                  <option value="Semester (175€)">Semester (175€)</option>
-                  <option value="Jahresbeitrag (320€)">Jahresbeitrag (320€)</option>
-                  <option value="Familie / Geschwister (−20%)">Familie / Geschwister (−20%)</option>
+                  <option value="semester">Semester (175€)</option>
+                  <option value="jahr">Jahresbeitrag (320€)</option>
+                  <option value="familie">Familie / Geschwister (−20%)</option>
                 </select>
               </div>
               <div class="form-field form-grid--full form-field--check">
@@ -1588,9 +1654,15 @@
   <!-- FOOTER -->
   <footer class="footer reveal">
     <div class="footer__brand">
-      <h2>Fudoshin<br>Karate-Do</h2>
+      <div class="footer__brand-header">
+        <h2>Fudoshin<br>Karate-Do</h2>
+        <img class="footer__brand-logo" src="images/thumb/photo-01.png" alt="Fudoshin Karate-Do Club Wien" loading="lazy">
+      </div>
       <p data-i18n="footer.tagline">Shotokan Karate · Wien, Österreich</p>
-      <img class="footer__brand-logo" src="images/thumb/photo-01.png" alt="Fudoshin Karate-Do Club Wien" loading="lazy">
+      <div class="footer__social">
+        <a href="https://www.facebook.com/groups/2902313330065879/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      </div>
     </div>
     <div class="footer__col">
       <h3 data-i18n="footer.nav.title">Navigation</h3>
@@ -1611,9 +1683,7 @@
     </div>
     <div class="footer__col">
       <h3 data-i18n="footer.credit.title">Website Design</h3>
-      <ul>
-        <li><a href="https://sethweiner.org" target="_blank" rel="noopener">Seth Weiner</a></li>
-      </ul>
+      <ul><li><a href="https://sethweiner.org" target="_blank" rel="noopener">Seth Weiner</a></li></ul>
     </div>
     <div class="footer__bottom">
       <span data-i18n="footer.copyright">© 2026 Fudoshin Karate-Do Club Wien</span>
@@ -1761,11 +1831,10 @@
         'about.title': 'Über den Verein',
         'about.history.title': 'Geschichte des Vereins',
         'about.history.p1': 'Fudoshin lehrt seit [Jahr] traditionelles Karate in Wien. Wir trainieren Kinder, Jugendliche und Erwachsene. Der Schwerpunkt liegt auf korrekter Technik, Respekt und Beständigkeit — nicht auf Wettkampfergebnissen oder Urkunden. Schauen Sie gerne vorbei, bevor Sie sich entscheiden.',
-        'about.history.p2': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         'about.values.title': 'Werte & pädagogischer Ansatz',
-        'about.values.p1': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'about.values.p1': 'Unser Ansatz ist geduldig und direkt. Wir korrigieren die Technik früh und oft, denn gute Gewohnheiten lassen sich leichter aufbauen, als schlechte abzulegen. Wir halten Kinder und Erwachsene an die gleichen Maßstäbe von Aufmerksamkeit und Respekt — angepasst an das, was vernünftig ist, aber nie aus Bequemlichkeit herabgesetzt. Fortschritt wird hier in Monaten und Jahren gemessen, nicht in Gürteln.',
         'about.style.title': 'Welche Stilrichtung?',
-        'about.style.p1': 'Wir unterrichten den traditionellen <strong>Shotokan-Karate-Stil.</strong> Im Training fördern wir körperliche und geistige Fitness sowie Werte wie Respekt, Disziplin und Durchhaltevermögen.',
+        'about.style.p1': 'Wir unterrichten traditionelles <strong>Shotokan-Karate</strong> — einen Stil, der auf Präzision, Disziplin und korrekter Form aufbaut. Das Training fördert körperliche und geistige Fitness und entwickelt mit der Zeit Qualitäten, die weiter reichen: Respekt, Beständigkeit und die Fähigkeit, auch unter Druck ruhig zu bleiben.',
         'caption.photos': '<em>Aktivitaten</em> / Caption Credits<br><span class="text-span">Fotos – Firstname Lastname</span>',
         'schedule.title': 'Trainingszeiten',
         'schedule.h.group': 'Gruppe',
@@ -1801,9 +1870,9 @@
         'pricing.note': '* Einmalige Aufnahmegebühr wird eingeführt. Kostenlose Schnupperstunde vor Anmeldung möglich.',
         'team.title': 'Team / Trainer',
         'team.emir.role': 'Staatlich geprüfter Karate-Instruktor · 2. Dan',
-        'team.emir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.emir.bio': 'Emir praktiziert seit [X] Jahren Karate und trägt den [X. Dan] Schwarzgurt im Shotokan. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Er leitet das Training mit ruhiger Autorität und einem genauen Blick für technische Details.',
         'team.samir.role': 'Staatlich geprüfter Karate-Instruktor · 4. Dan',
-        'team.samir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.samir.bio': 'Samir trainiert seit [X] Jahren Shotokan und trägt den [X. Dan] Schwarzgurt. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Sein Fokus im Dojo liegt auf dem Aufbau solider Grundlagen, unabhängig vom Alter oder Niveau der Schüler.',
         'activities.title': 'Projekte &amp; Aktivitäten',
         'activities.tournaments': 'Turniere',
         'activities.seminars': 'Lehrgänge',
@@ -1867,6 +1936,20 @@
         'modal.close.aria': 'Schließen',
         'modal.map.footer': 'Auf Google Maps öffnen ↗',
         'modal.map.directions': 'Route planen',
+        'legal.tab.impressum': 'Impressum',
+        'legal.tab.datenschutz': 'Datenschutz',
+        'legal.phone': 'Telefonnummern',
+        'legal.bank': 'Bankverbindung',
+        'legal.privacy.title': 'Datenschutzerklärung',
+        'legal.privacy.p1': 'Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Wir verarbeiten Ihre Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, DSG, TKG 2003).',
+        'legal.privacy.contact.title': 'Kontaktaufnahme',
+        'legal.privacy.contact.p1': 'Wenn Sie per Formular auf der Website oder per E-Mail Kontakt mit uns aufnehmen, werden Ihre angegebenen Daten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO.',
+        'legal.privacy.membership.title': 'Mitgliederverwaltung',
+        'legal.privacy.membership.p1': 'Im Rahmen Ihrer Vereinsmitgliedschaft verarbeiten wir Name, Geburtsdatum, Adresse, E-Mail und Telefonnummer. Die Verarbeitung erfolgt zur Erfüllung des Mitgliedschaftsvertrags gemäß Art. 6 Abs. 1 lit. b DSGVO.',
+        'legal.privacy.rights.title': 'Ihre Rechte',
+        'legal.privacy.rights.p1': 'Ihnen stehen grundsätzlich die Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch zu. Wenn Sie glauben, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt, können Sie sich bei der Datenschutzbehörde (dsb.gv.at) beschweren.',
+        'legal.privacy.cookies.title': 'Cookies',
+        'legal.privacy.cookies.p1': 'Diese Website verwendet nur technisch notwendige Cookies (Spracheinstellung). Es werden keine Tracking- oder Analyse-Cookies eingesetzt.',
         'lightbox.aria': 'Foto-Galerie',
         'lightbox.close.aria': 'Schließen',
         'lightbox.prev.aria': 'Vorheriges Bild',
@@ -1896,11 +1979,10 @@
         'about.title': 'About the Club',
         'about.history.title': 'Club History',
         'about.history.p1': 'Fudoshin has been teaching traditional karate in Vienna since [year]. We train children, young people, and adults. The emphasis is on correct technique, respect, and consistency — not competition results or certificates. Feel free to come and watch before you decide to join.',
-        'about.history.p2': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         'about.values.title': 'Values & Pedagogical Approach',
-        'about.values.p1': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        'about.style.title': 'Which style?',
-        'about.style.p1': 'We teach the traditional <strong>Shotokan karate style.</strong> In training, we promote physical and mental fitness as well as values like respect, discipline, and perseverance.',
+        'about.values.p1': 'Our approach is patient and direct. We correct technique early and often, because good habits are easier to build than bad ones are to undo. We hold children and adults to the same standards of attention and respect — scaled to what is reasonable, but never lowered out of convenience. Progress here is measured in months and years, not belts.',
+        'about.style.title': 'Which Style?',
+        'about.style.p1': 'We teach traditional <strong>Shotokan karate</strong> — a style built on precision, discipline, and correct form. Training develops physical and mental fitness, and over time, qualities that go further: respect, consistency, and the ability to stay steady under pressure.',
         'caption.photos': '<em>Activities</em> / Caption Credits<br><span class="text-span">Photos – Firstname Lastname</span>',
         'schedule.title': 'Training Schedule',
         'schedule.h.group': 'Group',
@@ -1936,9 +2018,9 @@
         'pricing.note': '* One-time registration fee applies. Free trial class before registration possible.',
         'team.title': 'Team / Trainers',
         'team.emir.role': 'State-certified karate instructor · 2nd Dan',
-        'team.emir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.emir.bio': 'Emir has been practicing karate for [X] years and holds a [X. Dan] black belt in Shotokan. [One sentence on background — where he trained, any competitive experience, how long he has been teaching.] He leads training with calm authority and a close attention to technical detail.',
         'team.samir.role': 'State-certified karate instructor · 4th Dan',
-        'team.samir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.samir.bio': 'Samir has been training in Shotokan for [X] years and holds a [X. Dan] black belt. [One sentence on background — where he trained, any competitive experience, how long he has been teaching.] His focus in the dojo is on building strong foundations, regardless of the age or level of the student.',
         'activities.title': 'Projects &amp; Activities',
         'activities.tournaments': 'Tournaments',
         'activities.seminars': 'Seminars',
@@ -2002,6 +2084,20 @@
         'modal.close.aria': 'Close',
         'modal.map.footer': 'Open in Google Maps ↗',
         'modal.map.directions': 'Get directions',
+        'legal.tab.impressum': 'Legal Notice',
+        'legal.tab.datenschutz': 'Privacy Policy',
+        'legal.phone': 'Phone Numbers',
+        'legal.bank': 'Bank Details',
+        'legal.privacy.title': 'Privacy Policy',
+        'legal.privacy.p1': 'The protection of your personal data is of particular concern to us. We process your data exclusively on the basis of legal provisions (GDPR, DSG, TKG 2003).',
+        'legal.privacy.contact.title': 'Contact',
+        'legal.privacy.contact.p1': 'If you contact us via the website form or email, your data will be stored for the purpose of processing the inquiry and in case of follow-up questions. We will not share this data without your consent. Processing is based on Art. 6(1)(b) GDPR.',
+        'legal.privacy.membership.title': 'Membership Management',
+        'legal.privacy.membership.p1': 'As part of your club membership, we process your name, date of birth, address, email, and phone number. Processing is carried out to fulfil the membership contract pursuant to Art. 6(1)(b) GDPR.',
+        'legal.privacy.rights.title': 'Your Rights',
+        'legal.privacy.rights.p1': 'You have the right to access, rectification, erasure, restriction, data portability, and objection. If you believe that the processing of your data violates data protection law, you may file a complaint with the Data Protection Authority (dsb.gv.at).',
+        'legal.privacy.cookies.title': 'Cookies',
+        'legal.privacy.cookies.p1': 'This website uses only technically necessary cookies (language setting). No tracking or analytics cookies are used.',
         'lightbox.aria': 'Photo gallery',
         'lightbox.close.aria': 'Close',
         'lightbox.prev.aria': 'Previous image',
@@ -2031,11 +2127,10 @@
         'about.title': 'Kulüp hakkında',
         'about.history.title': 'Kulüp tarihi',
         'about.history.p1': 'Fudoshin, [yıl] yılından bu yana Viyana\'da geleneksel karate öğretmektedir. Çocukları, gençleri ve yetişkinleri eğitiyoruz. Vurgu doğru teknik, saygı ve tutarlılık üzerinedir — yarışma sonuçları ya da sertifikalar değil. Katılmaya karar vermeden önce gelip izleyebilirsiniz.',
-        'about.history.p2': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         'about.values.title': 'Değerler ve pedagojik yaklaşım',
-        'about.values.p1': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        'about.style.title': 'Hangi stil?',
-        'about.style.p1': 'Geleneksel <strong>Shotokan karate stilini</strong> öğretiyoruz. Antrenmanlarda fiziksel ve zihinsel zindeliğin yanı sıra saygı, disiplin ve azim gibi değerleri teşvik ediyoruz.',
+        'about.values.p1': 'Yaklaşımımız sabırlı ve doğrudandır. Tekniği erken ve sık düzeltiriz, çünkü iyi alışkanlıklar edinmek kötü olanları bırakmaktan daha kolaydır. Çocuklardan ve yetişkinlerden aynı dikkat ve saygı standartlarını bekleriz — makul olana göre ayarlanmış, ama asla kolaylık uğruna düşürülmemiş. Burada ilerleme aylarla ve yıllarla ölçülür, kuşaklarla değil.',
+        'about.style.title': 'Hangi Stil?',
+        'about.style.p1': 'Geleneksel <strong>Shotokan karate</strong> öğretiyoruz — hassasiyet, disiplin ve doğru form üzerine kurulu bir stil. Antrenman fiziksel ve zihinsel zindeliği geliştirir ve zamanla daha ileri nitelikler kazandırır: saygı, süreklilik ve baskı altında sakin kalabilme yeteneği.',
         'caption.photos': '<em>Etkinlikler</em> / Caption Credits<br><span class="text-span">Fotoğraflar – Firstname Lastname</span>',
         'schedule.title': 'Antrenman saatleri',
         'schedule.h.group': 'Grup',
@@ -2071,9 +2166,9 @@
         'pricing.note': '* Tek seferlik kayıt ücreti uygulanır. Kayıt öncesi ücretsiz deneme dersi mümkündür.',
         'team.title': 'Ekip / Antrenörler',
         'team.emir.role': 'Devlet onaylı karate eğitmeni · 2. Dan',
-        'team.emir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.emir.bio': 'Emir [X] yıldır karate yapıyor ve Shotokan\'da [X. Dan] siyah kuşak taşıyor. [Arka plan hakkında bir cümle — nerede eğitim aldığı, yarışma deneyimi, ne zamandır öğretmenlik yaptığı.] Antrenmanları sakin bir otoriteyle ve teknik detaylara yakın bir dikkatle yönetiyor.',
         'team.samir.role': 'Devlet onaylı karate eğitmeni · 4. Dan',
-        'team.samir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.samir.bio': 'Samir [X] yıldır Shotokan eğitimi alıyor ve [X. Dan] siyah kuşak taşıyor. [Arka plan hakkında bir cümle — nerede eğitim aldığı, yarışma deneyimi, ne zamandır öğretmenlik yaptığı.] Dojo\'daki odağı, öğrencinin yaşı veya seviyesinden bağımsız olarak sağlam temeller oluşturmak.',
         'activities.title': 'Projeler &amp; Etkinlikler',
         'activities.tournaments': 'Turnuvalar',
         'activities.seminars': 'Seminerler',
@@ -2132,11 +2227,25 @@
         'footer.nav.title': 'Gezinti',
         'footer.locations.title': 'Konumlar',
         'footer.copyright': '© 2026 Fudoshin Karate-Do Kulübü Viyana',
-        'footer.credit.title': 'Web Tasarımı',
+        'footer.credit.title': 'Website Design',
         'footer.legal': '<a href="#">Yasal Bilgiler</a> · <a href="#">Gizlilik Politikası</a>',
         'modal.close.aria': 'Kapat',
         'modal.map.footer': 'Google Maps\'te aç ↗',
         'modal.map.directions': 'Yol tarifi al',
+        'legal.tab.impressum': 'Yasal Bilgiler',
+        'legal.tab.datenschutz': 'Gizlilik Politikası',
+        'legal.phone': 'Telefon Numaraları',
+        'legal.bank': 'Banka Bilgileri',
+        'legal.privacy.title': 'Gizlilik Politikası',
+        'legal.privacy.p1': 'Kişisel verilerinizin korunması bizim için özellikle önemlidir. Verilerinizi yalnızca yasal düzenlemeler (GDPR, DSG, TKG 2003) çerçevesinde işliyoruz.',
+        'legal.privacy.contact.title': 'İletişim',
+        'legal.privacy.contact.p1': 'Web sitesi formu veya e-posta yoluyla bizimle iletişime geçerseniz, verileriniz talebin işlenmesi ve olası takip soruları için saklanacaktır. Bu verileri onayınız olmadan paylaşmayız. İşleme, GDPR Madde 6(1)(b) temelinde gerçekleştirilir.',
+        'legal.privacy.membership.title': 'Üyelik Yönetimi',
+        'legal.privacy.membership.p1': 'Kulüp üyeliğiniz kapsamında adınızı, doğum tarihinizi, adresinizi, e-postanızı ve telefon numaranızı işliyoruz. İşleme, GDPR Madde 6(1)(b) uyarınca üyelik sözleşmesini yerine getirmek amacıyla yapılır.',
+        'legal.privacy.rights.title': 'Haklarınız',
+        'legal.privacy.rights.p1': 'Erişim, düzeltme, silme, kısıtlama, veri taşınabilirliği ve itiraz haklarına sahipsiniz. Verilerinizin işlenmesinin veri koruma yasasını ihlal ettiğine inanıyorsanız, Veri Koruma Kurumu\'na (dsb.gv.at) şikayette bulunabilirsiniz.',
+        'legal.privacy.cookies.title': 'Çerezler',
+        'legal.privacy.cookies.p1': 'Bu web sitesi yalnızca teknik olarak gerekli çerezleri (dil ayarı) kullanır. İzleme veya analiz çerezleri kullanılmaz.',
         'lightbox.aria': 'Fotoğraf galerisi',
         'lightbox.close.aria': 'Kapat',
         'lightbox.prev.aria': 'Önceki fotoğraf',
@@ -2166,11 +2275,10 @@
         'about.title': 'O klubu',
         'about.history.title': 'Historija kluba',
         'about.history.p1': 'Fudoshin podučava tradicionalni karate u Beču od [godine]. Treniramo djecu, mlade i odrasle. Naglasak je na pravilnoj tehnici, poštovanju i dosljednosti — ne na rezultatima takmičenja ili diplomama. Slobodno dođite i pogledajte prije nego što se odlučite za članstvo.',
-        'about.history.p2': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         'about.values.title': 'Vrijednosti i pedagoški pristup',
-        'about.values.p1': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        'about.style.title': 'Koji stil?',
-        'about.style.p1': 'Predajemo tradicionalni <strong>Shotokan karate stil.</strong> Na treningu promovišemo fizičku i mentalnu kondiciju, kao i vrijednosti poput poštovanja, discipline i istrajnosti.',
+        'about.values.p1': 'Naš pristup je strpljiv i direktan. Tehniku ispravljamo rano i često, jer je dobre navike lakše izgraditi nego loše ispraviti. Od djece i odraslih očekujemo iste standarde pažnje i poštovanja — prilagođene onome što je razumno, ali nikada snižene iz udobnosti. Napredak se ovdje mjeri mjesecima i godinama, ne pojasevima.',
+        'about.style.title': 'Koji Stil?',
+        'about.style.p1': 'Predajemo tradicionalni <strong>Shotokan karate</strong> — stil utemeljen na preciznosti, disciplini i ispravnoj formi. Trening razvija fizičku i mentalnu kondiciju, a s vremenom i kvalitete koje sežu dalje: poštovanje, postojanost i sposobnost da ostanete mirni pod pritiskom.',
         'caption.photos': '<em>Aktivnosti</em> / Caption Credits<br><span class="text-span">Fotografije – Firstname Lastname</span>',
         'schedule.title': 'Raspored treninga',
         'schedule.h.group': 'Grupa',
@@ -2206,9 +2314,9 @@
         'pricing.note': '* Jednokratna upisnina se naplaćuje. Besplatan probni trening prije upisa je moguć.',
         'team.title': 'Tim / Treneri',
         'team.emir.role': 'Državno certificirani karate instruktor · 2. Dan',
-        'team.emir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.emir.bio': 'Emir se bavi karateom [X] godina i nosi [X. Dan] crni pojas u Shotokanu. [Jedna rečenica o pozadini — gdje je trenirao, takmičarsko iskustvo, koliko dugo predaje.] Trening vodi sa mirnim autoritetom i pažljivim okom za tehničke detalje.',
         'team.samir.role': 'Državno certificirani karate instruktor · 4. Dan',
-        'team.samir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.samir.bio': 'Samir trenira Shotokan [X] godina i nosi [X. Dan] crni pojas. [Jedna rečenica o pozadini — gdje je trenirao, takmičarsko iskustvo, koliko dugo predaje.] Njegov fokus u dojou je na izgradnji čvrstih temelja, bez obzira na uzrast ili nivo učenika.',
         'activities.title': 'Projekti &amp; Aktivnosti',
         'activities.tournaments': 'Turniri',
         'activities.seminars': 'Seminari',
@@ -2267,11 +2375,25 @@
         'footer.nav.title': 'Navigacija',
         'footer.locations.title': 'Lokacije',
         'footer.copyright': '© 2026 Fudoshin Karate-Do Klub Beč',
-        'footer.credit.title': 'Dizajn web stranice',
+        'footer.credit.title': 'Website Design',
         'footer.legal': '<a href="#">Pravne informacije</a> · <a href="#">Politika privatnosti</a>',
         'modal.close.aria': 'Zatvori',
         'modal.map.footer': 'Otvori u Google Maps ↗',
         'modal.map.directions': 'Planiraj rutu',
+        'legal.tab.impressum': 'Pravne informacije',
+        'legal.tab.datenschutz': 'Politika privatnosti',
+        'legal.phone': 'Telefonski brojevi',
+        'legal.bank': 'Bankovni podaci',
+        'legal.privacy.title': 'Izjava o zaštiti podataka',
+        'legal.privacy.p1': 'Zaštita vaših ličnih podataka nam je posebno važna. Vaše podatke obrađujemo isključivo na osnovu zakonskih propisa (GDPR, DSG, TKG 2003).',
+        'legal.privacy.contact.title': 'Kontakt',
+        'legal.privacy.contact.p1': 'Ako nas kontaktirate putem obrasca na web stranici ili e-mailom, vaši podaci će biti pohranjeni u svrhu obrade upita i za slučaj naknadnih pitanja. Ove podatke nećemo dijeliti bez vašeg pristanka. Obrada se vrši na osnovu čl. 6 st. 1 tač. b GDPR-a.',
+        'legal.privacy.membership.title': 'Upravljanje članstvom',
+        'legal.privacy.membership.p1': 'U okviru vašeg članstva u klubu obrađujemo ime, datum rođenja, adresu, e-mail i broj telefona. Obrada se vrši radi ispunjenja ugovora o članstvu u skladu s čl. 6 st. 1 tač. b GDPR-a.',
+        'legal.privacy.rights.title': 'Vaša prava',
+        'legal.privacy.rights.p1': 'Imate pravo na pristup, ispravku, brisanje, ograničenje, prenosivost podataka i prigovor. Ako smatrate da obrada vaših podataka krši zakon o zaštiti podataka, možete podnijeti žalbu Agenciji za zaštitu podataka (dsb.gv.at).',
+        'legal.privacy.cookies.title': 'Kolačići',
+        'legal.privacy.cookies.p1': 'Ova web stranica koristi samo tehnički neophodne kolačiće (postavka jezika). Ne koriste se kolačići za praćenje ili analitiku.',
         'lightbox.aria': 'Foto galerija',
         'lightbox.close.aria': 'Zatvori',
         'lightbox.prev.aria': 'Prethodna slika',
@@ -2470,6 +2592,43 @@
     </div>
   </div>
 
+  <!-- ══════════════ LEGAL MODAL ══════════════ -->
+  <div class="legal-modal" id="legalModal" role="dialog" aria-modal="true">
+    <div class="legal-modal__panel">
+      <div class="legal-modal__header">
+        <div class="legal-modal__tabs">
+          <button class="legal-modal__tab is-active" data-legal-tab="impressum" data-i18n="legal.tab.impressum">Impressum</button>
+          <button class="legal-modal__tab" data-legal-tab="datenschutz" data-i18n="legal.tab.datenschutz">Datenschutz</button>
+        </div>
+        <button class="legal-modal__close" id="legalModalClose" aria-label="Schließen" data-i18n-aria="modal.close.aria">&#10005;</button>
+      </div>
+      <div class="legal-modal__body">
+        <div class="legal-modal__section is-active" id="legalImpressum">
+          <h3>Fudoshin Karate-Do Club Wien</h3>
+          <p>Obmann: Ing. Sijamija Samir</p>
+          <h3 data-i18n="legal.phone">Telefonnummern</h3>
+          <p>Tel. 1: 0660 77 51 300<br>Tel. 2: 0660 71 77 228</p>
+          <h3 data-i18n="legal.bank">Bankverbindung</h3>
+          <p>Erste Sparkasse<br>IBAN: AT81 2011 1843 2757 9400</p>
+          <h3>E-Mail</h3>
+          <p><a href="mailto:office@fudoshin.at">office@fudoshin.at</a></p>
+        </div>
+        <div class="legal-modal__section" id="legalDatenschutz">
+          <h3 data-i18n="legal.privacy.title">Datenschutzerklärung</h3>
+          <p data-i18n="legal.privacy.p1">Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Wir verarbeiten Ihre Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, DSG, TKG 2003).</p>
+          <h3 data-i18n="legal.privacy.contact.title">Kontaktaufnahme</h3>
+          <p data-i18n="legal.privacy.contact.p1">Wenn Sie per Formular auf der Website oder per E-Mail Kontakt mit uns aufnehmen, werden Ihre angegebenen Daten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO.</p>
+          <h3 data-i18n="legal.privacy.membership.title">Mitgliederverwaltung</h3>
+          <p data-i18n="legal.privacy.membership.p1">Im Rahmen Ihrer Vereinsmitgliedschaft verarbeiten wir Name, Geburtsdatum, Adresse, E-Mail und Telefonnummer. Die Verarbeitung erfolgt zur Erfüllung des Mitgliedschaftsvertrags gemäß Art. 6 Abs. 1 lit. b DSGVO.</p>
+          <h3 data-i18n="legal.privacy.rights.title">Ihre Rechte</h3>
+          <p data-i18n="legal.privacy.rights.p1">Ihnen stehen grundsätzlich die Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch zu. Wenn Sie glauben, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt, können Sie sich bei der Datenschutzbehörde (dsb.gv.at) beschweren.</p>
+          <h3 data-i18n="legal.privacy.cookies.title">Cookies</h3>
+          <p data-i18n="legal.privacy.cookies.p1">Diese Website verwendet nur technisch notwendige Cookies (Spracheinstellung). Es werden keine Tracking- oder Analyse-Cookies eingesetzt.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ══════════════ STICKER ══════════════ -->
 
   <div class="sticker" id="the-sticker" data-shape="sharp" data-align="left" data-tooltip="Sommer Camp 2026">
@@ -2484,9 +2643,8 @@
       <i class="sticker__chevron">▲</i>
     </button>
   </div>
-  <!-- ══════════════ /STICKER ══════════════ -->
 
-
+  
 
   <script>
     // ── STICKER collapse + scroll-driven pill morph ─────────────────
@@ -2660,6 +2818,39 @@
     document.getElementById('mapModalClose').addEventListener('click', closeMap);
     mapModal.addEventListener('click', e => { if (e.target === mapModal) closeMap(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMap(); });
+
+    // ── LEGAL MODAL ──
+    const legalModal = document.getElementById('legalModal');
+    const legalTabs = legalModal.querySelectorAll('.legal-modal__tab');
+    const legalSections = legalModal.querySelectorAll('.legal-modal__section');
+
+    function openLegal(tab) {
+      legalTabs.forEach(t => t.classList.toggle('is-active', t.dataset.legalTab === tab));
+      legalSections.forEach(s => s.classList.toggle('is-active', s.id === (tab === 'impressum' ? 'legalImpressum' : 'legalDatenschutz')));
+      legalModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLegal() {
+      legalModal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    legalTabs.forEach(tab => tab.addEventListener('click', () => openLegal(tab.dataset.legalTab)));
+    document.getElementById('legalModalClose').addEventListener('click', closeLegal);
+    legalModal.addEventListener('click', e => { if (e.target === legalModal) closeLegal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && legalModal.classList.contains('is-open')) closeLegal(); });
+
+    // Wire footer legal links
+    document.querySelector('.footer__bottom').addEventListener('click', e => {
+      const link = e.target.closest('a');
+      if (!link) return;
+      const text = link.textContent.trim().toLowerCase();
+      if (text.includes('impressum') || text.includes('legal notice') || text.includes('yasal') || text.includes('pravne')) {
+        e.preventDefault(); openLegal('impressum');
+      } else if (text.includes('datenschutz') || text.includes('privacy') || text.includes('gizlilik') || text.includes('privatnost')) {
+        e.preventDefault(); openLegal('datenschutz');
+      }
+    });
   </script>
 
   <!-- ══════════════ LIGHTBOX ══════════════ -->
@@ -2726,55 +2917,6 @@
   </script>
 
   <script>
-    // ── FORM SUBMISSION (Formsubmit.co + Google Sheets) ─────────────
-    var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyqPYHlYH1dbuH7IdE3DHy77gTjl7d2r0lB8t6I9fZkMrsDnC5Yorh-vv8KIAdL9DGH/exec';
-    document.querySelectorAll('form[action*="formsubmit.co"]').forEach(function(form) {
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        var btn = form.querySelector('button[type="submit"]');
-        var prev = btn.textContent;
-        btn.disabled = true;
-        btn.textContent = 'Sending…';
-        var old = form.querySelector('.form-msg');
-        if (old) old.remove();
-        // Collect form data as object for Google Sheets
-        var fd = new FormData(form);
-        var obj = { _formName: form.getAttribute('name') || 'kontakt' };
-        fd.forEach(function(v, k) { if (k.charAt(0) !== '_' && k !== 'Open Spreadsheet') obj[k] = v; });
-        // Send to both endpoints in parallel
-        var emailReq = fetch(form.action, {
-          method: 'POST', body: fd, headers: { 'Accept': 'application/json' }
-        }).then(function(r) { return r.json(); });
-        var sheetReq = fetch(SHEETS_URL, {
-          method: 'POST', mode: 'no-cors', body: JSON.stringify(obj),
-          headers: { 'Content-Type': 'text/plain' }
-        }).catch(function() { return { result: 'ok' }; }); // sheet failure is non-blocking
-        emailReq.then(function(data) {
-          if (data.success) {
-            var msg = document.createElement('div');
-            msg.className = 'form-msg form-msg--ok';
-            msg.textContent = form.getAttribute('name') === 'kontakt'
-              ? 'Nachricht gesendet! Wir melden uns in Kürze.'
-              : 'Anmeldung erhalten! Wir kontaktieren Sie in Kürze.';
-            form.appendChild(msg);
-            form.reset();
-          } else {
-            throw new Error(data.message || 'Submission failed');
-          }
-        }).catch(function(err) {
-          var msg = document.createElement('div');
-          msg.className = 'form-msg form-msg--err';
-          msg.textContent = 'Something went wrong. Please try again or email us directly.';
-          form.appendChild(msg);
-        }).finally(function() {
-          btn.disabled = false;
-          btn.textContent = prev;
-        });
-      });
-    });
-  </script>
-
-  <script>
     // ── RESTORE SAVED LANGUAGE ──────────────────────────────────────
     (function() {
       const savedLang = localStorage.getItem('fudoshin-lang');
@@ -2787,19 +2929,5 @@
   </script>
 
   <script>requestAnimationFrame(() => document.body.classList.add('is-loaded'));</script>
-
-  <!-- Netlify Identity widget (redirects after login) -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", function(user) {
-        if (!user) {
-          window.netlifyIdentity.on("login", function() {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-  </script>
 
 </body></html>
