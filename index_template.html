@@ -2725,7 +2725,7 @@
 
   <script>
     // ── FORM SUBMISSION (Formsubmit.co + Google Sheets) ─────────────
-    var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyFRSLQf1L3IDqiq4ibhNX2yDCLhDhbxrIhVBOJWDYX-3tmV_rS4diaFz9Y6ulUXgNh/exec';
+    var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyqPYHlYH1dbuH7IdE3DHy77gTjl7d2r0lB8t6I9fZkMrsDnC5Yorh-vv8KIAdL9DGH/exec';
     document.querySelectorAll('form[action*="formsubmit.co"]').forEach(function(form) {
       form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -2744,7 +2744,7 @@
           method: 'POST', body: fd, headers: { 'Accept': 'application/json' }
         }).then(function(r) { return r.json(); });
         var sheetReq = fetch(SHEETS_URL, {
-          method: 'POST', body: JSON.stringify(obj),
+          method: 'POST', mode: 'no-cors', body: JSON.stringify(obj),
           headers: { 'Content-Type': 'text/plain' }
         }).catch(function() { return { result: 'ok' }; }); // sheet failure is non-blocking
         emailReq.then(function(data) {
