@@ -5,11 +5,6 @@ backend:
 media_folder: "images/full"
 public_folder: "/images/full"
 
-# Decap CMS will also look for thumbs here
-media_library:
-  name: upload
-  config:
-    multiple: true
 
 collections:
   # ── STICKER / BADGE ──────────────────────────────────
