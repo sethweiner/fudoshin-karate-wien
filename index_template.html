@@ -2724,7 +2724,8 @@
   </script>
 
   <script>
-    // ── FORM SUBMISSION (Formsubmit.co AJAX) ────────────────────────
+    // ── FORM SUBMISSION (Formsubmit.co + Google Sheets) ─────────────
+    var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyFRSLQf1L3IDqiq4ibhNX2yDCLhDhbxrIhVBOJWDYX-3tmV_rS4diaFz9Y6ulUXgNh/exec';
     document.querySelectorAll('form[action*="formsubmit.co"]').forEach(function(form) {
       form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -2732,14 +2733,21 @@
         var prev = btn.textContent;
         btn.disabled = true;
         btn.textContent = 'Sending…';
-        // Remove any previous message
         var old = form.querySelector('.form-msg');
         if (old) old.remove();
-        fetch(form.action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        }).then(function(r) { return r.json(); }).then(function(data) {
+        // Collect form data as object for Google Sheets
+        var fd = new FormData(form);
+        var obj = { _formName: form.name || 'kontakt' };
+        fd.forEach(function(v, k) { if (k.charAt(0) !== '_') obj[k] = v; });
+        // Send to both endpoints in parallel
+        var emailReq = fetch(form.action, {
+          method: 'POST', body: fd, headers: { 'Accept': 'application/json' }
+        }).then(function(r) { return r.json(); });
+        var sheetReq = fetch(SHEETS_URL, {
+          method: 'POST', body: JSON.stringify(obj),
+          headers: { 'Content-Type': 'text/plain' }
+        }).catch(function() { return { result: 'ok' }; }); // sheet failure is non-blocking
+        emailReq.then(function(data) {
           if (data.success) {
             var msg = document.createElement('div');
             msg.className = 'form-msg form-msg--ok';
