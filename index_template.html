@@ -1454,7 +1454,7 @@
             </div>
           </div>
           <form class="form-body reveal" name="kontakt" method="POST" action="https://formsubmit.co/ajax/5e22b81a08dbc507c27809f55303960b">
-            <input type="hidden" name="_subject" value="Fudoshin Karate — Contact Form">
+            <input type="hidden" name="_subject" value="Fudoshin Karate — Kontaktformular">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="Open Spreadsheet" value="https://docs.google.com/spreadsheets/d/1jK0U-7jsn28zrsrx-rRlyb3lNGp9U2o-CNIlfm0dHtg/edit#gid=773346652">
@@ -1476,11 +1476,11 @@
                 <label for="k-betreff" data-i18n="contact.form.subject.label">Betreff</label>
                 <select id="k-betreff" data-i18n-options="contact.form.subject" name="betreff">
                   <option value="" disabled="" selected="">Bitte wählen</option>
-                  <option value="schnupper">Schnupperstunde</option>
-                  <option value="anmeldung">Anmeldung</option>
-                  <option value="preise">Fragen zu Preisen</option>
-                  <option value="training">Trainingszeiten</option>
-                  <option value="sonstiges">Sonstiges</option>
+                  <option value="Schnupperstunde">Schnupperstunde</option>
+                  <option value="Anmeldung">Anmeldung</option>
+                  <option value="Fragen zu Preisen">Fragen zu Preisen</option>
+                  <option value="Trainingszeiten">Trainingszeiten</option>
+                  <option value="Sonstiges">Sonstiges</option>
                 </select>
               </div>
               <div class="form-field form-grid--full">
@@ -1506,7 +1506,7 @@
             </div>
           </div>
           <form class="form-body reveal" name="mitglied" method="POST" action="https://formsubmit.co/ajax/5e22b81a08dbc507c27809f55303960b">
-            <input type="hidden" name="_subject" value="Fudoshin Karate — Membership Registration">
+            <input type="hidden" name="_subject" value="Fudoshin Karate — Mitgliedsanmeldung">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
             <input type="hidden" name="Open Spreadsheet" value="https://docs.google.com/spreadsheets/d/1jK0U-7jsn28zrsrx-rRlyb3lNGp9U2o-CNIlfm0dHtg/edit#gid=701910726">
@@ -1541,28 +1541,28 @@
               <div class="form-field form-grid--full form-field--check">
                 <label data-i18n="member.form.group.label">Gewünschte Gruppe *</label>
                 <div class="check-group">
-                  <label class="check-item" data-i18n-after="member.form.group.children"><input type="radio" name="gruppe" value="kinder" required=""> Kinder Anfänger (6–10 Jahre)</label>
-                  <label class="check-item" data-i18n-after="member.form.group.youth"><input type="radio" name="gruppe" value="jugendliche"> Jugendliche Fortgeschritten (11–18 Jahre)</label>
-                  <label class="check-item" data-i18n-after="member.form.group.adults"><input type="radio" name="gruppe" value="erwachsene"> Erwachsene alle Level</label>
+                  <label class="check-item" data-i18n-after="member.form.group.children"><input type="radio" name="gruppe" value="Kinder Anfänger (6–10 Jahre)" required=""> Kinder Anfänger (6–10 Jahre)</label>
+                  <label class="check-item" data-i18n-after="member.form.group.youth"><input type="radio" name="gruppe" value="Jugendliche Fortgeschritten (11–18 Jahre)"> Jugendliche Fortgeschritten (11–18 Jahre)</label>
+                  <label class="check-item" data-i18n-after="member.form.group.adults"><input type="radio" name="gruppe" value="Erwachsene alle Level"> Erwachsene alle Level</label>
                 </div>
               </div>
               <div class="form-field">
                 <label for="m-erfahrung" data-i18n="member.form.exp.label">Karate-Erfahrung</label>
                 <select id="m-erfahrung" data-i18n-options="member.form.exp" name="erfahrung">
                   <option value="" disabled="" selected="">Bitte wählen</option>
-                  <option value="keine">Keine Erfahrung</option>
-                  <option value="anfaenger">Anfänger (unter 1 Jahr)</option>
-                  <option value="fortgeschritten">Fortgeschritten (1–5 Jahre)</option>
-                  <option value="erfahren">Erfahren (über 5 Jahre)</option>
+                  <option value="Keine Erfahrung">Keine Erfahrung</option>
+                  <option value="Anfänger (unter 1 Jahr)">Anfänger (unter 1 Jahr)</option>
+                  <option value="Fortgeschritten (1–5 Jahre)">Fortgeschritten (1–5 Jahre)</option>
+                  <option value="Erfahren (über 5 Jahre)">Erfahren (über 5 Jahre)</option>
                 </select>
               </div>
               <div class="form-field">
                 <label for="m-beitrag" data-i18n="member.form.fee.label">Gewünschter Beitrag</label>
                 <select id="m-beitrag" data-i18n-options="member.form.fee" name="beitrag">
                   <option value="" disabled="" selected="">Bitte wählen</option>
-                  <option value="semester">Semester (175€)</option>
-                  <option value="jahr">Jahresbeitrag (320€)</option>
-                  <option value="familie">Familie / Geschwister (−20%)</option>
+                  <option value="Semester (175€)">Semester (175€)</option>
+                  <option value="Jahresbeitrag (320€)">Jahresbeitrag (320€)</option>
+                  <option value="Familie / Geschwister (−20%)">Familie / Geschwister (−20%)</option>
                 </select>
               </div>
               <div class="form-field form-grid--full form-field--check">
@@ -2754,8 +2754,8 @@
             var msg = document.createElement('div');
             msg.className = 'form-msg form-msg--ok';
             msg.textContent = form.getAttribute('name') === 'kontakt'
-              ? 'Message sent! We will get back to you soon.'
-              : 'Registration received! We will contact you shortly.';
+              ? 'Nachricht gesendet! Wir melden uns in Kürze.'
+              : 'Anmeldung erhalten! Wir kontaktieren Sie in Kürze.';
             form.appendChild(msg);
             form.reset();
           } else {
