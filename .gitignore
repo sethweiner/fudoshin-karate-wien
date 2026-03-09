@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Dev/editor files (not for deployment)
+_archive/
+_editor_archive/
+_scripts/
+_snippets/
+.claude/
+
+# Self-contained & editor versions
+index_self-contained.html
+index_self-contained_edited.html
+index_v15_with-images_edited*.html
+html-site-editor-v11.html
+
+# Misc
+*.log
+node_modules/

@@ -1,0 +1,2745 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fudoshin Karate-Do Club Wien</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='22' fill='%23b53a3a' stroke='white' stroke-width='8'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS — from Webflow variables
+       Toggle by setting [data-theme] on <html>
+    ═══════════════════════════════════════════ */
+    [data-theme="dark"] {
+      --color-bg:       hsla(0, 0%, 0%, 1);
+      --color-fg:       hsla(0, 0%, 92%, 1);
+      --color-red:      hsla(0, 53%, 50%, 1);
+      --color-surface:  hsla(0, 0%, 6%, 1);
+      --color-mid:      hsla(0, 0%, 20%, 1);
+      --scrollbar-bg:   hsla(0, 0%, 8%, 1);
+      --scrollbar-thumb:hsla(0, 53%, 50%, 1);
+    }
+
+    [data-theme="light"] {
+      --color-bg:       hsla(0, 0%, 97%, 1);
+      --color-fg:       hsla(0, 0%, 8%, 1);
+      --color-red:      hsla(0, 53%, 45%, 1);
+      --color-surface:  hsla(0, 0%, 93%, 1);
+      --color-mid:      hsla(0, 0%, 75%, 1);
+      --scrollbar-bg:   hsla(0, 0%, 90%, 1);
+      --scrollbar-thumb:hsla(0, 53%, 45%, 1);
+    }
+
+    :root {
+      --color-text:    var(--color-fg);
+      --color-border:  var(--color-fg);
+      --color-off:     transparent;
+      --color-accent:  var(--color-red);
+      --font-display:  'Bebas Neue', sans-serif;
+      --font-body:     Arial, sans-serif;
+      --nav-h:         4rem;
+      --pad:           6rem;
+      --gap:           2rem;
+      --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+      --t-theme:       background-color 400ms var(--ease-out),
+                       color 400ms var(--ease-out),
+                       border-color 400ms var(--ease-out);
+    }
+
+    /* ═══════════════════════════════════════════
+       CUSTOM SCROLLBAR
+    ═══════════════════════════════════════════ */
+    ::-webkit-scrollbar               { width: 6px; }
+    ::-webkit-scrollbar-track         { background: var(--scrollbar-bg); }
+    ::-webkit-scrollbar-thumb         { background: var(--scrollbar-thumb); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover   { background: var(--color-accent); }
+    * { scrollbar-width: thin; scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg); }
+
+    /* ═══════════════════════════════════════════
+       TEXT SELECTION
+    ═══════════════════════════════════════════ */
+    ::selection      { background: hsla(0, 53%, 50%, 0.4); }
+    ::-moz-selection { background: hsla(0, 53%, 50%, 0.4); }
+
+    /* ═══════════════════════════════════════════
+       RESET
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scrollbar-gutter: stable; }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.3;
+      transition: var(--t-theme);
+      overflow-x: hidden;
+      opacity: 0;
+    }
+    body.is-loaded {
+      opacity: 1;
+      transition: opacity 600ms ease;
+    }
+
+    img  { display: block; max-width: 100%; }
+    a    { color: inherit; text-decoration: none; }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5rem);
+      line-height: 1;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1; font-weight: 400;
+      text-transform: uppercase;
+    }
+    h3 { font-size: 1.5rem; line-height: 1.2; font-weight: 700; letter-spacing: 0.03rem; }
+    p  { font-size: 1.1rem; line-height: 1.5; letter-spacing: 0.02rem; margin-bottom: 0.5rem; padding-top: 0.5rem; }
+    strong { color: var(--color-accent); }
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0; left: 1rem; right: 1rem;
+      height: var(--nav-h);
+      z-index: 1000;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: stretch;
+      transition: var(--t-theme);
+    }
+
+    .nav__logo {
+      display: flex; align-items: center;
+      padding: 0 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1.1rem; letter-spacing: 0.08em;
+      text-transform: uppercase; white-space: nowrap;
+      flex-shrink: 0;
+      border-right: 1px solid var(--color-border);
+      transition: var(--t-theme);
+    }
+
+    .nav__links {
+      display: flex; align-items: stretch;
+      list-style: none; margin-left: auto;
+      max-width: 0; overflow: hidden;
+      transition: max-width 0ms 280ms;
+    }
+    .nav__links li { display: flex; }
+    .nav__links a {
+      display: flex; align-items: center;
+      padding: 0 1.25rem;
+      font-size: 0.85rem; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-left: 1px solid transparent;
+      white-space: nowrap;
+      opacity: 0; transform: translateX(2px);
+      transition: opacity 180ms ease, transform 180ms ease, background 200ms ease, color 200ms ease;
+    }
+    .nav__links li:nth-child(1) a { transition-delay: 0ms; }
+    .nav__links li:nth-child(2) a { transition-delay: 20ms; }
+    .nav__links li:nth-child(3) a { transition-delay: 40ms; }
+    .nav__links li:nth-child(4) a { transition-delay: 60ms; }
+    .nav__links li:nth-child(5) a { transition-delay: 80ms; }
+    .nav__links li:nth-child(6) a { transition-delay: 100ms; }
+    .nav__links li:nth-child(7) a { transition-delay: 120ms; }
+    .nav__links a:hover { background: var(--color-fg); color: var(--color-bg); }
+    .nav__links a.nav__cta {
+      background: var(--color-accent); color: #fff;
+      border-left-color: var(--color-accent); font-weight: 700;
+    }
+    .nav__links a.nav__cta:hover { background: var(--color-fg); color: var(--color-bg); border-left-color: var(--color-fg); }
+
+    /* Theme toggle button */
+    .nav__theme {
+      display: flex; align-items: center; justify-content: center;
+      width: var(--nav-h);
+      background: none; border: none;
+      border-left: 1px solid var(--color-border);
+      color: var(--color-fg);
+      cursor: pointer;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-left: auto; /* pushes controls right when links are hidden */
+      transition: background 200ms ease, var(--t-theme);
+    }
+    .nav__theme:hover { background: var(--color-fg); color: var(--color-bg); }
+    .nav__theme .icon-sun  { display: none; }
+    .nav__theme .icon-moon { display: block; }
+    [data-theme="light"] .nav__theme .icon-sun  { display: block; }
+    [data-theme="light"] .nav__theme .icon-moon { display: none; }
+
+    /* ── Language toggle ── */
+    .nav__lang {
+      position: relative;
+      display: flex; align-items: stretch;
+      flex-shrink: 0;
+    }
+    .nav__lang-btn {
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 1.1rem;
+      background: none; border: none;
+      border-left: 1px solid var(--color-border);
+      color: var(--color-fg);
+      font-family: var(--font-display);
+      font-size: 0.9rem; letter-spacing: 0.12em;
+      cursor: pointer; white-space: nowrap;
+      transition: background 200ms ease, color 200ms ease, var(--t-theme);
+    }
+    .nav__lang-btn::after {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: 6px; margin-top: -2px;
+      transition: transform 200ms ease;
+    }
+    .nav__lang.is-open .nav__lang-btn::after { transform: rotate(-135deg); margin-top: 2px; }
+    .nav__lang-btn:hover,
+    .nav__lang.is-open .nav__lang-btn { background: var(--color-fg); color: var(--color-bg); }
+    .nav__lang-dropdown {
+      position: absolute;
+      top: 100%; right: 0;
+      min-width: 100%;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-top: none;
+      list-style: none;
+      z-index: 1001;
+      opacity: 0; pointer-events: none;
+      transform: translateY(-4px);
+      transition: opacity 180ms ease, transform 180ms ease, var(--t-theme);
+    }
+    .nav__lang.is-open .nav__lang-dropdown {
+      opacity: 1; pointer-events: all; transform: translateY(0);
+    }
+    .nav__lang-dropdown li + li { border-top: 1px solid var(--color-border); }
+    .nav__lang-dropdown li button {
+      display: block; width: 100%;
+      padding: 0.6rem 1.1rem;
+      background: none; border: none;
+      color: var(--color-fg);
+      font-family: var(--font-display);
+      font-size: 0.85rem; letter-spacing: 0.12em;
+      text-align: center; cursor: pointer;
+      transition: background 150ms ease;
+    }
+    .nav__lang-dropdown li button:hover { background: var(--color-fg); color: var(--color-bg); }
+
+    /* ── Custom Select ── */
+    .custom-select { position: relative; }
+    .custom-select__trigger {
+      width: 100%;
+      background: transparent; border: none;
+      border-bottom: 1px solid var(--color-mid);
+      color: var(--color-fg);
+      font-family: var(--font-body); font-size: 1rem;
+      padding: 0.75rem 2rem 0.75rem 0;
+      text-align: left; cursor: pointer; outline: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23ebebeb' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.25rem center;
+      transition: border-color 200ms ease, color 400ms ease;
+    }
+    [data-theme="light"] .custom-select__trigger {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23141414' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+    .custom-select__trigger.is-placeholder { opacity: 0.35; }
+    .custom-select.is-open .custom-select__trigger,
+    .custom-select__trigger:focus { border-bottom-color: var(--color-accent); }
+    .custom-select__dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 1px); left: 0; right: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      list-style: none; z-index: 500;
+      max-height: 220px; overflow-y: auto;
+    }
+    .custom-select.is-open .custom-select__dropdown { display: block; }
+    .custom-select__dropdown li + li { border-top: 1px solid var(--color-mid); }
+    .custom-select__dropdown li button {
+      display: block; width: 100%;
+      padding: 0.65rem 1rem;
+      background: none; border: none;
+      color: var(--color-fg);
+      font-family: var(--font-body); font-size: 1rem;
+      text-align: left; cursor: pointer;
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .custom-select__dropdown li button:hover { background: var(--color-accent); color: #fff; }
+    .custom-select__dropdown li button.is-selected { opacity: 0.4; cursor: default; }
+    .custom-select__dropdown li button.is-selected:hover { background: none; color: var(--color-fg); }
+
+    /* Hamburger */
+    .nav__hamburger {
+      display: flex; flex-direction: column;
+      justify-content: center; gap: 5px;
+      width: var(--nav-h); padding: 1.1rem;
+      cursor: pointer; border: none; background: none; flex-shrink: 0;
+    }
+    .nav__hamburger span {
+      display: block; height: 1px;
+      background: var(--color-fg);
+      transition: transform 300ms ease, opacity 200ms ease, background 400ms ease;
+    }
+    .nav__hamburger.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav__hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .nav__hamburger.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Mobile overlay */
+    .nav__overlay {
+      display: none; position: fixed; inset: 0;
+      background: var(--color-bg);
+      z-index: 1001; /* above nav (1000) so the ✕ button is always clickable */
+      flex-direction: column; align-items: stretch; justify-content: center;
+      transition: var(--t-theme);
+      /* clip from top for entry animation */
+      clip-path: inset(0 0 100% 0);
+      pointer-events: none;
+    }
+    .nav__overlay.is-open {
+      display: flex;
+      pointer-events: all;
+      animation: overlayIn 620ms var(--ease-out) forwards;
+    }
+
+    @keyframes overlayIn {
+      from { clip-path: inset(0 0 100% 0); }
+      to   { clip-path: inset(0 0 0% 0); }
+    }
+
+    .nav__overlay a {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 0.6rem var(--pad);
+      border-bottom: 1px solid var(--color-border);
+      transition: color 150ms ease;
+      opacity: 0;
+      animation: none;
+    }
+    .nav__overlay.is-open a { animation: fadeSlideIn 420ms var(--ease-out) forwards; }
+    .nav__overlay.is-open a:nth-child(2) { animation-delay:  80ms; }
+    .nav__overlay.is-open a:nth-child(3) { animation-delay: 140ms; }
+    .nav__overlay.is-open a:nth-child(4) { animation-delay: 195ms; }
+    .nav__overlay.is-open a:nth-child(5) { animation-delay: 245ms; }
+    .nav__overlay.is-open a:nth-child(6) { animation-delay: 290ms; }
+    .nav__overlay.is-open a:nth-child(7) { animation-delay: 330ms; }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav__overlay a:hover { color: var(--color-accent); }
+    .nav__overlay a.nav__cta-overlay { color: var(--color-accent); }
+
+    /* Overlay brand footer */
+    .nav__overlay-footer {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.5rem var(--pad);
+      display: flex; align-items: center; justify-content: space-between;
+      opacity: 0;
+      transition: opacity 400ms ease 350ms;
+    }
+    .nav__overlay.is-open .nav__overlay-footer { opacity: 1; }
+    .nav__overlay-footer-brand {
+      font-family: var(--font-display);
+      font-size: 0.85rem; letter-spacing: 0.1em;
+      text-transform: uppercase; opacity: 0.25;
+    }
+    .nav__overlay-footer-meta {
+      font-size: 0.75rem; opacity: 0.2;
+      letter-spacing: 0.04em;
+    }
+
+    /* Close button — properly positioned, visible, functional */
+    .nav__close {
+      position: absolute;
+      top: 0; right: 1rem;
+      width: var(--nav-h); height: var(--nav-h);
+      background: none; border: none;
+      color: var(--color-fg);
+      font-size: 1.4rem; line-height: 1;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1001;
+      transition: color 150ms ease, transform 200ms ease;
+    }
+    .nav__close:hover { color: var(--color-accent); transform: scale(1.2); }
+
+    /* ═══════════════════════════════════════════
+       LAYOUT
+    ═══════════════════════════════════════════ */
+    .container_all     { padding: 0 1rem 1rem; }
+    .container_content { padding-top: calc(var(--nav-h) + 1rem); }
+
+    /* ═══════════════════════════════════════════
+       SCROLL REVEAL — base state (JS adds .revealed)
+    ═══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 750ms cubic-bezier(0.25, 0, 0.35, 1),
+                  transform 750ms cubic-bezier(0.25, 0, 0.35, 1);
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* stagger children inside a reveal-group */
+    .reveal-group > * {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 600ms cubic-bezier(0.25, 0, 0.35, 1),
+                  transform 600ms cubic-bezier(0.25, 0, 0.35, 1);
+    }
+    .reveal-group.revealed > *:nth-child(1) { opacity:1; transform:none; transition-delay:  0ms; }
+    .reveal-group.revealed > *:nth-child(2) { opacity:1; transform:none; transition-delay: 40ms; }
+    .reveal-group.revealed > *:nth-child(3) { opacity:1; transform:none; transition-delay: 80ms; }
+    .reveal-group.revealed > *:nth-child(4) { opacity:1; transform:none; transition-delay:120ms; }
+    .reveal-group.revealed > *:nth-child(5) { opacity:1; transform:none; transition-delay:155ms; }
+    .reveal-group.revealed > *:nth-child(6) { opacity:1; transform:none; transition-delay:185ms; }
+    .reveal-group.revealed > *:nth-child(7) { opacity:1; transform:none; transition-delay:210ms; }
+    .reveal-group.revealed > *:nth-child(8) { opacity:1; transform:none; transition-delay:230ms; }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    .hero {
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      gap: var(--gap);
+      min-height: 89vh;
+      margin: 1rem 0 2rem;
+      padding: var(--pad);
+      border: 1px solid var(--color-border);
+      transition: var(--t-theme);
+    }
+
+    .hero h1 {
+      opacity: 0; transform: translateY(30px);
+      animation: heroIn 900ms var(--ease-out) 100ms forwards;
+    }
+    .hero__intro {
+      opacity: 0; transform: translateY(20px);
+      animation: heroIn 900ms var(--ease-out) 280ms forwards;
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      line-height: 1.2; max-width: 55ch;
+      font-weight: 400; opacity: 0;
+    }
+    @keyframes heroIn {
+      to { opacity: 0.7; transform: translateY(0); }
+    }
+    /* override for h1 which should be full opacity */
+    .hero h1 { animation-name: heroInFull; }
+    @keyframes heroInFull {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════
+       SECTION WRAPPER
+    ═══════════════════════════════════════════ */
+    .section { position: relative; margin-bottom: 2rem; }
+
+    .section_wrapper {
+      position: relative; display: grid;
+      min-height: 90vh; padding: var(--pad);
+      grid-template-columns: repeat(6, 1fr);
+      column-gap: var(--gap); row-gap: var(--gap);
+      border-top: 1px solid var(--color-off);
+      border-right: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-off);
+      border-left: 1px solid var(--color-border);
+      transition: var(--t-theme);
+    }
+    .section_wrapper > h2 { grid-column: 1 / -1; }
+
+    .caption {
+      grid-column: 1 / -1; padding-bottom: 2rem;
+      font-size: 1rem; opacity: 0.4;
+    }
+    .caption .text-span { font-size: 0.8rem; }
+
+    /* ═══════════════════════════════════════════
+       ÜBER — 3-col
+    ═══════════════════════════════════════════ */
+    .grid {
+      grid-column: 1 / -1; display: grid;
+      min-height: 100vh; grid-template-columns: repeat(3, 1fr);
+      column-gap: var(--gap); row-gap: var(--gap);
+    }
+    .wrapper_text { display: grid; grid-template-columns: 1fr; row-gap: 1rem; align-content: start; }
+    .h3_subtitle {
+      min-height: 7vh; align-self: center;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--color-border);
+      font-size: 1.1rem; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      transition: var(--t-theme);
+    }
+
+    /* ═══════════════════════════════════════════
+       PHOTO GRID
+    ═══════════════════════════════════════════ */
+    .photo-grid {
+      grid-column: 1 / -1; display: grid;
+      grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+    }
+    .wrapper_image { width: 100%; overflow: hidden; cursor: pointer; }
+    .wrapper_image img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      transition: transform 500ms var(--ease-out), filter 300ms ease;
+    }
+    .wrapper_image:hover img { transform: scale(1.03); filter: brightness(1.1); }
+
+    /* ═══════════════════════════════════════════
+       TRAININGSZEITEN
+    ═══════════════════════════════════════════ */
+    /* ═══════════════════════════════════════════
+       TRAININGSZEITEN — schedule rows
+    ═══════════════════════════════════════════ */
+    .schedule {
+      grid-column: 1 / -1;
+      display: flex; flex-direction: column;
+    }
+    /* Header sits above the table, consistent with site's h3_subtitle spacing */
+    .schedule-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.2fr 1.4fr;
+      column-gap: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 0;
+    }
+    .schedule-header span {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      opacity: 0.35;
+    }
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.2fr 1.4fr;
+      column-gap: 2rem;
+      align-items: center;
+      padding: 2.2rem 0;
+      border-bottom: 1px solid var(--color-border);
+      transition: border-color 200ms ease;
+      cursor: default;
+    }
+    .schedule-row:hover {
+      border-bottom-color: var(--color-accent);
+    }
+    .schedule-row__group {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+      line-height: 1; text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+    .schedule-row__age {
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.06em; opacity: 0.45;
+      text-transform: uppercase;
+    }
+    .schedule-row__days {
+      display: flex; gap: 0.4rem; flex-wrap: wrap;
+    }
+    .schedule-row__day {
+      font-family: var(--font-display);
+      font-size: 1.15rem; letter-spacing: 0.08em;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--color-border);
+      text-transform: uppercase;
+      transition: var(--t-theme);
+    }
+    .schedule-row__location {
+      font-size: 0.95rem; font-weight: 700;
+      letter-spacing: 0.02em;
+      display: flex; align-items: center; gap: 0.5rem;
+      cursor: pointer;
+      transition: color 150ms ease;
+    }
+    .schedule-row__location:hover { color: var(--color-accent); }
+    .schedule-row__location-pin {
+      font-size: 0.75rem; opacity: 0.4;
+      flex-shrink: 0;
+      transition: opacity 150ms ease;
+    }
+    .schedule-row__location:hover .schedule-row__location-pin { opacity: 1; }
+
+    .contact__map-link {
+      cursor: pointer;
+      transition: color 150ms ease;
+    }
+    .contact__map-link:hover { color: var(--color-accent); }
+
+    /* ═══════════════════════════════════════════
+       MAP MODAL
+    ═══════════════════════════════════════════ */
+    .map-modal {
+      display: flex; position: fixed; inset: 0;
+      z-index: 1100;
+      background: rgba(0,0,0,0);
+      align-items: center; justify-content: center;
+      padding: 2rem;
+      opacity: 0; pointer-events: none;
+      transition: background 380ms var(--ease-out), opacity 380ms var(--ease-out);
+    }
+    .map-modal.is-open {
+      opacity: 1; pointer-events: all;
+      background: rgba(0,0,0,0.72);
+    }
+    .map-modal__panel {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      width: 100%; max-width: 680px;
+      height: 80vh; max-height: 600px;
+      display: flex; flex-direction: column;
+      transform: scale(0.92) translateY(12px);
+      opacity: 0;
+      transition: transform 420ms var(--ease-out), opacity 380ms ease, var(--t-theme);
+    }
+    .map-modal.is-open .map-modal__panel {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    .map-modal__header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+    .map-modal__title {
+      font-family: var(--font-display);
+      font-size: 1.1rem; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .map-modal__address {
+      font-size: 0.78rem; opacity: 0.45; margin-top: 0.15rem;
+      letter-spacing: 0.02em;
+    }
+    .map-modal__close {
+      background: none; border: none; cursor: pointer;
+      color: var(--color-fg); font-size: 0.9rem; opacity: 0.45;
+      padding: 0.25rem; transition: opacity 150ms ease, transform 150ms ease;
+      flex-shrink: 0;
+    }
+    .map-modal__close:hover { opacity: 1; transform: scale(1.2); }
+    .map-modal__map-wrap {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+    #mapModalCanvas { width: 100%; height: 100%; display: block; }
+    .map-modal__info {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center; gap: 1rem;
+      padding: 0.85rem 1.25rem;
+      border-top: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+    .map-modal__info-name {
+      font-size: 0.7rem; letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .map-modal__info-street {
+      font-size: 0.65rem; opacity: 0.4;
+      letter-spacing: 0.04em; margin-top: 3px;
+    }
+    .map-modal__directions {
+      display: flex; align-items: center; gap: 7px;
+      padding: 0.45rem 1rem;
+      background: var(--color-accent); border: none;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      cursor: pointer; white-space: nowrap;
+      text-decoration: none;
+      transition: background 150ms;
+    }
+    .map-modal__directions:hover { filter: brightness(1.15); }
+    .map-modal__directions svg { flex-shrink: 0; }
+    .map-modal__coords {
+      font-size: 0.5rem; opacity: 0.2;
+      letter-spacing: 0.06em;
+      padding: 0 1.25rem 0.6rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .schedule-row { grid-template-columns: 1fr 1fr; row-gap: 0.5rem; padding: 1.5rem 0; }
+      .schedule-header { display: none; }
+      .schedule-row__group { grid-column: 1 / -1; }
+      .map-modal { padding: 1rem; }
+      .map-modal__panel { height: 90vh; max-height: none; }
+    }
+
+    /* ═══════════════════════════════════════════
+       PREISE
+    ═══════════════════════════════════════════ */
+    .preise-grid {
+      grid-column: 1 / -1; display: grid;
+      grid-template-columns: repeat(3, 1fr); gap: var(--gap);
+    }
+    .preise-card {
+      padding: 2rem; border: 1px solid var(--color-border);
+      display: grid; row-gap: 1rem; align-content: start;
+      transition: border-color 250ms ease, var(--t-theme);
+    }
+    .preise-card:hover { border-color: var(--color-accent); }
+    .preise-card__label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.5; font-weight: 700; }
+    .preise-card__price { font-family: var(--font-display); font-size: 4rem; line-height: 1; }
+    .preise-card__unit  { font-size: 0.9rem; opacity: 0.5; margin-top: -0.5rem; padding-top: 0; }
+    .preise-card__features { list-style: none; padding-top: 1rem; border-top: 1px solid var(--color-border); display: grid; row-gap: 0.5rem; }
+    .preise-card__features li { font-size: 0.95rem; opacity: 0.75; padding-left: 1rem; position: relative; }
+    .preise-card__features li::before { content: '—'; position: absolute; left: 0; opacity: 0.4; }
+    .preise-card--highlight { border-color: var(--color-accent); }
+    .preise-card--highlight .preise-card__price { color: var(--color-accent); }
+    .preise-note { grid-column: 1 / -1; font-size: 0.9rem; opacity: 0.5; padding-top: 1rem; }
+
+    /* ═══════════════════════════════════════════
+       TEAM
+    ═══════════════════════════════════════════ */
+    .team-grid { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+    .team-card { display: grid; row-gap: 0.75rem; }
+    .team-card img {
+      width: 100%; aspect-ratio: 1; object-fit: cover;
+      transition: filter 350ms ease;
+    }
+    .team-card:hover img { filter: brightness(1.08); }
+    .heading-4 { font-family: var(--font-display); font-size: 2.2rem; font-weight: 400; text-align: center; padding: 0.5rem 0; }
+    .heading-3 { font-size: 1rem; font-weight: 400; text-align: center; line-height: 1.6; opacity: 0.65; }
+
+    /* ═══════════════════════════════════════════
+       AKTIVITÄTEN
+    ═══════════════════════════════════════════ */
+    .aktivitaeten-grid { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+    .aktivitaet-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 1rem; transition: transform 500ms var(--ease-out); }
+    .aktivitaet-card:hover img { transform: scale(1.02); }
+    .heading-4._2 { font-family: var(--font-display); font-size: 2rem; font-weight: 400; }
+
+    /* ═══════════════════════════════════════════
+       FORMS
+    ═══════════════════════════════════════════ */
+    .form-info {
+      grid-column: 1 / 3; display: flex;
+      flex-direction: column; gap: 1.5rem;
+      padding-right: 4rem;
+      border-right: 1px solid var(--color-border);
+      transition: var(--t-theme);
+    }
+    .form-info p { opacity: 0.7; }
+    .form-info__detail { font-size: 0.85rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .form-body     { grid-column: 3 / 7; }
+    .form-body--full { grid-column: 1 / -1; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--gap); row-gap: var(--gap); }
+    .form-grid--full { grid-column: 1 / -1; }
+
+    .form-field { display: flex; flex-direction: column; gap: 0.5rem; }
+    .form-field label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; font-weight: 700; }
+
+    /* Input / textarea / select base */
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--color-mid);
+      color: var(--color-fg);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      padding: 0.75rem 0;
+      outline: none;
+      transition: border-color 200ms ease, color 400ms ease;
+      width: 100%;
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { opacity: 0.3; color: var(--color-fg); }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus { border-bottom-color: var(--color-accent); }
+    .form-field textarea { resize: vertical; min-height: 8rem; }
+
+    /* ─── Styled <select> dropdown ─── */
+    .form-field select {
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      /* custom arrow SVG — colour matches FG */
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23ebebeb' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.25rem center;
+      padding-right: 1.75rem;
+    }
+    [data-theme="light"] .form-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23141414' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+
+    /* Option elements (limited browser styling) */
+    .form-field select option {
+      background: var(--color-bg);
+      color: var(--color-fg);
+      padding: 0.5rem;
+      font-family: var(--font-body);
+    }
+    .form-field select option:checked,
+    .form-field select option:hover {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    /* Radio / checkbox */
+    .form-field--check .check-group { display: flex; flex-direction: column; gap: 0.75rem; }
+    .check-item { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; font-size: 1rem; }
+    .check-item input[type="checkbox"],
+    .check-item input[type="radio"] {
+      appearance: none; width: 1.1rem; height: 1.1rem;
+      border: 1px solid var(--color-border); border-radius: 0;
+      flex-shrink: 0; position: relative; cursor: pointer; padding: 0;
+      transition: background 150ms ease, border-color 150ms ease;
+    }
+    .check-item input[type="radio"] { border-radius: 50%; }
+    .check-item input:checked { background: var(--color-accent); border-color: var(--color-accent); }
+    .check-item input:checked::after {
+      content: ''; position: absolute; inset: 2px;
+      background: #fff;
+      clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    }
+    .check-item input[type="radio"]:checked::after { clip-path: none; border-radius: 50%; }
+
+    /* Submit button */
+    .form-submit {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: none; border: 1px solid var(--color-border);
+      color: var(--color-fg);
+      font-family: var(--font-display); font-size: 1.4rem;
+      letter-spacing: 0.08em; padding: 1rem 2rem;
+      cursor: pointer; margin-top: var(--gap);
+      transition: background 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease;
+    }
+    .form-submit:hover { background: var(--color-fg); color: var(--color-bg); }
+    .form-submit:active { transform: scale(0.98); }
+    .form-submit--accent { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+    .form-submit--accent:hover { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
+
+    .form-divider {
+      grid-column: 1 / -1;
+      font-size: 0.75rem; text-transform: uppercase;
+      letter-spacing: 0.12em; opacity: 0.4;
+      padding-top: 1.5rem; border-top: 1px solid var(--color-border);
+      margin-top: 0.5rem; transition: var(--t-theme);
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    .footer {
+      display: grid; grid-template-columns: 2fr 1fr 1.5fr auto;
+      gap: var(--gap); padding: var(--pad);
+      border-top: 1px solid var(--color-border);
+      margin-top: 4rem;
+      transition: var(--t-theme);
+    }
+    .footer__brand { grid-column: 1 / 2; }
+    .footer__brand h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); opacity: 0.9; margin-bottom: 1rem; }
+    .footer__brand p  { opacity: 0.4; font-size: 0.9rem; }
+    .footer__brand-logo { width: 56px; height: 56px; opacity: 0.75; margin-top: 1.25rem; }
+    .footer__col h3   { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.4; font-weight: 700; margin-bottom: 1.25rem; }
+    .footer__col ul   { list-style: none; display: grid; row-gap: 0.75rem; }
+    .footer__col ul li a { font-size: 0.95rem; opacity: 0.65; transition: opacity 150ms ease; }
+    .footer__col ul li a:hover { opacity: 1; }
+    .footer__bottom {
+      grid-column: 1 / -1; padding-top: 2rem;
+      border-top: 1px solid transparent;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.8rem; opacity: 0.35;
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE — desktop ≥1281px
+    ═══════════════════════════════════════════ */
+    @media (min-width: 1281px) {
+      .nav__links     { max-width: 100vw; overflow: visible; transition: max-width 0ms 0ms; }
+      .nav__links a   { opacity: 1; transform: translateX(0); transition-delay: 0ms; }
+      .nav__hamburger { display: none; }
+      .nav__theme     { margin-left: 0; }
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE — tablet ≤1280px
+    ═══════════════════════════════════════════ */
+    @media (max-width: 1280px) {
+      .nav__lang     { border-right: 1px solid var(--color-border); }
+      .section_wrapper { grid-template-columns: 1fr; padding: 3rem 2rem; min-height: auto; }
+      .grid { grid-template-columns: 1fr; min-height: auto; }
+      .photo-grid    { grid-template-columns: repeat(2, 1fr); }
+      .team-grid     { grid-template-columns: 1fr; }
+      .aktivitaeten-grid { grid-template-columns: 1fr; }
+      .preise-grid   { grid-template-columns: 1fr; }
+      .form-info { grid-column: 1 / -1; padding-right: 0; border-right: none; border-bottom: 1px solid var(--color-border); padding-bottom: 2rem; }
+      .form-body { grid-column: 1 / -1; }
+      .form-grid { grid-template-columns: 1fr; }
+      .footer { grid-template-columns: 1fr 1fr 1fr; }
+      .footer__brand { grid-column: 1 / -1; }
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE — mobile ≤479px
+    ═══════════════════════════════════════════ */
+    @media (max-width: 479px) {
+      :root { --pad: 1.5rem 1rem; }
+      .hero { padding: 2rem 1rem; min-height: 70vh; }
+      .section_wrapper { padding: 2rem 1rem; }
+      .photo-grid  { grid-template-columns: 1fr; }
+      .gt-cell--header { display: none; }
+      .footer { grid-template-columns: 1fr; padding: 2rem 1rem; }
+      .footer__brand { grid-column: 1; }
+    }
+
+    /* ═══════════════════════════════════════════
+       OFFER STICKER
+    ═══════════════════════════════════════════ */
+    .sticker {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      z-index: 900;
+      display: flex; flex-direction: column;
+      width: clamp(180px, 15vw, 220px);
+      background: var(--color-accent);
+      color: #fff;
+      transform: none;
+      transform-origin: bottom right;
+      border-radius: 0;
+      /* Collapse: near-linear; expand uses is-expanding class override */
+      transition: background 200ms ease, color 200ms ease,
+                  width 350ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                  border-radius 350ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                  min-height 350ms cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .sticker.is-expanding {
+      transition: background 200ms ease, color 200ms ease,
+                  width 500ms var(--ease-out),
+                  border-radius 500ms var(--ease-out),
+                  min-height 500ms var(--ease-out);
+    }
+    .sticker:hover {
+      background: var(--color-fg);
+      color: var(--color-bg);
+    }
+    .sticker:hover .sticker__cta {
+      background: var(--color-bg);
+      color: var(--color-fg);
+    }
+    .sticker__body {
+      padding: 1.4rem 1.2rem 0.6rem;
+      overflow: hidden;
+      max-height: 400px;
+      transition: max-height 350ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                  opacity 350ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                  padding 350ms cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .sticker__label {
+      display: block;
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      opacity: 0.55; margin-bottom: 0.2rem;
+    }
+    .sticker__headline {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 2.5vw, 2.6rem);
+      line-height: 0.95; text-transform: uppercase;
+    }
+    .sticker__detail {
+      font-size: 0.76rem; font-weight: 700;
+      letter-spacing: 0.04em; line-height: 1.5;
+      opacity: 0.7; margin-top: 0.45rem;
+    }
+    .sticker__cta {
+      display: block; margin-top: 0.85rem;
+      background: #fff; color: var(--color-accent);
+      font-family: var(--font-display); font-size: 0.95rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.45rem 0.75rem;
+      text-decoration: none; text-align: left;
+      transition: background 200ms ease, color 200ms ease;
+    }
+    .sticker__cta:hover { opacity: 0.8; }
+    .sticker__tab {
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem 1.2rem;
+      background: none; border: none;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      width: 100%; text-align: center; cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: inherit; opacity: 0.7;
+      min-height: 3rem;
+      transition: opacity 150ms ease,
+                  border-radius 350ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                  border-top 350ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                  padding 350ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                  min-height 350ms cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
+    .sticker__tab:hover { opacity: 1; }
+    .sticker__tab-text {
+      transition: opacity 350ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                  max-width 350ms cubic-bezier(0.25, 0.1, 0.25, 1);
+      overflow: hidden; white-space: nowrap;
+      max-width: 200px;
+    }
+    .sticker__chevron {
+      font-style: normal; font-size: 0.5rem;
+      transition: transform 350ms cubic-bezier(0.25, 0.1, 0.25, 1);
+      margin-left: 0.5rem; flex-shrink: 0;
+    }
+    /* ── Pill state: scroll-driven morph ── */
+    .sticker.is-pill {
+      width: 40px; border-radius: 50%;
+      min-height: 40px;
+    }
+    .sticker.is-pill .sticker__body {
+      max-height: 0; opacity: 0; padding: 0; overflow: hidden;
+    }
+    .sticker.is-pill .sticker__tab {
+      border-top: none; padding: 0;
+      justify-content: center; align-items: center;
+      border-radius: 50%;
+      min-height: 40px;
+    }
+    .sticker.is-pill .sticker__tab-text {
+      max-width: 0; opacity: 0; padding: 0;
+    }
+    .sticker.is-pill .sticker__chevron {
+      margin: 0;
+      font-size: 0.55rem;
+      transform: rotate(180deg);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── Pill tooltip on hover ── */
+    .sticker.is-pill::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      right: calc(100% + 8px); top: 50%;
+      transform: translateY(-50%);
+      background: var(--color-fg); color: var(--color-bg);
+      font-family: var(--font-display);
+      font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
+      white-space: nowrap;
+      padding: 0.35rem 0.65rem;
+      border-radius: 3px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 200ms ease;
+    }
+    .sticker.is-pill:hover::after { opacity: 1; }
+    .sticker.is-collapsing:hover::after { opacity: 0; }
+
+    @media (max-width: 479px) {
+      .sticker { right: 1rem; bottom: 1rem; }
+      .sticker.is-pill { width: 36px; min-height: 36px; }
+      .sticker.is-pill .sticker__tab { min-height: 36px; }
+    }
+
+    /* ═══════════════════════════════════════════
+       LIGHTBOX
+       ═══════════════════════════════════════════ */
+    .lightbox {
+      display: none; position: fixed; inset: 0; z-index: 1200;
+      background: rgba(0,0,0,0.92); align-items: center; justify-content: center;
+      animation: overlayIn 320ms var(--ease-out) forwards;
+    }
+    [data-theme="light"] .lightbox { background: rgba(245,245,245,0.96); }
+    .lightbox.is-open { display: flex; }
+    .lightbox__img {
+      max-width: 90vw; max-height: 85vh; object-fit: contain;
+      border-radius: 4px;
+      animation: overlayIn 320ms var(--ease-out) forwards;
+    }
+    .lightbox__close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: none; border: none; color: var(--color-fg); font-size: 2rem;
+      cursor: pointer; opacity: 0.7; transition: opacity 200ms, transform 200ms;
+      z-index: 1201;
+    }
+    .lightbox__close:hover { opacity: 1; transform: scale(1.2); }
+    .lightbox__nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: var(--color-fg); font-size: 2.5rem;
+      cursor: pointer; opacity: 0.6; transition: opacity 200ms;
+      padding: 1rem; z-index: 1201;
+    }
+    .lightbox__nav:hover { opacity: 1; }
+    .lightbox__prev { left: 1rem; }
+    .lightbox__next { right: 1rem; }
+    .lightbox__counter {
+      position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      color: var(--color-fg); font-family: var(--font-body);
+      font-size: 0.85rem; letter-spacing: 0.1em; opacity: 0.6;
+    }
+    @media (max-width: 479px) {
+      .lightbox__nav { font-size: 1.8rem; padding: 0.5rem; }
+      .lightbox__prev { left: 0.5rem; }
+      .lightbox__next { right: 0.5rem; }
+      .lightbox__close { top: 1rem; right: 1rem; font-size: 1.5rem; }
+    }
+    /* ═══════════════════════════════════════════
+       MAPLIBRE OVERRIDES
+    ═══════════════════════════════════════════ */
+    .maplibregl-ctrl-group {
+      background: var(--color-bg) !important;
+      border: 1px solid var(--color-border) !important;
+      border-radius: 1px !important;
+      box-shadow: none !important;
+    }
+    .maplibregl-ctrl-group button {
+      width: 28px !important; height: 28px !important;
+      background: transparent !important;
+      border: none !important; cursor: pointer;
+    }
+    .maplibregl-ctrl-group button + button {
+      border-top: 1px solid var(--color-border) !important;
+    }
+    .maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23888' stroke-width='1.5'%3E%3Cpath d='M7 2v10M2 7h10'/%3E%3C/svg%3E") !important;
+      background-size: 14px !important;
+    }
+    .maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%23888' stroke-width='1.5'%3E%3Cpath d='M2 7h10'/%3E%3C/svg%3E") !important;
+      background-size: 14px !important;
+    }
+    .maplibregl-ctrl-attrib {
+      background: rgba(5,5,5,0.8) !important;
+      font-family: var(--font-body) !important;
+      font-size: 8px !important;
+      letter-spacing: 0.04em;
+      padding: 2px 6px !important;
+    }
+    .maplibregl-ctrl-attrib a { color: #555 !important; }
+    .maplibregl-canvas { cursor: grab; }
+    .maplibregl-canvas:active { cursor: grabbing; }
+
+    /* Custom popup */
+    .maplibregl-popup-content {
+      background: var(--color-bg) !important;
+      border: 1px solid var(--color-border) !important;
+      border-radius: 1px !important;
+      padding: 0 !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.8) !important;
+      font-family: var(--font-body) !important;
+      min-width: 160px;
+    }
+    .maplibregl-popup-tip { border-top-color: var(--color-border) !important; }
+    .maplibregl-popup-close-button { color: #555 !important; font-size: 14px !important; padding: 4px 7px !important; }
+    .maplibregl-popup-close-button:hover { color: var(--color-accent) !important; background: none !important; }
+    .map-popup-inner { padding: 0.75rem 0.9rem; }
+    .map-popup-name {
+      font-family: var(--font-display);
+      font-size: 15px; letter-spacing: 0.1em;
+      color: var(--color-accent); margin-bottom: 4px;
+    }
+    .map-popup-address { font-size: 9px; color: #555; letter-spacing: 0.05em; line-height: 1.7; }
+
+    /* Scan-line texture — dark mode only */
+    [data-theme="dark"] .map-modal__map-wrap::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
+      pointer-events: none; z-index: 1;
+    }
+
+    /* Pulsing marker */
+    @keyframes pulse-ring {
+      0%   { transform: scale(0.8); opacity: 0.8; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+    .map-marker-wrap { position: relative; width: 12px; height: 12px; }
+    .map-marker-ring {
+      position: absolute; inset: -2px;
+      border: 1px solid var(--color-accent);
+      border-radius: 50%;
+      animation: pulse-ring 2s ease-out infinite;
+    }
+    .map-marker-ring:nth-child(2) { animation-delay: 0.7s; }
+    .map-marker-dot {
+      width: 10px; height: 10px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px var(--color-accent), 0 4px 12px rgba(181,64,64,0.5);
+    }
+  </style>
+  <link href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css" rel="stylesheet">
+  <script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js" defer></script>
+</head>
+<body>
+
+  <!-- ══════════════ NAV — desktop ══════════════ -->
+  <nav class="nav" role="navigation" aria-label="Hauptnavigation" data-i18n-aria="nav.aria">
+    <a href="#" class="nav__logo">Fudoshin Karate-Do</a>
+    <ul class="nav__links">
+      <li><a href="#ueber" data-i18n="nav.about">Über uns</a></li>
+      <li><a href="#training" data-i18n="nav.schedule">Trainingszeiten</a></li>
+      <li><a href="#preise" data-i18n="nav.pricing">Preise</a></li>
+      <li><a href="#team" data-i18n="nav.team">Team</a></li>
+      <li><a href="#aktivitaeten" data-i18n="nav.activities">Aktivitäten</a></li>
+      <li><a href="#kontakt" data-i18n="nav.contact">Kontakt</a></li>
+      <li><a href="#mitglied" class="nav__cta" data-i18n="nav.cta">Mitglied werden</a></li>
+    </ul>
+    <button class="nav__theme" id="themeToggle" aria-label="Theme wechseln" data-i18n-aria="nav.theme.aria">
+      <span class="icon-moon">☽</span>
+      <span class="icon-sun">☀</span>
+    </button>
+    <div class="nav__lang" id="langToggle" aria-haspopup="true">
+      <button class="nav__lang-btn" aria-expanded="false">DE</button>
+      <ul class="nav__lang-dropdown" role="menu">
+        <li><button data-lang="de" role="menuitem">DE</button></li>
+        <li><button data-lang="en" role="menuitem">EN</button></li>
+        <li><button data-lang="tr" role="menuitem">TR</button></li>
+        <li><button data-lang="bs" role="menuitem">BCMS</button></li>
+      </ul>
+    </div>
+    <button class="nav__hamburger" id="hamburger" aria-label="Menü öffnen" data-i18n-aria="nav.hamburger.aria" aria-expanded="false" aria-controls="nav-overlay">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ══════════════ NAV — mobile overlay ══════════════ -->
+  <div class="nav__overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation" data-i18n-aria="nav.overlay.aria">
+    <button class="nav__close" id="navClose" aria-label="Menü schließen" data-i18n-aria="nav.close.aria">✕</button>
+    <a href="#ueber" data-i18n="nav.about">Über uns</a>
+    <a href="#training" data-i18n="nav.schedule">Trainingszeiten</a>
+    <a href="#preise" data-i18n="nav.pricing">Preise</a>
+    <a href="#team" data-i18n="nav.team">Team</a>
+    <a href="#aktivitaeten" data-i18n="nav.activities">Aktivitäten</a>
+    <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
+    <a href="#mitglied" class="nav__cta-overlay" data-i18n="nav.cta">Mitglied werden</a>
+    <div class="nav__overlay-footer">
+      <span class="nav__overlay-footer-brand" data-i18n-html="nav.overlay.brand">Fudoshin Karate-Do · Wien</span>
+      <span class="nav__overlay-footer-meta" data-i18n="nav.overlay.meta">Shotokan · Seit 2010</span>
+    </div>
+  </div>
+
+  <!-- ══════════════ MAIN ══════════════ -->
+  <div class="container_all">
+    <div class="container_content">
+
+      <!-- HERO -->
+      <div class="hero">
+        <h1>Fudoshin Karate-Do<br>Club Wien</h1>
+        <figure><img src="images/thumb/photo-01.png" data-full="images/full/photo-01.png" alt="Fudoshin Karate" style="width:100%;max-height:60vh;object-fit:cover;margin-bottom:1rem;"></figure>
+        <p class="hero__intro" data-i18n="hero.intro">
+          Das Wort Fudoshin beschreibt einen Zustand innerer Stille, der nicht erschüttert werden kann. Es ist das Ziel, auf das Karate hinweist — nicht in der Theorie, sondern durch Jahre geduldiger Praxis.
+        </p>
+      </div>
+
+      <!-- ÜBER DEN VEREIN -->
+      <section class="section" id="ueber">
+        <div class="section_wrapper">
+          <h2 class="reveal" data-i18n="about.title">Über den Verein</h2>
+          <div class="grid reveal-group">
+            <div class="wrapper_text">
+              <h3 class="h3_subtitle" data-i18n="about.history.title">Geschichte des Vereins</h3>
+              <p data-i18n="about.history.p1">Fudoshin lehrt seit [Jahr] traditionelles Karate in Wien. Wir trainieren Kinder, Jugendliche und Erwachsene. Der Schwerpunkt liegt auf korrekter Technik, Respekt und Beständigkeit — nicht auf Wettkampfergebnissen oder Urkunden. Schauen Sie gerne vorbei, bevor Sie sich entscheiden.</p>
+              <p data-i18n="about.history.p2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+            <div class="wrapper_text">
+              <h3 class="h3_subtitle" data-i18n="about.values.title">Werte &amp; pädagogischer Ansatz</h3>
+              <p data-i18n="about.values.p1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+            <div class="wrapper_text">
+              <h3 class="h3_subtitle" data-i18n="about.style.title">Welche Stilrichtung?</h3>
+              <p data-i18n-html="about.style.p1">Wir unterrichten den traditionellen <strong>Shotokan-Karate-Stil.</strong> Im Training fördern wir körperliche und geistige Fitness sowie Werte wie Respekt, Disziplin und Durchhaltevermögen.</p>
+            </div>
+          </div>
+          <p class="caption" data-i18n-html="caption.photos"><em>Aktivitaten</em> / Caption Credits<br><span class="text-span">Fotos – Firstname Lastname</span></p>
+        </div>
+      </section>
+
+      <!-- GALERIE -->
+      <section class="section" id="fotos">
+        <div class="section_wrapper">
+          <div class="photo-grid reveal-group">
+            <div class="wrapper_image"><img src="images/thumb/photo-02.jpg" data-full="images/full/photo-02.jpg" alt="Fudoshin Foto 1"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-03.jpg" data-full="images/full/photo-03.jpg" alt="Fudoshin Foto 2"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-04.jpg" data-full="images/full/photo-04.jpg" alt="Fudoshin Foto 3"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-05.jpg" data-full="images/full/photo-05.jpg" alt="Fudoshin Foto 4"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-06.jpg" data-full="images/full/photo-06.jpg" alt="Fudoshin Foto 5"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-07.jpg" data-full="images/full/photo-07.jpg" alt="Fudoshin Foto 6"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-08.jpg" data-full="images/full/photo-08.jpg" alt="Fudoshin Foto 7"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-09.jpg" data-full="images/full/photo-09.jpg" alt="Fudoshin Foto 8"></div>
+          </div>
+          <p class="caption" data-i18n-html="caption.photos"><em>Aktivitaten</em> / Caption Credits<br><span class="text-span">Fotos – Firstname Lastname</span></p>
+        </div>
+      </section>
+
+      <!-- TRAININGSZEITEN -->
+      <section class="section" id="training">
+        <div class="section_wrapper">
+          <h2 class="reveal" data-i18n="schedule.title">Trainingszeiten</h2>
+          <div class="schedule reveal">
+            <div class="schedule-header">
+              <span data-i18n="schedule.h.group">Gruppe</span>
+              <span data-i18n="schedule.h.age">Alter / Level</span>
+              <span data-i18n="schedule.h.days">Trainingstage</span>
+              <span data-i18n="schedule.h.location">Standort</span>
+            </div>
+
+            <div class="schedule-row">
+              <div class="schedule-row__group" data-i18n-html="schedule.r1.group">Kinder<br>Anfänger</div>
+              <div class="schedule-row__age" data-i18n="schedule.r1.age">6–10 Jahre</div>
+              <div class="schedule-row__days">
+                <span class="schedule-row__day" data-i18n="schedule.day.mi">Mi</span>
+                <span class="schedule-row__day" data-i18n="schedule.day.do">Do</span>
+                <span class="schedule-row__day" data-i18n="schedule.day.fr">Fr</span>
+              </div>
+              <div class="schedule-row__location" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990">
+                <span class="schedule-row__location-pin">⊙</span>
+                Volksschule Wolfgang-Schmälzlgasse, 1020 Wien
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="schedule-row__group" data-i18n-html="schedule.r2.group">Jugendliche<br>Fortgeschritten</div>
+              <div class="schedule-row__age" data-i18n="schedule.r2.age">11–18 Jahre</div>
+              <div class="schedule-row__days">
+                <span class="schedule-row__day" data-i18n="schedule.day.do">Do</span>
+                <span class="schedule-row__day" data-i18n="schedule.day.fr">Fr</span>
+              </div>
+              <div class="schedule-row__location" data-location="Gymnasium am Augarten" data-address="Karajangasse 14, 1200 Wien" data-lat="48.2292" data-lng="16.3747">
+                <span class="schedule-row__location-pin">⊙</span>
+                Gymnasium am Augarten, Karajangasse 14, 1200 Wien
+              </div>
+            </div>
+
+            <div class="schedule-row">
+              <div class="schedule-row__group" data-i18n-html="schedule.r3.group">Erwachsene<br>Alle Level</div>
+              <div class="schedule-row__age" data-i18n="schedule.r3.age">Ab 18 Jahren</div>
+              <div class="schedule-row__days">
+                <span class="schedule-row__day" data-i18n="schedule.day.fr">Fr</span>
+              </div>
+              <div class="schedule-row__location" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990">
+                <span class="schedule-row__location-pin">⊙</span>
+                Volksschule Wolfgang-Schmälzlgasse, 1020 Wien
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PREISE -->
+      <section class="section" id="preise">
+        <div class="section_wrapper">
+          <h2 class="reveal" data-i18n="pricing.title">Preise</h2>
+          <div class="preise-grid reveal-group">
+            <div class="preise-card">
+              <span class="preise-card__label" data-i18n="pricing.s.label">Semester</span>
+              <div class="preise-card__price">175€</div>
+              <p class="preise-card__unit" data-i18n="pricing.s.unit">pro Semester</p>
+              <ul class="preise-card__features">
+                <li data-i18n="pricing.s.f1">Alle Trainingseinheiten</li>
+                <li data-i18n="pricing.s.f2">Gürtelprüfungen inklusive</li>
+                <li data-i18n="pricing.s.f3">Zugang zu beiden Standorten</li>
+              </ul>
+            </div>
+            <div class="preise-card preise-card--highlight">
+              <span class="preise-card__label" data-i18n="pricing.a.label">Jahresbeitrag</span>
+              <div class="preise-card__price">320€</div>
+              <p class="preise-card__unit" data-i18n="pricing.a.unit">pro Jahr · 2 Semester</p>
+              <ul class="preise-card__features">
+                <li data-i18n="pricing.a.f1">Alle Trainingseinheiten</li>
+                <li data-i18n="pricing.a.f2">Gürtelprüfungen inklusive</li>
+                <li data-i18n="pricing.a.f3">Zugang zu beiden Standorten</li>
+                <li data-i18n="pricing.a.f4">Ersparnis gegenüber Einzelsemester</li>
+              </ul>
+            </div>
+            <div class="preise-card">
+              <span class="preise-card__label" data-i18n="pricing.f.label">Familie / Geschwister</span>
+              <div class="preise-card__price">−20%</div>
+              <p class="preise-card__unit" data-i18n="pricing.f.unit">Rabatt ab 2 Personen</p>
+              <ul class="preise-card__features">
+                <li data-i18n="pricing.f.f1">Gilt für Geschwister</li>
+                <li data-i18n="pricing.f.f2">Gilt für Eltern-Kind-Kombination</li>
+                <li data-i18n="pricing.f.f3">Auf Anfrage</li>
+              </ul>
+            </div>
+          </div>
+          <p class="preise-note" data-i18n="pricing.note">* Einmalige Aufnahmegebühr wird eingeführt. Kostenlose Schnupperstunde vor Anmeldung möglich.</p>
+        </div>
+      </section>
+
+      <!-- TEAM -->
+      <section class="section" id="team">
+        <div class="section_wrapper">
+          <h2 class="reveal" data-i18n="team.title">Team / Trainer</h2>
+          <div class="team-grid reveal-group">
+            <div class="team-card">
+              <img src="images/thumb/photo-10.jpg" data-full="images/full/photo-10.jpg" alt="Emir Catic">
+              <h2 class="heading-4">Emir Catic</h2>
+              <p class="heading-3" data-i18n="team.emir.role">Staatlich geprüfter Karate-Instruktor · 2. Dan</p>
+              <p data-i18n="team.emir.bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+            </div>
+            <div class="team-card">
+              <img src="images/thumb/photo-11.jpg" data-full="images/full/photo-11.jpg" alt="Samir Sijamija">
+              <h2 class="heading-4">Samir Sijamija</h2>
+              <p class="heading-3" data-i18n="team.samir.role">Staatlich geprüfter Karate-Instruktor · 4. Dan</p>
+              <p data-i18n="team.samir.bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AKTIVITÄTEN -->
+      <section class="section" id="aktivitaeten">
+        <div class="section_wrapper">
+          <h2 class="reveal" data-i18n-html="activities.title">Projekte &amp; Aktivitäten</h2>
+          <div class="aktivitaeten-grid reveal-group">
+            <div class="aktivitaet-card">
+              <figure><img src="images/thumb/photo-12.jpg" data-full="images/full/photo-12.jpg" alt="Turniere"><figcaption>Photo by ?</figcaption></figure>
+              <h2 class="heading-4 _2" data-i18n="activities.tournaments">Turniere</h2>
+            </div>
+            <div class="aktivitaet-card">
+              <img src="images/thumb/photo-13.jpg" data-full="images/full/photo-13.jpg" alt="Lehrgänge">
+              <h2 class="heading-4 _2" data-i18n="activities.seminars">Lehrgänge</h2>
+            </div>
+            <div class="aktivitaet-card">
+              <img src="images/thumb/photo-14.jpg" data-full="images/full/photo-14.jpg" alt="Ferien-Camps">
+              <h2 class="heading-4 _2" data-i18n="activities.camps">Ferien-Camps</h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- KONTAKT -->
+      <section class="section" id="kontakt">
+        <div class="section_wrapper">
+          <h2 class="reveal" data-i18n="contact.title">Kontakt</h2>
+          <div class="form-info reveal">
+            <p data-i18n="contact.intro">Fragen zum Training, zu den Standorten oder zur Anmeldung? Schreib uns einfach — wir melden uns innerhalb von 2 Werktagen.</p>
+            <div>
+              <p class="form-info__detail" data-i18n="contact.loc1.label">Standort 1</p>
+              <p class="contact__map-link" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990" data-i18n-html="contact.loc1.address">Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Wien</p>
+            </div>
+            <div>
+              <p class="form-info__detail" data-i18n="contact.loc2.label">Standort 2</p>
+              <p class="contact__map-link" data-location="Gymnasium am Augarten" data-address="Karajangasse 14, 1200 Wien" data-lat="48.2292" data-lng="16.3747" data-i18n-html="contact.loc2.address">Gymnasium am Augarten<br>Karajangasse 14, 1200 Wien</p>
+            </div>
+            <div>
+              <p class="form-info__detail" data-i18n="contact.email.label">E-Mail</p>
+              <p><a href="/cdn-cgi/l/email-protection#335a5d555c735546575c405b5a5d1d5247" style="border-bottom:1px solid var(--color-border);"><span class="__cf_email__" data-cfemail="076e6961684761726368746f6e69296673">[email&nbsp;protected]</span></a></p>
+            </div>
+          </div>
+          <form class="form-body reveal" name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="kontakt">
+            <p style="display:none"><input name="bot-field"></p>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="k-name" data-i18n="contact.form.name.label">Name *</label>
+                <input type="text" id="k-name" name="name" placeholder="Vorname Nachname" data-i18n-placeholder="contact.form.name.ph" required="">
+              </div>
+              <div class="form-field">
+                <label for="k-email" data-i18n="contact.form.email.label">E-Mail *</label>
+                <input type="email" id="k-email" name="email" placeholder="name@beispiel.at" data-i18n-placeholder="contact.form.email.ph" required="">
+              </div>
+              <div class="form-field">
+                <label for="k-phone" data-i18n="contact.form.phone.label">Telefon</label>
+                <input type="tel" id="k-phone" name="phone" placeholder="+43 ..." data-i18n-placeholder="contact.form.phone.ph">
+              </div>
+              <div class="form-field">
+                <label for="k-betreff" data-i18n="contact.form.subject.label">Betreff</label>
+                <select id="k-betreff" data-i18n-options="contact.form.subject" name="betreff">
+                  <option value="" disabled="" selected="">Bitte wählen</option>
+                  <option value="schnupper">Schnupperstunde</option>
+                  <option value="anmeldung">Anmeldung</option>
+                  <option value="preise">Fragen zu Preisen</option>
+                  <option value="training">Trainingszeiten</option>
+                  <option value="sonstiges">Sonstiges</option>
+                </select>
+              </div>
+              <div class="form-field form-grid--full">
+                <label for="k-nachricht" data-i18n="contact.form.message.label">Nachricht *</label>
+                <textarea id="k-nachricht" name="nachricht" placeholder="Deine Nachricht…" data-i18n-placeholder="contact.form.message.ph" required=""></textarea>
+              </div>
+            </div>
+            <button type="submit" class="form-submit" data-i18n="contact.form.submit">Nachricht senden →</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- MITGLIED WERDEN -->
+      <section class="section" id="mitglied">
+        <div class="section_wrapper">
+          <h2 class="reveal" data-i18n="member.title">Mitglied werden</h2>
+          <div class="form-info reveal">
+            <p data-i18n="member.intro">Bereit, mit dem Training zu beginnen? Füll das Formular aus — wir kontaktieren dich, um alle Details zu besprechen und einen Einstiegstermin zu vereinbaren.</p>
+            <p data-i18n-html="member.alt">Nicht sicher? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Schreib uns zuerst</a> oder komm zur kostenlosen Schnupperstunde.</p>
+            <div>
+              <p class="form-info__detail" data-i18n="member.fee.label">Beitrag ab</p>
+              <p style="font-family:var(--font-display);font-size:2.5rem;line-height:1;"data-i18n-html="member.fee.amount">175€ <span style="font-size:1rem;opacity:0.5;">/ Semester</span></p>
+            </div>
+          </div>
+          <form class="form-body reveal" name="mitglied" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="mitglied">
+            <p style="display:none"><input name="bot-field"></p>
+            <div class="form-grid">
+              <p class="form-divider" data-i18n="member.form.div1">Persönliche Daten</p>
+              <div class="form-field">
+                <label for="m-vorname" data-i18n="member.form.firstname.label">Vorname *</label>
+                <input type="text" id="m-vorname" name="vorname" placeholder="Vorname" data-i18n-placeholder="member.form.firstname.ph" required="">
+              </div>
+              <div class="form-field">
+                <label for="m-nachname" data-i18n="member.form.lastname.label">Nachname *</label>
+                <input type="text" id="m-nachname" name="nachname" placeholder="Nachname" data-i18n-placeholder="member.form.lastname.ph" required="">
+              </div>
+              <div class="form-field">
+                <label for="m-geburt" data-i18n="member.form.dob.label">Geburtsdatum *</label>
+                <input type="date" id="m-geburt" name="geburtsdatum" required="">
+              </div>
+              <div class="form-field">
+                <label for="m-email" data-i18n="member.form.email.label">E-Mail *</label>
+                <input type="email" id="m-email" name="email" placeholder="name@beispiel.at" data-i18n-placeholder="member.form.email.ph" required="">
+              </div>
+              <div class="form-field">
+                <label for="m-phone" data-i18n="member.form.phone.label">Telefon *</label>
+                <input type="tel" id="m-phone" name="telefon" placeholder="+43 ..." data-i18n-placeholder="member.form.phone.ph" required="">
+              </div>
+              <div class="form-field form-grid--full">
+                <label for="m-adresse" data-i18n="member.form.address.label">Adresse</label>
+                <input type="text" id="m-adresse" name="adresse" placeholder="Straße, PLZ, Ort" data-i18n-placeholder="member.form.address.ph">
+              </div>
+              <p class="form-divider" data-i18n="member.form.div2">Training</p>
+              <div class="form-field form-grid--full form-field--check">
+                <label data-i18n="member.form.group.label">Gewünschte Gruppe *</label>
+                <div class="check-group">
+                  <label class="check-item" data-i18n-after="member.form.group.children"><input type="radio" name="gruppe" value="kinder" required=""> Kinder Anfänger (6–10 Jahre)</label>
+                  <label class="check-item" data-i18n-after="member.form.group.youth"><input type="radio" name="gruppe" value="jugendliche"> Jugendliche Fortgeschritten (11–18 Jahre)</label>
+                  <label class="check-item" data-i18n-after="member.form.group.adults"><input type="radio" name="gruppe" value="erwachsene"> Erwachsene alle Level</label>
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="m-erfahrung" data-i18n="member.form.exp.label">Karate-Erfahrung</label>
+                <select id="m-erfahrung" data-i18n-options="member.form.exp" name="erfahrung">
+                  <option value="" disabled="" selected="">Bitte wählen</option>
+                  <option value="keine">Keine Erfahrung</option>
+                  <option value="anfaenger">Anfänger (unter 1 Jahr)</option>
+                  <option value="fortgeschritten">Fortgeschritten (1–5 Jahre)</option>
+                  <option value="erfahren">Erfahren (über 5 Jahre)</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="m-beitrag" data-i18n="member.form.fee.label">Gewünschter Beitrag</label>
+                <select id="m-beitrag" data-i18n-options="member.form.fee" name="beitrag">
+                  <option value="" disabled="" selected="">Bitte wählen</option>
+                  <option value="semester">Semester (175€)</option>
+                  <option value="jahr">Jahresbeitrag (320€)</option>
+                  <option value="familie">Familie / Geschwister (−20%)</option>
+                </select>
+              </div>
+              <div class="form-field form-grid--full form-field--check">
+                <label data-i18n="member.form.extra.label">Zusätzliches</label>
+                <div class="check-group">
+                  <label class="check-item" data-i18n-after="member.form.extra.trial"><input type="checkbox" name="schnupper" value="ja"> Ich möchte zuerst eine kostenlose Schnupperstunde</label>
+                  <label class="check-item" data-i18n-after="member.form.extra.news"><input type="checkbox" name="newsletter" value="ja"> Über Turniere und Veranstaltungen informiert werden</label>
+                </div>
+              </div>
+              <div class="form-field form-grid--full">
+                <label for="m-nachricht" data-i18n="member.form.notes.label">Anmerkungen</label>
+                <textarea id="m-nachricht" name="anmerkungen" placeholder="Gesundheitliche Hinweise, Fragen, etc." data-i18n-placeholder="member.form.notes.ph"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="form-submit form-submit--accent" data-i18n="member.form.submit">Anmeldung absenden →</button>
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer reveal">
+    <div class="footer__brand">
+      <h2>Fudoshin<br>Karate-Do</h2>
+      <p data-i18n="footer.tagline">Shotokan Karate · Wien, Österreich</p>
+      <img class="footer__brand-logo" src="images/thumb/photo-01.png" alt="Fudoshin Karate-Do Club Wien" loading="lazy">
+    </div>
+    <div class="footer__col">
+      <h3 data-i18n="footer.nav.title">Navigation</h3>
+      <ul>
+        <li><a href="#ueber" data-i18n="nav.about">Über uns</a></li>
+        <li><a href="#training" data-i18n="nav.schedule">Trainingszeiten</a></li>
+        <li><a href="#preise" data-i18n="nav.pricing">Preise</a></li>
+        <li><a href="#team" data-i18n="nav.team">Team</a></li>
+        <li><a href="#aktivitaeten" data-i18n="nav.activities">Aktivitäten</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 data-i18n="footer.locations.title">Standorte</h3>
+      <ul>
+        <li><a href="#" class="footer__map-link" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990">Volksschule Wolfgang-Schmälzlgasse</a></li>
+        <li><a href="#" class="footer__map-link" data-location="Gymnasium am Augarten" data-address="Karajangasse 14, 1200 Wien" data-lat="48.2292" data-lng="16.3747">Gymnasium am Augarten</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 data-i18n="footer.credit.title">Website Design</h3>
+      <ul>
+        <li><a href="https://sethweiner.org" target="_blank" rel="noopener">Seth Weiner</a></li>
+      </ul>
+    </div>
+    <div class="footer__bottom">
+      <span data-i18n="footer.copyright">© 2026 Fudoshin Karate-Do Club Wien</span>
+      <span data-i18n-html="footer.legal"><a href="#">Impressum</a> · <a href="#">Datenschutz</a></span>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // ── 1. SMOOTH SCROLL — easeOutQuint, 1800ms (slow, cinematic) ──
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const id = link.getAttribute('href');
+        if (id === '#') return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+
+        const start    = window.scrollY;
+        const end      = target.getBoundingClientRect().top + window.scrollY - 68;
+        const duration = 1800;
+        let   t0       = null;
+
+        // easeOutQuint — very gradual deceleration, feels unhurried
+        const ease = t => 1 - Math.pow(1 - t, 5);
+
+        const step = ts => {
+          if (!t0) t0 = ts;
+          const p = Math.min((ts - t0) / duration, 1);
+          window.scrollTo(0, start + (end - start) * ease(p));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    });
+
+    // ── 2. THEME TOGGLE ──────────────────────────────────────────────
+    const html   = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+
+    // Respect OS preference on first load
+    if (!localStorage.getItem('fudoshin-theme')) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    } else {
+      html.setAttribute('data-theme', localStorage.getItem('fudoshin-theme'));
+    }
+
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('fudoshin-theme', next);
+      window.dispatchEvent(new CustomEvent('theme-change', { detail: next }));
+    });
+
+    // ── 3. MOBILE MENU ───────────────────────────────────────────────
+    const hamburger    = document.getElementById('hamburger');
+    const overlay      = document.getElementById('nav-overlay');
+    const navClose     = document.getElementById('navClose');
+    const overlayLinks = overlay.querySelectorAll('a');
+
+    const openMenu = () => {
+      overlay.classList.add('is-open');
+      hamburger.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeMenu = () => {
+      overlay.classList.remove('is-open');
+      hamburger.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+
+    hamburger.addEventListener('click', openMenu);
+    navClose.addEventListener('click', closeMenu);          // ← fixed: using id reference
+    overlayLinks.forEach(l => l.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+    // ── 4. SCROLL REVEAL ─────────────────────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal, .reveal-group');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── 5. LANGUAGE TOGGLE ───────────────────────────────────────────
+    const langToggle = document.getElementById('langToggle');
+    const langBtn    = langToggle.querySelector('.nav__lang-btn');
+
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = langToggle.classList.contains('is-open');
+      langToggle.classList.toggle('is-open', !isOpen);
+      langBtn.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    langToggle.querySelectorAll('[data-lang]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        langBtn.childNodes[0].textContent = btn.dataset.lang === 'bs' ? 'BCMS' : btn.dataset.lang.toUpperCase();
+        langToggle.classList.remove('is-open');
+        langBtn.setAttribute('aria-expanded', 'false');
+        setLanguage(btn.dataset.lang);
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!langToggle.contains(e.target)) {
+        langToggle.classList.remove('is-open');
+        langBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        langToggle.classList.remove('is-open');
+        langBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+
+    // ── I18N TRANSLATIONS ──────────────────────────────────────────
+    const translations = {
+      de: {
+        'nav.aria': 'Hauptnavigation',
+        'nav.about': 'Über uns',
+        'nav.schedule': 'Trainingszeiten',
+        'nav.pricing': 'Preise',
+        'nav.team': 'Team',
+        'nav.activities': 'Aktivitäten',
+        'nav.contact': 'Kontakt',
+        'nav.cta': 'Mitglied werden',
+        'nav.theme.aria': 'Theme wechseln',
+        'nav.hamburger.aria': 'Menü öffnen',
+        'nav.overlay.aria': 'Navigation',
+        'nav.close.aria': 'Menü schließen',
+        'nav.overlay.brand': 'Fudoshin Karate-Do · Wien',
+        'nav.overlay.meta': 'Shotokan · Seit 2010',
+        'hero.intro': 'Das Wort Fudoshin beschreibt einen Zustand innerer Stille, der nicht erschüttert werden kann. Es ist das Ziel, auf das Karate hinweist — nicht in der Theorie, sondern durch Jahre geduldiger Praxis.',
+        'about.title': 'Über den Verein',
+        'about.history.title': 'Geschichte des Vereins',
+        'about.history.p1': 'Fudoshin lehrt seit [Jahr] traditionelles Karate in Wien. Wir trainieren Kinder, Jugendliche und Erwachsene. Der Schwerpunkt liegt auf korrekter Technik, Respekt und Beständigkeit — nicht auf Wettkampfergebnissen oder Urkunden. Schauen Sie gerne vorbei, bevor Sie sich entscheiden.',
+        'about.history.p2': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'about.values.title': 'Werte & pädagogischer Ansatz',
+        'about.values.p1': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'about.style.title': 'Welche Stilrichtung?',
+        'about.style.p1': 'Wir unterrichten den traditionellen <strong>Shotokan-Karate-Stil.</strong> Im Training fördern wir körperliche und geistige Fitness sowie Werte wie Respekt, Disziplin und Durchhaltevermögen.',
+        'caption.photos': '<em>Aktivitaten</em> / Caption Credits<br><span class="text-span">Fotos – Firstname Lastname</span>',
+        'schedule.title': 'Trainingszeiten',
+        'schedule.h.group': 'Gruppe',
+        'schedule.h.age': 'Alter / Level',
+        'schedule.h.days': 'Trainingstage',
+        'schedule.h.location': 'Standort',
+        'schedule.r1.group': 'Kinder<br>Anfänger',
+        'schedule.r1.age': '6–10 Jahre',
+        'schedule.r2.group': 'Jugendliche<br>Fortgeschritten',
+        'schedule.r2.age': '11–18 Jahre',
+        'schedule.r3.group': 'Erwachsene<br>Alle Level',
+        'schedule.r3.age': 'Ab 18 Jahren',
+        'schedule.day.mi': 'Mi',
+        'schedule.day.do': 'Do',
+        'schedule.day.fr': 'Fr',
+        'pricing.title': 'Preise',
+        'pricing.s.label': 'Semester',
+        'pricing.s.unit': 'pro Semester',
+        'pricing.s.f1': 'Alle Trainingseinheiten',
+        'pricing.s.f2': 'Gürtelprüfungen inklusive',
+        'pricing.s.f3': 'Zugang zu beiden Standorten',
+        'pricing.a.label': 'Jahresbeitrag',
+        'pricing.a.unit': 'pro Jahr · 2 Semester',
+        'pricing.a.f1': 'Alle Trainingseinheiten',
+        'pricing.a.f2': 'Gürtelprüfungen inklusive',
+        'pricing.a.f3': 'Zugang zu beiden Standorten',
+        'pricing.a.f4': 'Ersparnis gegenüber Einzelsemester',
+        'pricing.f.label': 'Familie / Geschwister',
+        'pricing.f.unit': 'Rabatt ab 2 Personen',
+        'pricing.f.f1': 'Gilt für Geschwister',
+        'pricing.f.f2': 'Gilt für Eltern-Kind-Kombination',
+        'pricing.f.f3': 'Auf Anfrage',
+        'pricing.note': '* Einmalige Aufnahmegebühr wird eingeführt. Kostenlose Schnupperstunde vor Anmeldung möglich.',
+        'team.title': 'Team / Trainer',
+        'team.emir.role': 'Staatlich geprüfter Karate-Instruktor · 2. Dan',
+        'team.emir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.samir.role': 'Staatlich geprüfter Karate-Instruktor · 4. Dan',
+        'team.samir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'activities.title': 'Projekte &amp; Aktivitäten',
+        'activities.tournaments': 'Turniere',
+        'activities.seminars': 'Lehrgänge',
+        'activities.camps': 'Ferien-Camps',
+        'contact.title': 'Kontakt',
+        'contact.intro': 'Fragen zum Training, zu den Standorten oder zur Anmeldung? Schreib uns einfach — wir melden uns innerhalb von 2 Werktagen.',
+        'contact.loc1.label': 'Standort 1',
+        'contact.loc1.address': 'Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Wien',
+        'contact.loc2.label': 'Standort 2',
+        'contact.loc2.address': 'Gymnasium am Augarten<br>Karajangasse 14, 1200 Wien',
+        'contact.email.label': 'E-Mail',
+        'contact.form.name.label': 'Name *',
+        'contact.form.email.label': 'E-Mail *',
+        'contact.form.phone.label': 'Telefon',
+        'contact.form.subject.label': 'Betreff',
+        'contact.form.message.label': 'Nachricht *',
+        'contact.form.submit': 'Nachricht senden →',
+        'contact.form.name.ph': 'Vorname Nachname',
+        'contact.form.email.ph': 'name@beispiel.at',
+        'contact.form.phone.ph': '+43 ...',
+        'contact.form.message.ph': 'Deine Nachricht…',
+        'contact.form.subject': ['Bitte wählen', 'Schnupperstunde', 'Anmeldung', 'Fragen zu Preisen', 'Trainingszeiten', 'Sonstiges'],
+        'member.title': 'Mitglied werden',
+        'member.intro': 'Bereit, mit dem Training zu beginnen? Füll das Formular aus — wir kontaktieren dich, um alle Details zu besprechen und einen Einstiegstermin zu vereinbaren.',
+        'member.alt': 'Nicht sicher? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Schreib uns zuerst</a> oder komm zur kostenlosen Schnupperstunde.',
+        'member.fee.label': 'Beitrag ab',
+        'member.fee.amount': '175€ <span style="font-size:1rem;opacity:0.5;">/ Semester</span>',
+        'member.form.div1': 'Persönliche Daten',
+        'member.form.firstname.label': 'Vorname *',
+        'member.form.lastname.label': 'Nachname *',
+        'member.form.dob.label': 'Geburtsdatum *',
+        'member.form.email.label': 'E-Mail *',
+        'member.form.phone.label': 'Telefon *',
+        'member.form.address.label': 'Adresse',
+        'member.form.div2': 'Training',
+        'member.form.group.label': 'Gewünschte Gruppe *',
+        'member.form.exp.label': 'Karate-Erfahrung',
+        'member.form.fee.label': 'Gewünschter Beitrag',
+        'member.form.extra.label': 'Zusätzliches',
+        'member.form.notes.label': 'Anmerkungen',
+        'member.form.submit': 'Anmeldung absenden →',
+        'member.form.firstname.ph': 'Vorname',
+        'member.form.lastname.ph': 'Nachname',
+        'member.form.email.ph': 'name@beispiel.at',
+        'member.form.phone.ph': '+43 ...',
+        'member.form.address.ph': 'Straße, PLZ, Ort',
+        'member.form.notes.ph': 'Gesundheitliche Hinweise, Fragen, etc.',
+        'member.form.group.children': 'Kinder Anfänger (6–10 Jahre)',
+        'member.form.group.youth': 'Jugendliche Fortgeschritten (11–18 Jahre)',
+        'member.form.group.adults': 'Erwachsene alle Level',
+        'member.form.extra.trial': 'Ich möchte zuerst eine kostenlose Schnupperstunde',
+        'member.form.extra.news': 'Über Turniere und Veranstaltungen informiert werden',
+        'member.form.exp': ['Bitte wählen', 'Keine Erfahrung', 'Anfänger (unter 1 Jahr)', 'Fortgeschritten (1–5 Jahre)', 'Erfahren (über 5 Jahre)'],
+        'member.form.fee': ['Bitte wählen', 'Semester (175€)', 'Jahresbeitrag (320€)', 'Familie / Geschwister (−20%)'],
+        'footer.tagline': 'Shotokan Karate · Wien, Österreich',
+        'footer.nav.title': 'Navigation',
+        'footer.locations.title': 'Standorte',
+        'footer.copyright': '© 2026 Fudoshin Karate-Do Club Wien',
+        'footer.credit.title': 'Website Design',
+        'footer.legal': '<a href="#">Impressum</a> · <a href="#">Datenschutz</a>',
+        'modal.close.aria': 'Schließen',
+        'modal.map.footer': 'Auf Google Maps öffnen ↗',
+        'modal.map.directions': 'Route planen',
+        'lightbox.aria': 'Foto-Galerie',
+        'lightbox.close.aria': 'Schließen',
+        'lightbox.prev.aria': 'Vorheriges Bild',
+        'lightbox.next.aria': 'Nächstes Bild',
+        'sticker.label': 'Sommer 2026',
+        'sticker.headline': 'Sommer-<br>Camp',
+        'sticker.detail': '14 — 18 Juli<br>Kinder &amp; Jugendliche',
+        'sticker.cta': 'Anmelden →',
+        'sticker.tab': 'Sommer Camp 2026'
+      },
+      en: {
+        'nav.aria': 'Main navigation',
+        'nav.about': 'About us',
+        'nav.schedule': 'Training schedule',
+        'nav.pricing': 'Prices',
+        'nav.team': 'Team',
+        'nav.activities': 'Activities',
+        'nav.contact': 'Contact',
+        'nav.cta': 'Become a member',
+        'nav.theme.aria': 'Switch theme',
+        'nav.hamburger.aria': 'Open menu',
+        'nav.overlay.aria': 'Navigation',
+        'nav.close.aria': 'Close menu',
+        'nav.overlay.brand': 'Fudoshin Karate-Do · Vienna',
+        'nav.overlay.meta': 'Shotokan · Since 2010',
+        'hero.intro': 'The word fudoshin describes a state of inner stillness that cannot be disturbed. It is the goal karate points toward — not in theory, but through years of patient practice.',
+        'about.title': 'About the Club',
+        'about.history.title': 'Club History',
+        'about.history.p1': 'Fudoshin has been teaching traditional karate in Vienna since [year]. We train children, young people, and adults. The emphasis is on correct technique, respect, and consistency — not competition results or certificates. Feel free to come and watch before you decide to join.',
+        'about.history.p2': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'about.values.title': 'Values & Pedagogical Approach',
+        'about.values.p1': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'about.style.title': 'Which style?',
+        'about.style.p1': 'We teach the traditional <strong>Shotokan karate style.</strong> In training, we promote physical and mental fitness as well as values like respect, discipline, and perseverance.',
+        'caption.photos': '<em>Activities</em> / Caption Credits<br><span class="text-span">Photos – Firstname Lastname</span>',
+        'schedule.title': 'Training Schedule',
+        'schedule.h.group': 'Group',
+        'schedule.h.age': 'Age / Level',
+        'schedule.h.days': 'Training days',
+        'schedule.h.location': 'Location',
+        'schedule.r1.group': 'Children<br>Beginners',
+        'schedule.r1.age': '6–10 years',
+        'schedule.r2.group': 'Youth<br>Advanced',
+        'schedule.r2.age': '11–18 years',
+        'schedule.r3.group': 'Adults<br>All levels',
+        'schedule.r3.age': '18 years and up',
+        'schedule.day.mi': 'Wed',
+        'schedule.day.do': 'Thu',
+        'schedule.day.fr': 'Fri',
+        'pricing.title': 'Prices',
+        'pricing.s.label': 'Semester',
+        'pricing.s.unit': 'per semester',
+        'pricing.s.f1': 'All training sessions',
+        'pricing.s.f2': 'Belt exams included',
+        'pricing.s.f3': 'Access to both locations',
+        'pricing.a.label': 'Annual fee',
+        'pricing.a.unit': 'per year · 2 semesters',
+        'pricing.a.f1': 'All training sessions',
+        'pricing.a.f2': 'Belt exams included',
+        'pricing.a.f3': 'Access to both locations',
+        'pricing.a.f4': 'Savings compared to single semester',
+        'pricing.f.label': 'Family / Siblings',
+        'pricing.f.unit': 'Discount for 2+ persons',
+        'pricing.f.f1': 'Applies to siblings',
+        'pricing.f.f2': 'Applies to parent-child combination',
+        'pricing.f.f3': 'On request',
+        'pricing.note': '* One-time registration fee applies. Free trial class before registration possible.',
+        'team.title': 'Team / Trainers',
+        'team.emir.role': 'State-certified karate instructor · 2nd Dan',
+        'team.emir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.samir.role': 'State-certified karate instructor · 4th Dan',
+        'team.samir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'activities.title': 'Projects &amp; Activities',
+        'activities.tournaments': 'Tournaments',
+        'activities.seminars': 'Seminars',
+        'activities.camps': 'Holiday Camps',
+        'contact.title': 'Contact',
+        'contact.intro': 'Questions about training, locations, or registration? Just write to us — we will get back to you within 2 business days.',
+        'contact.loc1.label': 'Location 1',
+        'contact.loc1.address': 'Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Vienna',
+        'contact.loc2.label': 'Location 2',
+        'contact.loc2.address': 'Gymnasium am Augarten<br>Karajangasse 14, 1200 Vienna',
+        'contact.email.label': 'Email',
+        'contact.form.name.label': 'Name *',
+        'contact.form.email.label': 'Email *',
+        'contact.form.phone.label': 'Phone',
+        'contact.form.subject.label': 'Subject',
+        'contact.form.message.label': 'Message *',
+        'contact.form.submit': 'Send message →',
+        'contact.form.name.ph': 'First name Last name',
+        'contact.form.email.ph': 'name@example.at',
+        'contact.form.phone.ph': '+43 ...',
+        'contact.form.message.ph': 'Your message…',
+        'contact.form.subject': ['Please select', 'Trial class', 'Registration', 'Questions about prices', 'Training schedule', 'Other'],
+        'member.title': 'Become a Member',
+        'member.intro': 'Ready to start training? Fill out the form — we will contact you to discuss all details and arrange a start date.',
+        'member.alt': 'Not sure? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Write to us first</a> or come to a free trial class.',
+        'member.fee.label': 'Fees from',
+        'member.fee.amount': '175€ <span style="font-size:1rem;opacity:0.5;">/ Semester</span>',
+        'member.form.div1': 'Personal details',
+        'member.form.firstname.label': 'First name *',
+        'member.form.lastname.label': 'Last name *',
+        'member.form.dob.label': 'Date of birth *',
+        'member.form.email.label': 'Email *',
+        'member.form.phone.label': 'Phone *',
+        'member.form.address.label': 'Address',
+        'member.form.div2': 'Training',
+        'member.form.group.label': 'Preferred group *',
+        'member.form.exp.label': 'Karate experience',
+        'member.form.fee.label': 'Preferred fee',
+        'member.form.extra.label': 'Additional',
+        'member.form.notes.label': 'Notes',
+        'member.form.submit': 'Submit registration →',
+        'member.form.firstname.ph': 'First name',
+        'member.form.lastname.ph': 'Last name',
+        'member.form.email.ph': 'name@example.at',
+        'member.form.phone.ph': '+43 ...',
+        'member.form.address.ph': 'Street, Postal code, City',
+        'member.form.notes.ph': 'Health notes, questions, etc.',
+        'member.form.group.children': 'Children Beginners (6–10 years)',
+        'member.form.group.youth': 'Youth Advanced (11–18 years)',
+        'member.form.group.adults': 'Adults all levels',
+        'member.form.extra.trial': 'I would like a free trial class first',
+        'member.form.extra.news': 'Be informed about tournaments and events',
+        'member.form.exp': ['Please select', 'No experience', 'Beginner (under 1 year)', 'Advanced (1–5 years)', 'Experienced (over 5 years)'],
+        'member.form.fee': ['Please select', 'Semester (175€)', 'Annual fee (320€)', 'Family / Siblings (−20%)'],
+        'footer.tagline': 'Shotokan Karate · Vienna, Austria',
+        'footer.nav.title': 'Navigation',
+        'footer.locations.title': 'Locations',
+        'footer.copyright': '© 2026 Fudoshin Karate-Do Club Vienna',
+        'footer.credit.title': 'Website Design',
+        'footer.legal': '<a href="#">Legal Notice</a> · <a href="#">Privacy Policy</a>',
+        'modal.close.aria': 'Close',
+        'modal.map.footer': 'Open in Google Maps ↗',
+        'modal.map.directions': 'Get directions',
+        'lightbox.aria': 'Photo gallery',
+        'lightbox.close.aria': 'Close',
+        'lightbox.prev.aria': 'Previous image',
+        'lightbox.next.aria': 'Next image',
+        'sticker.label': 'Summer 2026',
+        'sticker.headline': 'Summer<br>Camp',
+        'sticker.detail': '14 — 18 July<br>Children &amp; Youth',
+        'sticker.cta': 'Register →',
+        'sticker.tab': 'Summer Camp 2026'
+      },
+      tr: {
+        'nav.aria': 'Ana gezinti',
+        'nav.about': 'Hakkımızda',
+        'nav.schedule': 'Antrenman saatleri',
+        'nav.pricing': 'Fiyatlar',
+        'nav.team': 'Ekip',
+        'nav.activities': 'Etkinlikler',
+        'nav.contact': 'İletişim',
+        'nav.cta': 'Üye ol',
+        'nav.theme.aria': 'Tema değiştir',
+        'nav.hamburger.aria': 'Menüyü aç',
+        'nav.overlay.aria': 'Gezinti',
+        'nav.close.aria': 'Menüyü kapat',
+        'nav.overlay.brand': 'Fudoshin Karate-Do · Viyana',
+        'nav.overlay.meta': 'Shotokan · 2010\'dan beri',
+        'hero.intro': 'Fudoshin kelimesi, sarsılamayan bir iç huzur durumunu tanımlar. Karatenin işaret ettiği hedef budur — teoride değil, yılların sabırlı pratiğiyle.',
+        'about.title': 'Kulüp hakkında',
+        'about.history.title': 'Kulüp tarihi',
+        'about.history.p1': 'Fudoshin, [yıl] yılından bu yana Viyana\'da geleneksel karate öğretmektedir. Çocukları, gençleri ve yetişkinleri eğitiyoruz. Vurgu doğru teknik, saygı ve tutarlılık üzerinedir — yarışma sonuçları ya da sertifikalar değil. Katılmaya karar vermeden önce gelip izleyebilirsiniz.',
+        'about.history.p2': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'about.values.title': 'Değerler ve pedagojik yaklaşım',
+        'about.values.p1': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'about.style.title': 'Hangi stil?',
+        'about.style.p1': 'Geleneksel <strong>Shotokan karate stilini</strong> öğretiyoruz. Antrenmanlarda fiziksel ve zihinsel zindeliğin yanı sıra saygı, disiplin ve azim gibi değerleri teşvik ediyoruz.',
+        'caption.photos': '<em>Etkinlikler</em> / Caption Credits<br><span class="text-span">Fotoğraflar – Firstname Lastname</span>',
+        'schedule.title': 'Antrenman saatleri',
+        'schedule.h.group': 'Grup',
+        'schedule.h.age': 'Yaş / Seviye',
+        'schedule.h.days': 'Antrenman günleri',
+        'schedule.h.location': 'Konum',
+        'schedule.r1.group': 'Çocuklar<br>Başlangıç',
+        'schedule.r1.age': '6–10 yaş',
+        'schedule.r2.group': 'Gençler<br>İleri seviye',
+        'schedule.r2.age': '11–18 yaş',
+        'schedule.r3.group': 'Yetişkinler<br>Tüm seviyeler',
+        'schedule.r3.age': '18 yaş ve üzeri',
+        'schedule.day.mi': 'Çar',
+        'schedule.day.do': 'Per',
+        'schedule.day.fr': 'Cum',
+        'pricing.title': 'Fiyatlar',
+        'pricing.s.label': 'Sömestr',
+        'pricing.s.unit': 'dönem başına',
+        'pricing.s.f1': 'Tüm antrenman seansları',
+        'pricing.s.f2': 'Kuşak sınavları dahil',
+        'pricing.s.f3': 'Her iki konuma erişim',
+        'pricing.a.label': 'Yıllık aidat',
+        'pricing.a.unit': 'yıllık · 2 sömestr',
+        'pricing.a.f1': 'Tüm antrenman seansları',
+        'pricing.a.f2': 'Kuşak sınavları dahil',
+        'pricing.a.f3': 'Her iki konuma erişim',
+        'pricing.a.f4': 'Tek döneme göre tasarruf',
+        'pricing.f.label': 'Aile / Kardeşler',
+        'pricing.f.unit': '2+ kişi için indirim',
+        'pricing.f.f1': 'Kardeşler için geçerli',
+        'pricing.f.f2': 'Ebeveyn-çocuk kombinasyonu için geçerli',
+        'pricing.f.f3': 'Talep üzerine',
+        'pricing.note': '* Tek seferlik kayıt ücreti uygulanır. Kayıt öncesi ücretsiz deneme dersi mümkündür.',
+        'team.title': 'Ekip / Antrenörler',
+        'team.emir.role': 'Devlet onaylı karate eğitmeni · 2. Dan',
+        'team.emir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.samir.role': 'Devlet onaylı karate eğitmeni · 4. Dan',
+        'team.samir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'activities.title': 'Projeler &amp; Etkinlikler',
+        'activities.tournaments': 'Turnuvalar',
+        'activities.seminars': 'Seminerler',
+        'activities.camps': 'Tatil kampları',
+        'contact.title': 'İletişim',
+        'contact.intro': 'Antrenman, konumlar veya kayıt hakkında sorularınız mı var? Bize yazın — 2 iş günü içinde size geri döneceğiz.',
+        'contact.loc1.label': 'Konum 1',
+        'contact.loc1.address': 'Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Viyana',
+        'contact.loc2.label': 'Konum 2',
+        'contact.loc2.address': 'Gymnasium am Augarten<br>Karajangasse 14, 1200 Viyana',
+        'contact.email.label': 'E-posta',
+        'contact.form.name.label': 'İsim *',
+        'contact.form.email.label': 'E-posta *',
+        'contact.form.phone.label': 'Telefon',
+        'contact.form.subject.label': 'Konu',
+        'contact.form.message.label': 'Mesaj *',
+        'contact.form.submit': 'Mesaj gönder →',
+        'contact.form.name.ph': 'Ad Soyad',
+        'contact.form.email.ph': 'isim@ornek.at',
+        'contact.form.phone.ph': '+43 ...',
+        'contact.form.message.ph': 'Mesajınız…',
+        'contact.form.subject': ['Lütfen seçin', 'Deneme dersi', 'Kayıt', 'Fiyat soruları', 'Antrenman saatleri', 'Diğer'],
+        'member.title': 'Üye ol',
+        'member.intro': 'Antrenmana başlamaya hazır mısınız? Formu doldurun — tüm detayları görüşmek ve bir başlangıç tarihi belirlemek için sizinle iletişime geçeceğiz.',
+        'member.alt': 'Emin değil misiniz? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Önce bize yazın</a> veya ücretsiz deneme dersine gelin.',
+        'member.fee.label': 'Aidat',
+        'member.fee.amount': '175€ <span style="font-size:1rem;opacity:0.5;">/ Sömestr</span>',
+        'member.form.div1': 'Kişisel bilgiler',
+        'member.form.firstname.label': 'Ad *',
+        'member.form.lastname.label': 'Soyad *',
+        'member.form.dob.label': 'Doğum tarihi *',
+        'member.form.email.label': 'E-posta *',
+        'member.form.phone.label': 'Telefon *',
+        'member.form.address.label': 'Adres',
+        'member.form.div2': 'Antrenman',
+        'member.form.group.label': 'Tercih edilen grup *',
+        'member.form.exp.label': 'Karate deneyimi',
+        'member.form.fee.label': 'Tercih edilen aidat',
+        'member.form.extra.label': 'Ek bilgiler',
+        'member.form.notes.label': 'Notlar',
+        'member.form.submit': 'Kaydı gönder →',
+        'member.form.firstname.ph': 'Ad',
+        'member.form.lastname.ph': 'Soyad',
+        'member.form.email.ph': 'isim@ornek.at',
+        'member.form.phone.ph': '+43 ...',
+        'member.form.address.ph': 'Sokak, Posta kodu, Şehir',
+        'member.form.notes.ph': 'Sağlık notları, sorular, vb.',
+        'member.form.group.children': 'Çocuklar Başlangıç (6–10 yaş)',
+        'member.form.group.youth': 'Gençler İleri seviye (11–18 yaş)',
+        'member.form.group.adults': 'Yetişkinler tüm seviyeler',
+        'member.form.extra.trial': 'Önce ücretsiz bir deneme dersi istiyorum',
+        'member.form.extra.news': 'Turnuvalar ve etkinlikler hakkında bilgilendirilmek istiyorum',
+        'member.form.exp': ['Lütfen seçin', 'Deneyim yok', 'Başlangıç (1 yıldan az)', 'İleri seviye (1–5 yıl)', 'Deneyimli (5 yıldan fazla)'],
+        'member.form.fee': ['Lütfen seçin', 'Sömestr (175€)', 'Yıllık aidat (320€)', 'Aile / Kardeşler (−20%)'],
+        'footer.tagline': 'Shotokan Karate · Viyana, Avusturya',
+        'footer.nav.title': 'Gezinti',
+        'footer.locations.title': 'Konumlar',
+        'footer.copyright': '© 2026 Fudoshin Karate-Do Kulübü Viyana',
+        'footer.credit.title': 'Web Tasarımı',
+        'footer.legal': '<a href="#">Yasal Bilgiler</a> · <a href="#">Gizlilik Politikası</a>',
+        'modal.close.aria': 'Kapat',
+        'modal.map.footer': 'Google Maps\'te aç ↗',
+        'modal.map.directions': 'Yol tarifi al',
+        'lightbox.aria': 'Fotoğraf galerisi',
+        'lightbox.close.aria': 'Kapat',
+        'lightbox.prev.aria': 'Önceki fotoğraf',
+        'lightbox.next.aria': 'Sonraki fotoğraf',
+        'sticker.label': 'Yaz 2026',
+        'sticker.headline': 'Yaz<br>Kampı',
+        'sticker.detail': '14 — 18 Temmuz<br>Çocuklar &amp; Gençler',
+        'sticker.cta': 'Kayıt ol →',
+        'sticker.tab': 'Yaz Kampı 2026'
+      },
+      bs: {
+        'nav.aria': 'Glavna navigacija',
+        'nav.about': 'O nama',
+        'nav.schedule': 'Raspored treninga',
+        'nav.pricing': 'Cijene',
+        'nav.team': 'Tim',
+        'nav.activities': 'Aktivnosti',
+        'nav.contact': 'Kontakt',
+        'nav.cta': 'Postani član',
+        'nav.theme.aria': 'Promijeni temu',
+        'nav.hamburger.aria': 'Otvori meni',
+        'nav.overlay.aria': 'Navigacija',
+        'nav.close.aria': 'Zatvori meni',
+        'nav.overlay.brand': 'Fudoshin Karate-Do · Beč',
+        'nav.overlay.meta': 'Shotokan · Od 2010.',
+        'hero.intro': 'Riječ fudoshin opisuje stanje unutrašnje tišine koja se ne može pokolebati. To je cilj na koji karate upućuje — ne u teoriji, već kroz godine strpljive prakse.',
+        'about.title': 'O klubu',
+        'about.history.title': 'Historija kluba',
+        'about.history.p1': 'Fudoshin podučava tradicionalni karate u Beču od [godine]. Treniramo djecu, mlade i odrasle. Naglasak je na pravilnoj tehnici, poštovanju i dosljednosti — ne na rezultatima takmičenja ili diplomama. Slobodno dođite i pogledajte prije nego što se odlučite za članstvo.',
+        'about.history.p2': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'about.values.title': 'Vrijednosti i pedagoški pristup',
+        'about.values.p1': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'about.style.title': 'Koji stil?',
+        'about.style.p1': 'Predajemo tradicionalni <strong>Shotokan karate stil.</strong> Na treningu promovišemo fizičku i mentalnu kondiciju, kao i vrijednosti poput poštovanja, discipline i istrajnosti.',
+        'caption.photos': '<em>Aktivnosti</em> / Caption Credits<br><span class="text-span">Fotografije – Firstname Lastname</span>',
+        'schedule.title': 'Raspored treninga',
+        'schedule.h.group': 'Grupa',
+        'schedule.h.age': 'Dob / Nivo',
+        'schedule.h.days': 'Dani treninga',
+        'schedule.h.location': 'Lokacija',
+        'schedule.r1.group': 'Djeca<br>Početnici',
+        'schedule.r1.age': '6–10 godina',
+        'schedule.r2.group': 'Omladina<br>Napredni',
+        'schedule.r2.age': '11–18 godina',
+        'schedule.r3.group': 'Odrasli<br>Svi nivoi',
+        'schedule.r3.age': 'Od 18 godina',
+        'schedule.day.mi': 'Sri',
+        'schedule.day.do': 'Čet',
+        'schedule.day.fr': 'Pet',
+        'pricing.title': 'Cijene',
+        'pricing.s.label': 'Semestar',
+        'pricing.s.unit': 'po semestru',
+        'pricing.s.f1': 'Svi treninzi',
+        'pricing.s.f2': 'Polaganje pojaseva uključeno',
+        'pricing.s.f3': 'Pristup na obje lokacije',
+        'pricing.a.label': 'Godišnja članarina',
+        'pricing.a.unit': 'godišnje · 2 semestra',
+        'pricing.a.f1': 'Svi treninzi',
+        'pricing.a.f2': 'Polaganje pojaseva uključeno',
+        'pricing.a.f3': 'Pristup na obje lokacije',
+        'pricing.a.f4': 'Ušteda u odnosu na pojedinačni semestar',
+        'pricing.f.label': 'Porodica / Braća i sestre',
+        'pricing.f.unit': 'Popust za 2+ osobe',
+        'pricing.f.f1': 'Važi za braću i sestre',
+        'pricing.f.f2': 'Važi za kombinaciju roditelj-dijete',
+        'pricing.f.f3': 'Na upit',
+        'pricing.note': '* Jednokratna upisnina se naplaćuje. Besplatan probni trening prije upisa je moguć.',
+        'team.title': 'Tim / Treneri',
+        'team.emir.role': 'Državno certificirani karate instruktor · 2. Dan',
+        'team.emir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'team.samir.role': 'Državno certificirani karate instruktor · 4. Dan',
+        'team.samir.bio': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+        'activities.title': 'Projekti &amp; Aktivnosti',
+        'activities.tournaments': 'Turniri',
+        'activities.seminars': 'Seminari',
+        'activities.camps': 'Ljetni kampovi',
+        'contact.title': 'Kontakt',
+        'contact.intro': 'Pitanja o treningu, lokacijama ili prijavi? Jednostavno nam pišite — javit ćemo vam se u roku od 2 radna dana.',
+        'contact.loc1.label': 'Lokacija 1',
+        'contact.loc1.address': 'Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Beč',
+        'contact.loc2.label': 'Lokacija 2',
+        'contact.loc2.address': 'Gymnasium am Augarten<br>Karajangasse 14, 1200 Beč',
+        'contact.email.label': 'E-mail',
+        'contact.form.name.label': 'Ime *',
+        'contact.form.email.label': 'E-mail *',
+        'contact.form.phone.label': 'Telefon',
+        'contact.form.subject.label': 'Predmet',
+        'contact.form.message.label': 'Poruka *',
+        'contact.form.submit': 'Pošalji poruku →',
+        'contact.form.name.ph': 'Ime Prezime',
+        'contact.form.email.ph': 'ime@primjer.at',
+        'contact.form.phone.ph': '+43 ...',
+        'contact.form.message.ph': 'Vaša poruka…',
+        'contact.form.subject': ['Molimo odaberite', 'Probni trening', 'Prijava', 'Pitanja o cijenama', 'Raspored treninga', 'Ostalo'],
+        'member.title': 'Postani član',
+        'member.intro': 'Spremni za početak treninga? Popunite formular — kontaktirat ćemo vas kako bismo razgovarali o svim detaljima i dogovorili datum početka.',
+        'member.alt': 'Niste sigurni? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Pišite nam prvo</a> ili dođite na besplatan probni trening.',
+        'member.fee.label': 'Članarina od',
+        'member.fee.amount': '175€ <span style="font-size:1rem;opacity:0.5;">/ Semestar</span>',
+        'member.form.div1': 'Lični podaci',
+        'member.form.firstname.label': 'Ime *',
+        'member.form.lastname.label': 'Prezime *',
+        'member.form.dob.label': 'Datum rođenja *',
+        'member.form.email.label': 'E-mail *',
+        'member.form.phone.label': 'Telefon *',
+        'member.form.address.label': 'Adresa',
+        'member.form.div2': 'Trening',
+        'member.form.group.label': 'Željena grupa *',
+        'member.form.exp.label': 'Karate iskustvo',
+        'member.form.fee.label': 'Željeni doprinos',
+        'member.form.extra.label': 'Dodatno',
+        'member.form.notes.label': 'Napomene',
+        'member.form.submit': 'Pošalji prijavu →',
+        'member.form.firstname.ph': 'Ime',
+        'member.form.lastname.ph': 'Prezime',
+        'member.form.email.ph': 'ime@primjer.at',
+        'member.form.phone.ph': '+43 ...',
+        'member.form.address.ph': 'Ulica, Poštanski broj, Grad',
+        'member.form.notes.ph': 'Zdravstvene napomene, pitanja, itd.',
+        'member.form.group.children': 'Djeca Početnici (6–10 godina)',
+        'member.form.group.youth': 'Omladina Napredni (11–18 godina)',
+        'member.form.group.adults': 'Odrasli svi nivoi',
+        'member.form.extra.trial': 'Želim prvo besplatan probni trening',
+        'member.form.extra.news': 'Biti obaviješten o turnirima i događajima',
+        'member.form.exp': ['Molimo odaberite', 'Bez iskustva', 'Početnik (manje od 1 godine)', 'Napredni (1–5 godina)', 'Iskusni (preko 5 godina)'],
+        'member.form.fee': ['Molimo odaberite', 'Semestar (175€)', 'Godišnja članarina (320€)', 'Porodica / Braća i sestre (−20%)'],
+        'footer.tagline': 'Shotokan Karate · Beč, Austrija',
+        'footer.nav.title': 'Navigacija',
+        'footer.locations.title': 'Lokacije',
+        'footer.copyright': '© 2026 Fudoshin Karate-Do Klub Beč',
+        'footer.credit.title': 'Dizajn web stranice',
+        'footer.legal': '<a href="#">Pravne informacije</a> · <a href="#">Politika privatnosti</a>',
+        'modal.close.aria': 'Zatvori',
+        'modal.map.footer': 'Otvori u Google Maps ↗',
+        'modal.map.directions': 'Planiraj rutu',
+        'lightbox.aria': 'Foto galerija',
+        'lightbox.close.aria': 'Zatvori',
+        'lightbox.prev.aria': 'Prethodna slika',
+        'lightbox.next.aria': 'Sljedeća slika',
+        'sticker.label': 'Ljeto 2026',
+        'sticker.headline': 'Ljetni<br>Kamp',
+        'sticker.detail': '14 — 18 Juli<br>Djeca &amp; Omladina',
+        'sticker.cta': 'Prijavi se →',
+        'sticker.tab': 'Ljetni Kamp 2026'
+      },
+    };
+
+    let currentLang = 'de';
+
+    function setLanguage(lang) {
+      const t = translations[lang];
+      if (!t) return;
+      currentLang = lang;
+
+      // textContent
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const val = t[el.dataset.i18n];
+        if (val) el.textContent = val;
+      });
+
+      // innerHTML
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const val = t[el.dataset.i18nHtml];
+        if (val) el.innerHTML = val;
+      });
+
+      // placeholder
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const val = t[el.dataset.i18nPlaceholder];
+        if (val) el.placeholder = val;
+      });
+
+      // aria-label
+      document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const val = t[el.dataset.i18nAria];
+        if (val) el.setAttribute('aria-label', val);
+      });
+
+      // select options + custom select sync
+      document.querySelectorAll('[data-i18n-options]').forEach(select => {
+        const key = select.dataset.i18nOptions;
+        const opts = t[key];
+        if (!opts) return;
+        // Update native option text
+        Array.from(select.options).forEach((opt, i) => {
+          if (opts[i] !== undefined) opt.text = opts[i];
+        });
+        // Sync custom select wrapper
+        const wrapper = select.closest('.custom-select');
+        if (wrapper) {
+          const buttons = wrapper.querySelectorAll('.custom-select__dropdown button');
+          const visibleOpts = opts.slice(1); // custom dropdown skips disabled placeholder
+          buttons.forEach((btn, i) => {
+            if (visibleOpts[i] !== undefined) btn.textContent = visibleOpts[i];
+          });
+          const trigger = wrapper.querySelector('.custom-select__trigger');
+          if (trigger) {
+            if (select.value) {
+              trigger.textContent = select.options[select.selectedIndex].text;
+            } else {
+              trigger.textContent = opts[0];
+            }
+            trigger.classList.toggle('is-placeholder', !select.value);
+          }
+        }
+      });
+
+      // text after input (radio/checkbox labels)
+      document.querySelectorAll('[data-i18n-after]').forEach(el => {
+        const val = t[el.dataset.i18nAfter];
+        if (!val) return;
+        const input = el.querySelector('input');
+        if (input) {
+          // Find or create text node after input
+          let textNode = input.nextSibling;
+          if (textNode && textNode.nodeType === 3) {
+            textNode.textContent = ' ' + val;
+          }
+        }
+      });
+
+      // Update html lang and title
+      document.documentElement.setAttribute('lang', lang === 'bs' ? 'bs' : lang);
+      const titles = { de: 'Fudoshin Karate-Do Club Wien', en: 'Fudoshin Karate-Do Club Vienna', tr: 'Fudoshin Karate-Do Kul\u00fcb\u00fc Viyana', bs: 'Fudoshin Karate-Do Klub Be\u010d' };
+      document.title = titles[lang] || titles.de;
+
+      // Sync sticker tooltip with tab text
+      const stickerEl = document.getElementById('the-sticker');
+      if (stickerEl && t['sticker.tab']) stickerEl.dataset.tooltip = t['sticker.tab'];
+
+      // Persist
+      localStorage.setItem('fudoshin-lang', lang);
+    }
+
+    // ── 6. CUSTOM SELECTS ────────────────────────────────────────────
+    document.querySelectorAll('.form-field select').forEach(native => {
+      // Wrap
+      const wrapper = document.createElement('div');
+      wrapper.className = 'custom-select';
+      native.parentNode.insertBefore(wrapper, native);
+      wrapper.appendChild(native);
+      native.style.display = 'none';
+
+      // Trigger button
+      const trigger = document.createElement('button');
+      trigger.type = 'button';
+      trigger.className = 'custom-select__trigger';
+
+      const updateTrigger = () => {
+        const sel = native.options[native.selectedIndex];
+        trigger.textContent = (sel && native.value) ? sel.text : (native.options[0] ? native.options[0].text : '—');
+        trigger.classList.toggle('is-placeholder', !native.value);
+      };
+      updateTrigger();
+      wrapper.appendChild(trigger);
+
+      // Dropdown
+      const dropdown = document.createElement('ul');
+      dropdown.className = 'custom-select__dropdown';
+      dropdown.setAttribute('role', 'listbox');
+
+      Array.from(native.options).forEach(opt => {
+        if (opt.disabled && !opt.value) return; // skip empty placeholder option
+        const li  = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = opt.text;
+        btn.setAttribute('role', 'option');
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          native.value = opt.value;
+          // sync selected state
+          dropdown.querySelectorAll('button').forEach(b => b.classList.remove('is-selected'));
+          btn.classList.add('is-selected');
+          updateTrigger();
+          wrapper.classList.remove('is-open');
+          trigger.setAttribute('aria-expanded', 'false');
+        });
+        li.appendChild(btn);
+        dropdown.appendChild(li);
+      });
+      wrapper.appendChild(dropdown);
+
+      // Toggle open
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = wrapper.classList.contains('is-open');
+        // close all others
+        document.querySelectorAll('.custom-select.is-open').forEach(el => {
+          el.classList.remove('is-open');
+          el.querySelector('.custom-select__trigger').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          wrapper.classList.add('is-open');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+
+      document.addEventListener('click', () => {
+        wrapper.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+  </script>
+
+  <!-- ══════════════ MAP MODAL ══════════════ -->
+  <div class="map-modal" id="mapModal" role="dialog" aria-modal="true">
+    <div class="map-modal__panel">
+      <div class="map-modal__header">
+        <div>
+          <div class="map-modal__title" id="mapModalTitle">—</div>
+          <div class="map-modal__address" id="mapModalAddress">—</div>
+        </div>
+        <button class="map-modal__close" id="mapModalClose" aria-label="Schließen" data-i18n-aria="modal.close.aria">✕</button>
+      </div>
+      <div class="map-modal__map-wrap">
+        <div id="mapModalCanvas"></div>
+      </div>
+      <div class="map-modal__info">
+        <div>
+          <div class="map-modal__info-name" id="mapInfoName">—</div>
+          <div class="map-modal__info-street" id="mapInfoStreet">—</div>
+        </div>
+        <a class="map-modal__directions" id="mapDirectionsBtn" href="#" target="_blank" rel="noopener">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1l4 4-4 4M2 5h8"/></svg>
+          <span data-i18n="modal.map.directions">Route planen</span>
+        </a>
+      </div>
+      <div class="map-modal__coords" id="mapCoords">—</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ STICKER ══════════════ -->
+
+  <div class="sticker" id="the-sticker" data-shape="sharp" data-align="left" data-tooltip="Sommer Camp 2026">
+    <div class="sticker__body">
+      <span class="sticker__label" data-i18n="sticker.label">Sommer 2026</span>
+      <div class="sticker__headline" data-i18n-html="sticker.headline">Sommer-<br>Camp</div>
+      <div class="sticker__detail" data-i18n-html="sticker.detail">14 — 18 Juli<br>Kinder &amp; Jugendliche</div>
+      <a href="#mitglied" class="sticker__cta" id="sticker-cta" data-i18n="sticker.cta">Anmelden →</a>
+    </div>
+    <button class="sticker__tab" id="sticker-tab">
+      <span class="sticker__tab-text" data-i18n="sticker.tab">Sommer Camp 2026</span>
+      <i class="sticker__chevron">▲</i>
+    </button>
+  </div>
+
+  
+
+  <script>
+    // ── STICKER collapse + scroll-driven pill morph ─────────────────
+    (function() {
+      const sticker = document.getElementById('the-sticker');
+      const tab     = document.getElementById('sticker-tab');
+      let userCollapsed = false; // true when user manually collapsed it
+
+      tab.addEventListener('click', () => {
+        if (sticker.classList.contains('is-pill')) {
+          // Expand from pill — springy easing
+          sticker.classList.add('is-expanding');
+          sticker.classList.remove('is-pill');
+          userCollapsed = false;
+          sticker.addEventListener('transitionend', function rm() {
+            sticker.classList.remove('is-expanding');
+            sticker.removeEventListener('transitionend', rm);
+          });
+        } else {
+          // Collapse to pill
+          sticker.classList.add('is-pill', 'is-collapsing');
+          userCollapsed = true;
+          sticker.addEventListener('transitionend', function rm() {
+            sticker.classList.remove('is-collapsing');
+            sticker.removeEventListener('transitionend', rm);
+          });
+        }
+      });
+
+      // Morph to pill once user has scrolled past 30% of the page
+      let ticking = false;
+
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          const scrollPct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+          const shouldPill = scrollPct > 0.3;
+
+          if (shouldPill && !userCollapsed) {
+            sticker.classList.remove('is-expanding');
+            sticker.classList.add('is-pill', 'is-collapsing');
+            sticker.addEventListener('transitionend', function rm() {
+              sticker.classList.remove('is-collapsing');
+              sticker.removeEventListener('transitionend', rm);
+            });
+          } else if (!shouldPill && !userCollapsed && sticker.classList.contains('is-pill')) {
+            sticker.classList.add('is-expanding');
+            sticker.classList.remove('is-pill');
+            sticker.addEventListener('transitionend', function rm() {
+              sticker.classList.remove('is-expanding');
+              sticker.removeEventListener('transitionend', rm);
+            });
+          }
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+
+    // ── MAP MODAL (MapLibre) ──────────────────────────────────────────
+    const mapModal   = document.getElementById('mapModal');
+    const mapTitle   = document.getElementById('mapModalTitle');
+    const mapAddress = document.getElementById('mapModalAddress');
+    const mapInfoName   = document.getElementById('mapInfoName');
+    const mapInfoStreet = document.getElementById('mapInfoStreet');
+    const mapDirBtn     = document.getElementById('mapDirectionsBtn');
+    const mapCoords     = document.getElementById('mapCoords');
+
+    let mlMap = null;
+    let mlMarker = null;
+    let mlPopup = null;
+
+    const mapStyles = {
+      dark:  'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+      light: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'
+    };
+
+    function currentTheme() {
+      return document.documentElement.getAttribute('data-theme') || 'dark';
+    }
+
+    function initMapLibre(lat, lng) {
+      mlMap = new maplibregl.Map({
+        container: 'mapModalCanvas',
+        style: mapStyles[currentTheme()],
+        center: [lng, lat],
+        zoom: 15.5,
+        attributionControl: false,
+      });
+      mlMap.addControl(new maplibregl.AttributionControl({ compact: true }), 'bottom-right');
+      mlMap.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+    }
+
+    // Switch map tiles when theme changes
+    window.addEventListener('theme-change', (e) => {
+      if (mlMap) mlMap.setStyle(mapStyles[e.detail]);
+    });
+
+    function setMarker(lat, lng, name, address) {
+      // Remove old marker + popup
+      if (mlMarker) mlMarker.remove();
+      if (mlPopup) mlPopup.remove();
+
+      // Pulsing marker element
+      const el = document.createElement('div');
+      el.className = 'map-marker-wrap';
+      el.innerHTML = '<div class="map-marker-ring"></div><div class="map-marker-ring"></div><div class="map-marker-dot"></div>';
+
+      mlPopup = new maplibregl.Popup({ offset: 18, closeButton: true, maxWidth: '220px' })
+        .setHTML('<div class="map-popup-inner"><div class="map-popup-name">' + name + '</div><div class="map-popup-address">' + address + '</div></div>');
+
+      mlMarker = new maplibregl.Marker({ element: el, anchor: 'center' })
+        .setLngLat([lng, lat])
+        .setPopup(mlPopup)
+        .addTo(mlMap);
+
+      setTimeout(() => mlPopup.addTo(mlMap), 500);
+    }
+
+    function openMap(location, address, lat, lng) {
+      mapTitle.textContent   = location;
+      mapAddress.textContent = address;
+      mapInfoName.textContent   = location;
+      mapInfoStreet.textContent = address;
+      mapCoords.textContent = lat.toFixed(4) + '° N · ' + lng.toFixed(4) + '° E';
+      mapDirBtn.href = 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lng + '&travelmode=transit';
+
+      mapModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+
+      // Init or fly
+      if (!mlMap) {
+        setTimeout(() => {
+          initMapLibre(lat, lng);
+          mlMap.on('load', () => {
+            setMarker(lat, lng, location, address);
+            mlMap.easeTo({ pitch: 28, duration: 1200, easing: t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t });
+          });
+        }, 80);
+      } else {
+        mlMap.resize();
+        mlMap.flyTo({ center: [lng, lat], zoom: 15.5, pitch: 28, duration: 900 });
+        setMarker(lat, lng, location, address);
+      }
+    }
+
+    function closeMap() {
+      mapModal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.schedule-row__location[data-lat]').forEach(el => {
+      el.addEventListener('click', () =>
+        openMap(el.dataset.location, el.dataset.address, parseFloat(el.dataset.lat), parseFloat(el.dataset.lng)));
+    });
+
+    document.querySelectorAll('.contact__map-link[data-lat]').forEach(el => {
+      el.addEventListener('click', () =>
+        openMap(el.dataset.location, el.dataset.address, parseFloat(el.dataset.lat), parseFloat(el.dataset.lng)));
+    });
+
+    document.querySelectorAll('.footer__map-link[data-lat]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openMap(el.dataset.location, el.dataset.address, parseFloat(el.dataset.lat), parseFloat(el.dataset.lng));
+      });
+    });
+
+    document.getElementById('mapModalClose').addEventListener('click', closeMap);
+    mapModal.addEventListener('click', e => { if (e.target === mapModal) closeMap(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMap(); });
+  </script>
+
+  <!-- ══════════════ LIGHTBOX ══════════════ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto-Galerie" data-i18n-aria="lightbox.aria">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Schließen" data-i18n-aria="lightbox.close.aria">✕</button>
+    <button class="lightbox__nav lightbox__prev" id="lightboxPrev" aria-label="Vorheriges Bild" data-i18n-aria="lightbox.prev.aria">‹</button>
+    <button class="lightbox__nav lightbox__next" id="lightboxNext" aria-label="Nächstes Bild" data-i18n-aria="lightbox.next.aria">›</button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+    <div class="lightbox__counter" id="lightboxCounter"></div>
+  </div>
+
+  <script>
+    (function() {
+      const lightbox  = document.getElementById('lightbox');
+      const lbImg     = document.getElementById('lightboxImg');
+      const lbCounter = document.getElementById('lightboxCounter');
+      const images    = Array.from(document.querySelectorAll('.photo-grid .wrapper_image img'));
+      let currentIdx  = 0;
+
+      function openLightbox(idx) {
+        currentIdx = idx;
+        const img = images[idx];
+        lbImg.src = img.dataset.full || img.src;
+        lbImg.alt = img.alt;
+        lbCounter.textContent = (idx + 1) + ' / ' + images.length;
+        lightbox.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        lbImg.src = '';
+        document.body.style.overflow = '';
+      }
+
+      function navigate(dir) {
+        currentIdx = (currentIdx + dir + images.length) % images.length;
+        const img = images[currentIdx];
+        lbImg.src = img.dataset.full || img.src;
+        lbImg.alt = img.alt;
+        lbCounter.textContent = (currentIdx + 1) + ' / ' + images.length;
+      }
+
+      images.forEach(function(img, i) {
+        img.closest('.wrapper_image').addEventListener('click', function() { openLightbox(i); });
+      });
+
+      document.getElementById('lightboxClose').addEventListener('click', function(e) { e.stopPropagation(); closeLightbox(); });
+      document.getElementById('lightboxPrev').addEventListener('click', function(e) { e.stopPropagation(); navigate(-1); });
+      document.getElementById('lightboxNext').addEventListener('click', function(e) { e.stopPropagation(); navigate(1); });
+      lbImg.addEventListener('click', function(e) { e.stopPropagation(); });
+
+      lightbox.addEventListener('click', function(e) {
+        closeLightbox();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (!lightbox.classList.contains('is-open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') navigate(-1);
+        if (e.key === 'ArrowRight') navigate(1);
+      });
+    })();
+  </script>
+
+  <script>
+    // ── RESTORE SAVED LANGUAGE ──────────────────────────────────────
+    (function() {
+      const savedLang = localStorage.getItem('fudoshin-lang');
+      if (savedLang && savedLang !== 'de' && translations[savedLang]) {
+        setLanguage(savedLang);
+        const lb = document.querySelector('.nav__lang-btn');
+        if (lb) lb.childNodes[0].textContent = savedLang === 'bs' ? 'BCMS' : savedLang.toUpperCase();
+      }
+    })();
+  </script>
+
+  <script>requestAnimationFrame(() => document.body.classList.add('is-loaded'));</script>
+
+  <!-- Netlify Identity widget (redirects after login) -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", function(user) {
+        if (!user) {
+          window.netlifyIdentity.on("login", function() {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+
+</body></html>
