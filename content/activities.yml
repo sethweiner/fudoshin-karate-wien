@@ -1,0 +1,21 @@
+items:
+  - title: "Turniere"
+    image_thumb: "images/thumb/photo-12.jpg"
+    image_full: "images/full/photo-12.jpg"
+    alt: "Turniere"
+    photo_credit: "Photo by ?"
+    description: ""
+
+  - title: "Lehrgänge"
+    image_thumb: "images/thumb/photo-13.jpg"
+    image_full: "images/full/photo-13.jpg"
+    alt: "Lehrgänge"
+    photo_credit: ""
+    description: ""
+
+  - title: "Ferien-Camps"
+    image_thumb: "images/thumb/photo-14.jpg"
+    image_full: "images/full/photo-14.jpg"
+    alt: "Ferien-Camps"
+    photo_credit: ""
+    description: ""

@@ -5,15 +5,107 @@ backend:
 media_folder: "images/full"
 public_folder: "/images/full"
 
+# Decap CMS will also look for thumbs here
+media_library:
+  name: upload
+  config:
+    multiple: true
+
 collections:
-  - name: "settings"
-    label: "Site Settings"
+  # ── STICKER / BADGE ──────────────────────────────────
+  - name: "sticker"
+    label: "Sticker / Badge"
     files:
-      - name: "general"
-        label: "General Settings"
-        file: "content/settings.json"
+      - name: "sticker"
+        label: "Sticker Settings"
+        file: "content/sticker.yml"
         fields:
-          - { label: "Site Title", name: "title", widget: "string", default: "Fudoshin Karate-Do Club Wien" }
-          - { label: "Contact Email", name: "email", widget: "string" }
-          - { label: "Phone", name: "phone", widget: "string" }
-          - { label: "Address", name: "address", widget: "text" }
+          - { label: "Visible", name: "visible", widget: "boolean", default: true, hint: "Toggle the sticker on/off" }
+          - { label: "Label (small text)", name: "label", widget: "string", default: "Sommer 2026" }
+          - { label: "Headline", name: "headline", widget: "string", default: "Sommer-Camp", hint: "Use <br> for line break" }
+          - { label: "Detail", name: "detail", widget: "string", hint: "Use <br> for line break" }
+          - { label: "Button Text", name: "cta_text", widget: "string", default: "Anmelden →" }
+          - { label: "Button Link", name: "cta_link", widget: "string", default: "#mitglied" }
+          - { label: "Tab Text (collapsed)", name: "tab_text", widget: "string", default: "Sommer Camp 2026" }
+
+  # ── TRAINING SCHEDULE ────────────────────────────────
+  - name: "schedule"
+    label: "Training Schedule"
+    files:
+      - name: "schedule"
+        label: "Schedule"
+        file: "content/schedule.yml"
+        fields:
+          - label: "Groups"
+            name: "groups"
+            widget: "list"
+            fields:
+              - { label: "Group Name", name: "name_html", widget: "string", hint: "Use <br> between lines, e.g. Kinder<br>Anfänger" }
+              - { label: "Age Range", name: "age", widget: "string" }
+              - label: "Training Days"
+                name: "days"
+                widget: "list"
+                field: { label: "Day", name: "day", widget: "string" }
+              - { label: "Location Name", name: "location_name", widget: "string" }
+              - { label: "Location Address", name: "location_address", widget: "string" }
+              - { label: "Display Text", name: "location_display", widget: "string", hint: "Shown in the schedule row" }
+              - { label: "Latitude", name: "lat", widget: "number", value_type: "float" }
+              - { label: "Longitude", name: "lng", widget: "number", value_type: "float" }
+
+  # ── PRICING ──────────────────────────────────────────
+  - name: "pricing"
+    label: "Prices"
+    files:
+      - name: "pricing"
+        label: "Pricing"
+        file: "content/pricing.yml"
+        fields:
+          - label: "Pricing Cards"
+            name: "cards"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Price", name: "price", widget: "string", hint: "e.g. 175€ or −20%" }
+              - { label: "Unit / Subtitle", name: "unit", widget: "string" }
+              - { label: "Highlighted", name: "highlighted", widget: "boolean", default: false }
+              - label: "Features"
+                name: "features"
+                widget: "list"
+                field: { label: "Feature", name: "feature", widget: "string" }
+          - { label: "Footnote", name: "note", widget: "string" }
+
+  # ── PROJECTS & ACTIVITIES ────────────────────────────
+  - name: "activities"
+    label: "Projects & Activities"
+    files:
+      - name: "activities"
+        label: "Activities"
+        file: "content/activities.yml"
+        fields:
+          - label: "Activity Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Thumbnail", name: "image_thumb", widget: "image" }
+              - { label: "Full Image", name: "image_full", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string" }
+              - { label: "Photo Credit", name: "photo_credit", widget: "string", required: false }
+              - { label: "Description", name: "description", widget: "text", required: false }
+
+  # ── PHOTO GALLERY ────────────────────────────────────
+  - name: "gallery"
+    label: "Photo Gallery"
+    files:
+      - name: "gallery"
+        label: "Gallery"
+        file: "content/gallery.yml"
+        fields:
+          - { label: "Caption (HTML)", name: "caption_html", widget: "string", hint: "Photo credits line" }
+          - label: "Photos"
+            name: "photos"
+            widget: "list"
+            fields:
+              - { label: "Thumbnail", name: "thumb", widget: "image" }
+              - { label: "Full Size", name: "full", widget: "image" }
+              - { label: "Alt Text", name: "alt", widget: "string" }

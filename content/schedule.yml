@@ -1,0 +1,33 @@
+groups:
+  - name_html: "Kinder<br>Anfänger"
+    age: "6–10 Jahre"
+    days:
+      - "Mi"
+      - "Do"
+      - "Fr"
+    location_name: "Volksschule Wolfgang-Schmälzlgasse"
+    location_address: "Wolfgang-Schmälzlgasse 13, 1020 Wien"
+    location_display: "Volksschule Wolfgang-Schmälzlgasse, 1020 Wien"
+    lat: 48.2202
+    lng: 16.3990
+
+  - name_html: "Jugendliche<br>Fortgeschritten"
+    age: "11–18 Jahre"
+    days:
+      - "Do"
+      - "Fr"
+    location_name: "Gymnasium am Augarten"
+    location_address: "Karajangasse 14, 1200 Wien"
+    location_display: "Gymnasium am Augarten, Karajangasse 14, 1200 Wien"
+    lat: 48.2292
+    lng: 16.3747
+
+  - name_html: "Erwachsene<br>Alle Level"
+    age: "Ab 18 Jahren"
+    days:
+      - "Fr"
+    location_name: "Volksschule Wolfgang-Schmälzlgasse"
+    location_address: "Wolfgang-Schmälzlgasse 13, 1020 Wien"
+    location_display: "Volksschule Wolfgang-Schmälzlgasse, 1020 Wien"
+    lat: 48.2202
+    lng: 16.3990

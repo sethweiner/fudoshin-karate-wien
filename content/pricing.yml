@@ -1,0 +1,30 @@
+cards:
+  - label: "Semester"
+    price: "175€"
+    unit: "pro Semester"
+    highlighted: false
+    features:
+      - "Alle Trainingseinheiten"
+      - "Gürtelprüfungen inklusive"
+      - "Zugang zu beiden Standorten"
+
+  - label: "Jahresbeitrag"
+    price: "320€"
+    unit: "pro Jahr · 2 Semester"
+    highlighted: true
+    features:
+      - "Alle Trainingseinheiten"
+      - "Gürtelprüfungen inklusive"
+      - "Zugang zu beiden Standorten"
+      - "Ersparnis gegenüber Einzelsemester"
+
+  - label: "Familie / Geschwister"
+    price: "−20%"
+    unit: "Rabatt ab 2 Personen"
+    highlighted: false
+    features:
+      - "Gilt für Geschwister"
+      - "Gilt für Eltern-Kind-Kombination"
+      - "Auf Anfrage"
+
+note: "* Einmalige Aufnahmegebühr wird eingeführt. Kostenlose Schnupperstunde vor Anmeldung möglich."
