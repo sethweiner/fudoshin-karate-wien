@@ -3,6 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fudoshin Karate-Do Club Wien</title>
+  <meta name="theme-color" id="metaThemeColor" content="#000000">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='22' fill='%23b53a3a' stroke='white' stroke-width='8'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -47,6 +48,48 @@
       --t-theme:       background-color 400ms var(--ease-out),
                        color 400ms var(--ease-out),
                        border-color 400ms var(--ease-out);
+    }
+
+    /* ═══════════════════════════════════════════
+       MOBILE TAP & PRESS STATES
+    ═══════════════════════════════════════════ */
+    @media (hover: none) and (pointer: coarse) {
+      /* Eliminate 300ms tap-highlight delay */
+      a, button { -webkit-tap-highlight-color: transparent; }
+
+      /* Subtle scale-down on press for haptic feel */
+      .nav__links a:active,
+      .nav__overlay a:active,
+      .nav__theme:active,
+      .nav__lang-btn:active,
+      .nav__hamburger:active,
+      .form-strip__cta:active,
+      .sticker__tab:active,
+      .sticker__cta:active,
+      .footer a:active,
+      .gt-cell--day:active,
+      .preise-card:active,
+      .photo-grid img:active,
+      .legal-trigger:active {
+        transform: scale(0.96);
+        transition: transform 80ms ease;
+      }
+
+      /* Brand-red flash on tap for key interactive elements */
+      .nav__overlay a:active,
+      .form-strip__cta:active,
+      .sticker__cta:active,
+      .nav__links a:active {
+        color: var(--color-accent);
+      }
+      .form-strip__cta:active {
+        border-color: var(--color-accent);
+      }
+      .form-strip__cta--accent:active {
+        background: #8b2d2d;
+        border-color: #8b2d2d;
+        color: #fff;
+      }
     }
 
     /* ═══════════════════════════════════════════
@@ -307,7 +350,10 @@
       display: none; position: fixed; inset: 0;
       background: var(--color-bg);
       z-index: 1001; /* above nav (1000) so the ✕ button is always clickable */
-      flex-direction: column; align-items: stretch; justify-content: center;
+      flex-direction: column; align-items: stretch;
+      overflow-y: auto;
+      padding-top: clamp(3.5rem, 10vh, 6rem);
+      padding-bottom: 4.5rem;
       transition: var(--t-theme);
       /* clip from top for entry animation */
       clip-path: inset(0 0 100% 0);
@@ -352,8 +398,7 @@
 
     /* Overlay brand footer */
     .nav__overlay-footer {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
+      margin-top: auto;
       padding: 1.5rem var(--pad);
       display: flex; align-items: center; justify-content: space-between;
       opacity: 0;
@@ -757,14 +802,125 @@
     .legal-modal__body p { opacity: 0.75; margin-bottom: 0.5rem; }
     .legal-modal__body a { border-bottom: 1px solid var(--color-border); }
 
+    /* ═══════════════════════════════════════════
+       FORM STRIP (placeholder for modal triggers)
+    ═══════════════════════════════════════════ */
+    .form-strips {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 1rem;
+      padding: 3rem var(--pad);
+    }
+    .form-strip {
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--t-theme);
+    }
+    .form-strip__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      margin: 0;
+    }
+    .form-strip__cta {
+      background: none; border: 1px solid var(--color-border);
+      color: var(--color-fg);
+      font-family: var(--font-display); font-size: clamp(1.1rem, 2vw, 1.5rem);
+      letter-spacing: 0.08em; padding: clamp(0.9rem, 1.5vw, 1.2rem) clamp(2rem, 3vw, 3rem);
+      cursor: pointer; text-transform: uppercase;
+      transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
+    }
+    .form-strip__cta:hover { background: var(--color-fg); color: var(--color-bg); }
+    .form-strip__cta--accent { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+    .form-strip__cta--accent:hover { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
+
+    /* ═══════════════════════════════════════════
+       CONTACT + MEMBER MODALS
+    ═══════════════════════════════════════════ */
+    .contact-modal,
+    .member-modal {
+      display: flex; position: fixed; inset: 0;
+      z-index: 1100;
+      background: rgba(0,0,0,0);
+      align-items: center; justify-content: center;
+      padding: clamp(0.5rem, 3vw, 2rem);
+      opacity: 0; pointer-events: none;
+      transition: background 380ms var(--ease-out), opacity 380ms var(--ease-out);
+    }
+    .contact-modal.is-open,
+    .member-modal.is-open {
+      opacity: 1; pointer-events: all;
+      background: rgba(0,0,0,0.72);
+    }
+    .contact-modal__panel,
+    .member-modal__panel {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      width: 100%; max-width: 900px;
+      max-height: 95vh;
+      display: flex; flex-direction: column;
+      transform: scale(0.92) translateY(12px);
+      opacity: 0;
+      transition: transform 420ms var(--ease-out), opacity 380ms ease, var(--t-theme);
+    }
+    .contact-modal.is-open .contact-modal__panel,
+    .member-modal.is-open .member-modal__panel {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+    .contact-modal__header,
+    .member-modal__header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem clamp(1.5rem, 3vw, 2.5rem);
+      border-bottom: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+    .contact-modal__title,
+    .member-modal__title {
+      font-family: var(--font-display);
+      font-size: 1.1rem; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .contact-modal__close,
+    .member-modal__close {
+      background: none; border: none; cursor: pointer;
+      color: var(--color-fg); font-size: 0.9rem; opacity: 0.45;
+      padding: 0.25rem; transition: opacity 150ms ease, transform 150ms ease;
+      flex-shrink: 0;
+    }
+    .contact-modal__close:hover,
+    .member-modal__close:hover { opacity: 1; transform: scale(1.2); }
+    .contact-modal__body,
+    .member-modal__body {
+      overflow-y: auto; padding: clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 3.5vw, 2.5rem);
+      display: flex; flex-direction: column; gap: clamp(1rem, 3vw, 2rem);
+    }
+    .contact-modal__body .form-info,
+    .member-modal__body .form-info {
+      grid-column: unset; padding-right: 0;
+      border-right: none;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 1.5rem;
+    }
+    .contact-modal__body .form-body,
+    .member-modal__body .form-body { grid-column: unset; }
+    .contact-modal__body .form-grid,
+    .member-modal__body .form-grid { grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
+    /* Boost contrast inside modals */
+    .contact-modal__body .form-info p,
+    .member-modal__body .form-info p { opacity: 0.9; }
+    .contact-modal__body .form-info__detail,
+    .member-modal__body .form-info__detail { opacity: 0.7; }
+    .contact-modal__body .form-field label,
+    .member-modal__body .form-field label { opacity: 0.85; }
+
     @media (max-width: 768px) {
       .schedule-row { grid-template-columns: 1fr 1fr; row-gap: 0.5rem; padding: 1.5rem 0; }
       .schedule-header { display: none; }
       .schedule-row__group { grid-column: 1 / -1; }
+      .schedule-row__days { justify-content: flex-end; }
       .map-modal { padding: 1rem; }
       .map-modal__panel { height: 90vh; max-height: none; }
       .legal-modal { padding: 1rem; }
       .legal-modal__panel { max-height: 92vh; }
+      /* contact/member modals use fluid values — no breakpoint overrides needed */
     }
 
     /* ═══════════════════════════════════════════
@@ -972,10 +1128,8 @@
       .nav__lang     { border-right: 1px solid var(--color-border); }
       .section_wrapper { grid-template-columns: 1fr; padding: 3rem 2rem; min-height: auto; }
       .grid { grid-template-columns: 1fr; min-height: auto; }
-      .photo-grid    { grid-template-columns: repeat(2, 1fr); }
-      .team-grid     { grid-template-columns: 1fr; }
       .aktivitaeten-grid { grid-template-columns: 1fr; }
-      .preise-grid   { grid-template-columns: 1fr; }
+      .preise-grid   { grid-template-columns: repeat(2, 1fr); }
       .form-info { grid-column: 1 / -1; padding-right: 0; border-right: none; border-bottom: 1px solid var(--color-border); padding-bottom: 2rem; }
       .form-body { grid-column: 1 / -1; }
       .form-grid { grid-template-columns: 1fr; }
@@ -984,16 +1138,33 @@
     }
 
     /* ═══════════════════════════════════════════
+       RESPONSIVE — tablet portrait ≤768px
+    ═══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .team-grid { grid-template-columns: 1fr; }
+      .team-card { justify-items: center; }
+      .team-card img { max-width: 400px; }
+      .photo-grid { grid-template-columns: repeat(2, 1fr); }
+      .preise-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════
        RESPONSIVE — mobile ≤479px
     ═══════════════════════════════════════════ */
     @media (max-width: 479px) {
       :root { --pad: 1.5rem 1rem; }
+      .nav { left: 0; right: 0; }
+      .nav__logo { padding: 0 0.75rem; font-size: 0.95rem; letter-spacing: 0.05em; }
+      .nav__theme { width: 3rem; }
+      .nav__lang-btn { padding: 0 0.7rem; font-size: 0.8rem; }
+      .nav__hamburger { width: 3rem; padding: 0.9rem; }
       .hero { padding: 2rem 1rem; min-height: 70vh; }
       .section_wrapper { padding: 2rem 1rem; }
-      .photo-grid  { grid-template-columns: 1fr; }
       .gt-cell--header { display: none; }
       .footer { grid-template-columns: 1fr; padding: 2rem 1rem; }
       .footer__brand { grid-column: 1; }
+      .form-strips { gap: 0.6rem; padding: 2rem 1rem; }
+      .form-strip__cta { width: 100%; text-align: center; white-space: nowrap; padding: 0.9rem 1rem; }
     }
 
     /* ═══════════════════════════════════════════
@@ -1135,7 +1306,7 @@
     .sticker.is-collapsing:hover::after { opacity: 0; }
 
     @media (max-width: 479px) {
-      .sticker { right: 1rem; bottom: 1rem; }
+      .sticker { right: 2rem; bottom: 1rem; }
       .sticker.is-pill { width: 36px; min-height: 36px; }
       .sticker.is-pill .sticker__tab { min-height: 36px; }
     }
@@ -1163,23 +1334,22 @@
     }
     .lightbox__close:hover { opacity: 1; transform: scale(1.2); }
     .lightbox__nav {
-      position: absolute; top: 50%; transform: translateY(-50%);
+      position: absolute; top: 10vh; bottom: 10vh; width: 25vw;
       background: none; border: none; color: var(--color-fg); font-size: 2.5rem;
       cursor: pointer; opacity: 0.6; transition: opacity 200ms;
-      padding: 1rem; z-index: 1201;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1201;
     }
     .lightbox__nav:hover { opacity: 1; }
-    .lightbox__prev { left: 1rem; }
-    .lightbox__next { right: 1rem; }
+    .lightbox__prev { left: 0; padding-right: 2rem; justify-content: flex-start; padding-left: 1rem; }
+    .lightbox__next { right: 0; padding-left: 2rem; justify-content: flex-end; padding-right: 1rem; }
     .lightbox__counter {
       position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
       color: var(--color-fg); font-family: var(--font-body);
       font-size: 0.85rem; letter-spacing: 0.1em; opacity: 0.6;
     }
     @media (max-width: 479px) {
-      .lightbox__nav { font-size: 1.8rem; padding: 0.5rem; }
-      .lightbox__prev { left: 0.5rem; }
-      .lightbox__next { right: 0.5rem; }
+      .lightbox__nav { font-size: 1.8rem; }
       .lightbox__close { top: 1rem; right: 1rem; font-size: 1.5rem; }
     }
     /* ═══════════════════════════════════════════
@@ -1506,145 +1676,15 @@
         </div>
       </section>
 
-      <!-- KONTAKT -->
+      <!-- KONTAKT + MITGLIED STRIPS -->
       <section class="section" id="kontakt">
-        <div class="section_wrapper">
-          <h2 class="reveal" data-i18n="contact.title">Kontakt</h2>
-          <div class="form-info reveal">
-            <p data-i18n="contact.intro">Fragen zum Training, zu den Standorten oder zur Anmeldung? Schreib uns einfach — wir melden uns innerhalb von 2 Werktagen.</p>
-            <div>
-              <p class="form-info__detail" data-i18n="contact.loc1.label">Standort 1</p>
-              <p class="contact__map-link" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990" data-i18n-html="contact.loc1.address">Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Wien</p>
-            </div>
-            <div>
-              <p class="form-info__detail" data-i18n="contact.loc2.label">Standort 2</p>
-              <p class="contact__map-link" data-location="Gymnasium am Augarten" data-address="Karajangasse 14, 1200 Wien" data-lat="48.2292" data-lng="16.3747" data-i18n-html="contact.loc2.address">Gymnasium am Augarten<br>Karajangasse 14, 1200 Wien</p>
-            </div>
-            <div>
-              <p class="form-info__detail" data-i18n="contact.email.label">E-Mail</p>
-              <p><a href="mailto:office@fudoshin.at" style="border-bottom:1px solid var(--color-border);">office@fudoshin.at</a></p>
-            </div>
+        <div class="form-strips reveal">
+          <div class="form-strip">
+            <button class="form-strip__cta" data-open-modal="contact" data-i18n="contact.strip.cta">Kontaktformular öffnen →</button>
           </div>
-          <form class="form-body reveal" name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="kontakt">
-            <p style="display:none"><input name="bot-field"></p>
-            <div class="form-grid">
-              <div class="form-field">
-                <label for="k-name" data-i18n="contact.form.name.label">Name *</label>
-                <input type="text" id="k-name" name="name" placeholder="Vorname Nachname" data-i18n-placeholder="contact.form.name.ph" required="">
-              </div>
-              <div class="form-field">
-                <label for="k-email" data-i18n="contact.form.email.label">E-Mail *</label>
-                <input type="email" id="k-email" name="email" placeholder="name@beispiel.at" data-i18n-placeholder="contact.form.email.ph" required="">
-              </div>
-              <div class="form-field">
-                <label for="k-phone" data-i18n="contact.form.phone.label">Telefon</label>
-                <input type="tel" id="k-phone" name="phone" placeholder="+43 ..." data-i18n-placeholder="contact.form.phone.ph">
-              </div>
-              <div class="form-field">
-                <label for="k-betreff" data-i18n="contact.form.subject.label">Betreff</label>
-                <select id="k-betreff" data-i18n-options="contact.form.subject" name="betreff">
-                  <option value="" disabled="" selected="">Bitte wählen</option>
-                  <option value="schnupper">Schnupperstunde</option>
-                  <option value="anmeldung">Anmeldung</option>
-                  <option value="preise">Fragen zu Preisen</option>
-                  <option value="training">Trainingszeiten</option>
-                  <option value="sonstiges">Sonstiges</option>
-                </select>
-              </div>
-              <div class="form-field form-grid--full">
-                <label for="k-nachricht" data-i18n="contact.form.message.label">Nachricht *</label>
-                <textarea id="k-nachricht" name="nachricht" placeholder="Deine Nachricht…" data-i18n-placeholder="contact.form.message.ph" required=""></textarea>
-              </div>
-            </div>
-            <button type="submit" class="form-submit" data-i18n="contact.form.submit">Nachricht senden →</button>
-          </form>
-        </div>
-      </section>
-
-      <!-- MITGLIED WERDEN -->
-      <section class="section" id="mitglied">
-        <div class="section_wrapper">
-          <h2 class="reveal" data-i18n="member.title">Mitglied werden</h2>
-          <div class="form-info reveal">
-            <p data-i18n="member.intro">Bereit, mit dem Training zu beginnen? Füll das Formular aus — wir kontaktieren dich, um alle Details zu besprechen und einen Einstiegstermin zu vereinbaren.</p>
-            <p data-i18n-html="member.alt">Nicht sicher? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Schreib uns zuerst</a> oder komm zur kostenlosen Schnupperstunde.</p>
-            <div>
-              <p class="form-info__detail" data-i18n="member.fee.label">Beitrag ab</p>
-              <p style="font-family:var(--font-display);font-size:2.5rem;line-height:1;"data-i18n-html="member.fee.amount">175€ <span style="font-size:1rem;opacity:0.5;">/ Semester</span></p>
-            </div>
+          <div class="form-strip" id="mitglied">
+            <button class="form-strip__cta form-strip__cta--accent" data-open-modal="member" data-i18n="member.strip.cta">Anmeldung öffnen →</button>
           </div>
-          <form class="form-body reveal" name="mitglied" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="mitglied">
-            <p style="display:none"><input name="bot-field"></p>
-            <div class="form-grid">
-              <p class="form-divider" data-i18n="member.form.div1">Persönliche Daten</p>
-              <div class="form-field">
-                <label for="m-vorname" data-i18n="member.form.firstname.label">Vorname *</label>
-                <input type="text" id="m-vorname" name="vorname" placeholder="Vorname" data-i18n-placeholder="member.form.firstname.ph" required="">
-              </div>
-              <div class="form-field">
-                <label for="m-nachname" data-i18n="member.form.lastname.label">Nachname *</label>
-                <input type="text" id="m-nachname" name="nachname" placeholder="Nachname" data-i18n-placeholder="member.form.lastname.ph" required="">
-              </div>
-              <div class="form-field">
-                <label for="m-geburt" data-i18n="member.form.dob.label">Geburtsdatum *</label>
-                <input type="date" id="m-geburt" name="geburtsdatum" required="">
-              </div>
-              <div class="form-field">
-                <label for="m-email" data-i18n="member.form.email.label">E-Mail *</label>
-                <input type="email" id="m-email" name="email" placeholder="name@beispiel.at" data-i18n-placeholder="member.form.email.ph" required="">
-              </div>
-              <div class="form-field">
-                <label for="m-phone" data-i18n="member.form.phone.label">Telefon *</label>
-                <input type="tel" id="m-phone" name="telefon" placeholder="+43 ..." data-i18n-placeholder="member.form.phone.ph" required="">
-              </div>
-              <div class="form-field form-grid--full">
-                <label for="m-adresse" data-i18n="member.form.address.label">Adresse</label>
-                <input type="text" id="m-adresse" name="adresse" placeholder="Straße, PLZ, Ort" data-i18n-placeholder="member.form.address.ph">
-              </div>
-              <p class="form-divider" data-i18n="member.form.div2">Training</p>
-              <div class="form-field form-grid--full form-field--check">
-                <label data-i18n="member.form.group.label">Gewünschte Gruppe *</label>
-                <div class="check-group">
-                  <label class="check-item" data-i18n-after="member.form.group.children"><input type="radio" name="gruppe" value="kinder" required=""> Kinder Anfänger (6–10 Jahre)</label>
-                  <label class="check-item" data-i18n-after="member.form.group.youth"><input type="radio" name="gruppe" value="jugendliche"> Jugendliche Fortgeschritten (11–18 Jahre)</label>
-                  <label class="check-item" data-i18n-after="member.form.group.adults"><input type="radio" name="gruppe" value="erwachsene"> Erwachsene alle Level</label>
-                </div>
-              </div>
-              <div class="form-field">
-                <label for="m-erfahrung" data-i18n="member.form.exp.label">Karate-Erfahrung</label>
-                <select id="m-erfahrung" data-i18n-options="member.form.exp" name="erfahrung">
-                  <option value="" disabled="" selected="">Bitte wählen</option>
-                  <option value="keine">Keine Erfahrung</option>
-                  <option value="anfaenger">Anfänger (unter 1 Jahr)</option>
-                  <option value="fortgeschritten">Fortgeschritten (1–5 Jahre)</option>
-                  <option value="erfahren">Erfahren (über 5 Jahre)</option>
-                </select>
-              </div>
-              <div class="form-field">
-                <label for="m-beitrag" data-i18n="member.form.fee.label">Gewünschter Beitrag</label>
-                <select id="m-beitrag" data-i18n-options="member.form.fee" name="beitrag">
-                  <option value="" disabled="" selected="">Bitte wählen</option>
-                  <option value="semester">Semester (175€)</option>
-                  <option value="jahr">Jahresbeitrag (320€)</option>
-                  <option value="familie">Familie / Geschwister (−20%)</option>
-                </select>
-              </div>
-              <div class="form-field form-grid--full form-field--check">
-                <label data-i18n="member.form.extra.label">Zusätzliches</label>
-                <div class="check-group">
-                  <label class="check-item" data-i18n-after="member.form.extra.trial"><input type="checkbox" name="schnupper" value="ja"> Ich möchte zuerst eine kostenlose Schnupperstunde</label>
-                  <label class="check-item" data-i18n-after="member.form.extra.news"><input type="checkbox" name="newsletter" value="ja"> Über Turniere und Veranstaltungen informiert werden</label>
-                </div>
-              </div>
-              <div class="form-field form-grid--full">
-                <label for="m-nachricht" data-i18n="member.form.notes.label">Anmerkungen</label>
-                <textarea id="m-nachricht" name="anmerkungen" placeholder="Gesundheitliche Hinweise, Fragen, etc." data-i18n-placeholder="member.form.notes.ph"></textarea>
-              </div>
-            </div>
-            <button type="submit" class="form-submit form-submit--accent" data-i18n="member.form.submit">Anmeldung absenden →</button>
-          </form>
         </div>
       </section>
 
@@ -1697,6 +1737,10 @@
       link.addEventListener('click', e => {
         const id = link.getAttribute('href');
         if (id === '#') return;
+
+        // #kontakt and #mitglied are handled by delegated modal handler (late script)
+        if (id === '#kontakt' || id === '#mitglied') return;
+
         const target = document.querySelector(id);
         if (!target) return;
         e.preventDefault();
@@ -1731,10 +1775,18 @@
       html.setAttribute('data-theme', localStorage.getItem('fudoshin-theme'));
     }
 
+    // Sync mobile browser chrome color with theme
+    const metaTheme = document.getElementById('metaThemeColor');
+    function updateThemeColor(theme) {
+      metaTheme.setAttribute('content', theme === 'dark' ? '#000000' : '#f7f7f7');
+    }
+    updateThemeColor(html.getAttribute('data-theme'));
+
     toggle.addEventListener('click', () => {
       const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
       localStorage.setItem('fudoshin-theme', next);
+      updateThemeColor(next);
       window.dispatchEvent(new CustomEvent('theme-change', { detail: next }));
     });
 
@@ -1890,6 +1942,7 @@
         'contact.form.subject.label': 'Betreff',
         'contact.form.message.label': 'Nachricht *',
         'contact.form.submit': 'Nachricht senden →',
+        'contact.strip.cta': 'Kontaktformular öffnen →',
         'contact.form.name.ph': 'Vorname Nachname',
         'contact.form.email.ph': 'name@beispiel.at',
         'contact.form.phone.ph': '+43 ...',
@@ -1914,6 +1967,7 @@
         'member.form.extra.label': 'Zusätzliches',
         'member.form.notes.label': 'Anmerkungen',
         'member.form.submit': 'Anmeldung absenden →',
+        'member.strip.cta': 'Anmeldung öffnen →',
         'member.form.firstname.ph': 'Vorname',
         'member.form.lastname.ph': 'Nachname',
         'member.form.email.ph': 'name@beispiel.at',
@@ -2038,6 +2092,7 @@
         'contact.form.subject.label': 'Subject',
         'contact.form.message.label': 'Message *',
         'contact.form.submit': 'Send message →',
+        'contact.strip.cta': 'Open contact form →',
         'contact.form.name.ph': 'First name Last name',
         'contact.form.email.ph': 'name@example.at',
         'contact.form.phone.ph': '+43 ...',
@@ -2062,6 +2117,7 @@
         'member.form.extra.label': 'Additional',
         'member.form.notes.label': 'Notes',
         'member.form.submit': 'Submit registration →',
+        'member.strip.cta': 'Open registration →',
         'member.form.firstname.ph': 'First name',
         'member.form.lastname.ph': 'Last name',
         'member.form.email.ph': 'name@example.at',
@@ -2186,6 +2242,7 @@
         'contact.form.subject.label': 'Konu',
         'contact.form.message.label': 'Mesaj *',
         'contact.form.submit': 'Mesaj gönder →',
+        'contact.strip.cta': 'İletişim formunu aç →',
         'contact.form.name.ph': 'Ad Soyad',
         'contact.form.email.ph': 'isim@ornek.at',
         'contact.form.phone.ph': '+43 ...',
@@ -2210,6 +2267,7 @@
         'member.form.extra.label': 'Ek bilgiler',
         'member.form.notes.label': 'Notlar',
         'member.form.submit': 'Kaydı gönder →',
+        'member.strip.cta': 'Kayıt formunu aç →',
         'member.form.firstname.ph': 'Ad',
         'member.form.lastname.ph': 'Soyad',
         'member.form.email.ph': 'isim@ornek.at',
@@ -2334,6 +2392,7 @@
         'contact.form.subject.label': 'Predmet',
         'contact.form.message.label': 'Poruka *',
         'contact.form.submit': 'Pošalji poruku →',
+        'contact.strip.cta': 'Otvori kontakt formu →',
         'contact.form.name.ph': 'Ime Prezime',
         'contact.form.email.ph': 'ime@primjer.at',
         'contact.form.phone.ph': '+43 ...',
@@ -2358,6 +2417,7 @@
         'member.form.extra.label': 'Dodatno',
         'member.form.notes.label': 'Napomene',
         'member.form.submit': 'Pošalji prijavu →',
+        'member.strip.cta': 'Otvori prijavu →',
         'member.form.firstname.ph': 'Ime',
         'member.form.lastname.ph': 'Prezime',
         'member.form.email.ph': 'ime@primjer.at',
@@ -2494,7 +2554,14 @@
     }
 
     // ── 6. CUSTOM SELECTS ────────────────────────────────────────────
-    document.querySelectorAll('.form-field select').forEach(native => {
+    function initCustomSelects(scope) {
+      (scope || document).querySelectorAll('.form-field select').forEach(native => {
+        if (native.closest('.custom-select')) return; // already initialised
+        _initOneCustomSelect(native);
+      });
+    }
+
+    function _initOneCustomSelect(native) {
       // Wrap
       const wrapper = document.createElement('div');
       wrapper.className = 'custom-select';
@@ -2561,7 +2628,9 @@
         wrapper.classList.remove('is-open');
         trigger.setAttribute('aria-expanded', 'false');
       });
-    });
+    }
+
+    initCustomSelects();
 
   </script>
 
@@ -2629,6 +2698,158 @@
     </div>
   </div>
 
+  <!-- ══════════════ CONTACT MODAL ══════════════ -->
+  <div class="contact-modal" id="contactModal" role="dialog" aria-modal="true">
+    <div class="contact-modal__panel">
+      <div class="contact-modal__header">
+        <div class="contact-modal__title" data-i18n="contact.title">Kontakt</div>
+        <button class="contact-modal__close" id="contactModalClose" aria-label="Schließen" data-i18n-aria="modal.close.aria">&#10005;</button>
+      </div>
+      <div class="contact-modal__body">
+        <div class="form-info">
+          <p data-i18n="contact.intro">Fragen zum Training, zu den Standorten oder zur Anmeldung? Schreib uns einfach — wir melden uns innerhalb von 2 Werktagen.</p>
+          <div>
+            <p class="form-info__detail" data-i18n="contact.loc1.label">Standort 1</p>
+            <p class="contact__map-link" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990" data-i18n-html="contact.loc1.address">Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Wien</p>
+          </div>
+          <div>
+            <p class="form-info__detail" data-i18n="contact.loc2.label">Standort 2</p>
+            <p class="contact__map-link" data-location="Gymnasium am Augarten" data-address="Karajangasse 14, 1200 Wien" data-lat="48.2292" data-lng="16.3747" data-i18n-html="contact.loc2.address">Gymnasium am Augarten<br>Karajangasse 14, 1200 Wien</p>
+          </div>
+          <div>
+            <p class="form-info__detail" data-i18n="contact.email.label">E-Mail</p>
+            <p><a href="mailto:office@fudoshin.at" style="border-bottom:1px solid var(--color-border);">office@fudoshin.at</a></p>
+          </div>
+        </div>
+        <form class="form-body" name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="kontakt">
+          <p style="display:none"><input name="bot-field"></p>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="k-name" data-i18n="contact.form.name.label">Name *</label>
+              <input type="text" id="k-name" name="name" placeholder="Vorname Nachname" data-i18n-placeholder="contact.form.name.ph" required="">
+            </div>
+            <div class="form-field">
+              <label for="k-email" data-i18n="contact.form.email.label">E-Mail *</label>
+              <input type="email" id="k-email" name="email" placeholder="name@beispiel.at" data-i18n-placeholder="contact.form.email.ph" required="">
+            </div>
+            <div class="form-field">
+              <label for="k-phone" data-i18n="contact.form.phone.label">Telefon</label>
+              <input type="tel" id="k-phone" name="phone" placeholder="+43 ..." data-i18n-placeholder="contact.form.phone.ph">
+            </div>
+            <div class="form-field">
+              <label for="k-betreff" data-i18n="contact.form.subject.label">Betreff</label>
+              <select id="k-betreff" data-i18n-options="contact.form.subject" name="betreff">
+                <option value="" disabled="" selected="">Bitte wählen</option>
+                <option value="schnupper">Schnupperstunde</option>
+                <option value="anmeldung">Anmeldung</option>
+                <option value="preise">Fragen zu Preisen</option>
+                <option value="training">Trainingszeiten</option>
+                <option value="sonstiges">Sonstiges</option>
+              </select>
+            </div>
+            <div class="form-field form-grid--full">
+              <label for="k-nachricht" data-i18n="contact.form.message.label">Nachricht *</label>
+              <textarea id="k-nachricht" name="nachricht" placeholder="Deine Nachricht…" data-i18n-placeholder="contact.form.message.ph" required=""></textarea>
+            </div>
+          </div>
+          <button type="submit" class="form-submit" data-i18n="contact.form.submit">Nachricht senden →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ MEMBER MODAL ══════════════ -->
+  <div class="member-modal" id="memberModal" role="dialog" aria-modal="true">
+    <div class="member-modal__panel">
+      <div class="member-modal__header">
+        <div class="member-modal__title" data-i18n="member.title">Mitglied werden</div>
+        <button class="member-modal__close" id="memberModalClose" aria-label="Schließen" data-i18n-aria="modal.close.aria">&#10005;</button>
+      </div>
+      <div class="member-modal__body">
+        <div class="form-info">
+          <p data-i18n="member.intro">Bereit, mit dem Training zu beginnen? Füll das Formular aus — wir kontaktieren dich, um alle Details zu besprechen und einen Einstiegstermin zu vereinbaren.</p>
+          <p data-i18n-html="member.alt">Nicht sicher? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Schreib uns zuerst</a> oder komm zur kostenlosen Schnupperstunde.</p>
+          <div>
+            <p class="form-info__detail" data-i18n="member.fee.label">Beitrag ab</p>
+            <p style="font-family:var(--font-display);font-size:2.5rem;line-height:1;"data-i18n-html="member.fee.amount">175€ <span style="font-size:1rem;opacity:0.5;">/ Semester</span></p>
+          </div>
+        </div>
+        <form class="form-body" name="mitglied" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="mitglied">
+          <p style="display:none"><input name="bot-field"></p>
+          <div class="form-grid">
+            <p class="form-divider" data-i18n="member.form.div1">Persönliche Daten</p>
+            <div class="form-field">
+              <label for="m-vorname" data-i18n="member.form.firstname.label">Vorname *</label>
+              <input type="text" id="m-vorname" name="vorname" placeholder="Vorname" data-i18n-placeholder="member.form.firstname.ph" required="">
+            </div>
+            <div class="form-field">
+              <label for="m-nachname" data-i18n="member.form.lastname.label">Nachname *</label>
+              <input type="text" id="m-nachname" name="nachname" placeholder="Nachname" data-i18n-placeholder="member.form.lastname.ph" required="">
+            </div>
+            <div class="form-field">
+              <label for="m-geburt" data-i18n="member.form.dob.label">Geburtsdatum *</label>
+              <input type="date" id="m-geburt" name="geburtsdatum" required="">
+            </div>
+            <div class="form-field">
+              <label for="m-email" data-i18n="member.form.email.label">E-Mail *</label>
+              <input type="email" id="m-email" name="email" placeholder="name@beispiel.at" data-i18n-placeholder="member.form.email.ph" required="">
+            </div>
+            <div class="form-field">
+              <label for="m-phone" data-i18n="member.form.phone.label">Telefon *</label>
+              <input type="tel" id="m-phone" name="telefon" placeholder="+43 ..." data-i18n-placeholder="member.form.phone.ph" required="">
+            </div>
+            <div class="form-field form-grid--full">
+              <label for="m-adresse" data-i18n="member.form.address.label">Adresse</label>
+              <input type="text" id="m-adresse" name="adresse" placeholder="Straße, PLZ, Ort" data-i18n-placeholder="member.form.address.ph">
+            </div>
+            <p class="form-divider" data-i18n="member.form.div2">Training</p>
+            <div class="form-field form-grid--full form-field--check">
+              <label data-i18n="member.form.group.label">Gewünschte Gruppe *</label>
+              <div class="check-group">
+                <label class="check-item" data-i18n-after="member.form.group.children"><input type="radio" name="gruppe" value="kinder" required=""> Kinder Anfänger (6–10 Jahre)</label>
+                <label class="check-item" data-i18n-after="member.form.group.youth"><input type="radio" name="gruppe" value="jugendliche"> Jugendliche Fortgeschritten (11–18 Jahre)</label>
+                <label class="check-item" data-i18n-after="member.form.group.adults"><input type="radio" name="gruppe" value="erwachsene"> Erwachsene alle Level</label>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="m-erfahrung" data-i18n="member.form.exp.label">Karate-Erfahrung</label>
+              <select id="m-erfahrung" data-i18n-options="member.form.exp" name="erfahrung">
+                <option value="" disabled="" selected="">Bitte wählen</option>
+                <option value="keine">Keine Erfahrung</option>
+                <option value="anfaenger">Anfänger (unter 1 Jahr)</option>
+                <option value="fortgeschritten">Fortgeschritten (1–5 Jahre)</option>
+                <option value="erfahren">Erfahren (über 5 Jahre)</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="m-beitrag" data-i18n="member.form.fee.label">Gewünschter Beitrag</label>
+              <select id="m-beitrag" data-i18n-options="member.form.fee" name="beitrag">
+                <option value="" disabled="" selected="">Bitte wählen</option>
+                <option value="semester">Semester (175€)</option>
+                <option value="jahr">Jahresbeitrag (320€)</option>
+                <option value="familie">Familie / Geschwister (−20%)</option>
+              </select>
+            </div>
+            <div class="form-field form-grid--full form-field--check">
+              <label data-i18n="member.form.extra.label">Zusätzliches</label>
+              <div class="check-group">
+                <label class="check-item" data-i18n-after="member.form.extra.trial"><input type="checkbox" name="schnupper" value="ja"> Ich möchte zuerst eine kostenlose Schnupperstunde</label>
+                <label class="check-item" data-i18n-after="member.form.extra.news"><input type="checkbox" name="newsletter" value="ja"> Über Turniere und Veranstaltungen informiert werden</label>
+              </div>
+            </div>
+            <div class="form-field form-grid--full">
+              <label for="m-nachricht" data-i18n="member.form.notes.label">Anmerkungen</label>
+              <textarea id="m-nachricht" name="anmerkungen" placeholder="Gesundheitliche Hinweise, Fragen, etc." data-i18n-placeholder="member.form.notes.ph"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="form-submit form-submit--accent" data-i18n="member.form.submit">Anmeldung absenden →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- ══════════════ STICKER ══════════════ -->
 
   <div class="sticker" id="the-sticker" data-shape="sharp" data-align="left" data-tooltip="Sommer Camp 2026">
@@ -2674,16 +2895,16 @@
         }
       });
 
-      // Morph to pill once user has scrolled past 30% of the page
+      // Morph to pill once user has scrolled past the training section
       let ticking = false;
+      const trainingSection = document.getElementById('training');
 
       function onScroll() {
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(() => {
           ticking = false;
-          const scrollPct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-          const shouldPill = scrollPct > 0.3;
+          const shouldPill = trainingSection && trainingSection.getBoundingClientRect().top < window.innerHeight;
 
           if (shouldPill && !userCollapsed) {
             sticker.classList.remove('is-expanding');
@@ -2793,9 +3014,14 @@
       }
     }
 
+    function restoreOverflow() {
+      const anyOpen = document.querySelector('.map-modal.is-open, .legal-modal.is-open, .contact-modal.is-open, .member-modal.is-open, .lightbox.is-open');
+      if (!anyOpen) document.body.style.overflow = '';
+    }
+
     function closeMap() {
       mapModal.classList.remove('is-open');
-      document.body.style.overflow = '';
+      restoreOverflow();
     }
 
     document.querySelectorAll('.schedule-row__location[data-lat]').forEach(el => {
@@ -2832,7 +3058,7 @@
     }
     function closeLegal() {
       legalModal.classList.remove('is-open');
-      document.body.style.overflow = '';
+      restoreOverflow();
     }
 
     legalTabs.forEach(tab => tab.addEventListener('click', () => openLegal(tab.dataset.legalTab)));
@@ -2849,6 +3075,70 @@
         e.preventDefault(); openLegal('impressum');
       } else if (text.includes('datenschutz') || text.includes('privacy') || text.includes('gizlilik') || text.includes('privatnost')) {
         e.preventDefault(); openLegal('datenschutz');
+      }
+    });
+
+    // Initialise custom selects inside modals (parsed after the first init run)
+    initCustomSelects(document.getElementById('contactModal'));
+    initCustomSelects(document.getElementById('memberModal'));
+
+    // ── CONTACT MODAL ─────────────────────────────────────────────
+    const contactModal = document.getElementById('contactModal');
+
+    function openContact() {
+      contactModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeContact() {
+      contactModal.classList.remove('is-open');
+      restoreOverflow();
+    }
+
+    document.getElementById('contactModalClose').addEventListener('click', closeContact);
+    contactModal.addEventListener('click', e => { if (e.target === contactModal) closeContact(); });
+
+    // ── MEMBER MODAL ──────────────────────────────────────────────
+    const memberModal = document.getElementById('memberModal');
+
+    function openMember() {
+      memberModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMember() {
+      memberModal.classList.remove('is-open');
+      restoreOverflow();
+    }
+
+    document.getElementById('memberModalClose').addEventListener('click', closeMember);
+    memberModal.addEventListener('click', e => { if (e.target === memberModal) closeMember(); });
+
+    // Escape key for form modals
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (contactModal.classList.contains('is-open')) closeContact();
+        if (memberModal.classList.contains('is-open')) closeMember();
+      }
+    });
+
+    // Strip CTA buttons
+    document.querySelectorAll('[data-open-modal="contact"]').forEach(btn =>
+      btn.addEventListener('click', openContact));
+    document.querySelectorAll('[data-open-modal="member"]').forEach(btn =>
+      btn.addEventListener('click', openMember));
+
+    // Delegated handler for ALL #kontakt / #mitglied links (nav, sticker, footer, cross-links)
+    document.addEventListener('click', e => {
+      const link = e.target.closest('a[href="#kontakt"], a[href="#mitglied"]');
+      if (!link) return;
+      const href = link.getAttribute('href');
+      e.preventDefault();
+      // Close the other modal if open
+      if (href === '#kontakt') {
+        if (memberModal.classList.contains('is-open')) closeMember();
+        setTimeout(openContact, 60);
+      } else {
+        if (contactModal.classList.contains('is-open')) closeContact();
+        setTimeout(openMember, 60);
       }
     });
   </script>
@@ -2870,9 +3160,34 @@
       const images    = Array.from(document.querySelectorAll('.photo-grid .wrapper_image img'));
       let currentIdx  = 0;
 
+      // ── Preload all full-size images ──
+      var preloaded = false;
+      function preloadFullImages() {
+        if (preloaded) return;
+        preloaded = true;
+        images.forEach(function(img) {
+          var src = img.dataset.full || img.src;
+          var link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.as = 'image';
+          link.href = src;
+          document.head.appendChild(link);
+        });
+      }
+      // Start preloading once page is idle or on first grid hover/touch
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(preloadFullImages);
+      } else {
+        setTimeout(preloadFullImages, 2000);
+      }
+      var gridEl = document.querySelector('.photo-grid');
+      if (gridEl) {
+        gridEl.addEventListener('pointerenter', preloadFullImages, { once: true });
+      }
+
       function openLightbox(idx) {
         currentIdx = idx;
-        const img = images[idx];
+        var img = images[idx];
         lbImg.src = img.dataset.full || img.src;
         lbImg.alt = img.alt;
         lbCounter.textContent = (idx + 1) + ' / ' + images.length;
@@ -2888,7 +3203,7 @@
 
       function navigate(dir) {
         currentIdx = (currentIdx + dir + images.length) % images.length;
-        const img = images[currentIdx];
+        var img = images[currentIdx];
         lbImg.src = img.dataset.full || img.src;
         lbImg.alt = img.alt;
         lbCounter.textContent = (currentIdx + 1) + ' / ' + images.length;
@@ -2906,6 +3221,41 @@
       lightbox.addEventListener('click', function(e) {
         closeLightbox();
       });
+
+      // ── Touch swipe support ──
+      var touchStartX = 0;
+      var touchStartY = 0;
+      var touchDeltaX = 0;
+      var swiping = false;
+
+      lightbox.addEventListener('touchstart', function(e) {
+        if (!lightbox.classList.contains('is-open')) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchDeltaX = 0;
+        swiping = true;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchmove', function(e) {
+        if (!swiping) return;
+        touchDeltaX = e.touches[0].clientX - touchStartX;
+        var deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+        // If vertical scroll intent, cancel swipe
+        if (deltaY > Math.abs(touchDeltaX)) { swiping = false; return; }
+        // Hint: slight image shift while swiping
+        if (Math.abs(touchDeltaX) > 10) {
+          lbImg.style.transform = 'translateX(' + (touchDeltaX * 0.3) + 'px)';
+        }
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', function(e) {
+        if (!swiping) { lbImg.style.transform = ''; return; }
+        swiping = false;
+        lbImg.style.transform = '';
+        var threshold = 50;
+        if (touchDeltaX < -threshold) { navigate(1); }
+        else if (touchDeltaX > threshold) { navigate(-1); }
+      }, { passive: true });
 
       document.addEventListener('keydown', function(e) {
         if (!lightbox.classList.contains('is-open')) return;
