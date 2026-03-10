@@ -54,8 +54,8 @@
        MOBILE TAP & PRESS STATES
     ═══════════════════════════════════════════ */
     @media (hover: none) and (pointer: coarse) {
-      /* Eliminate 300ms tap-highlight delay */
-      a, button { -webkit-tap-highlight-color: transparent; }
+      /* Eliminate tap-highlight on all interactive elements */
+      *, *::before, *::after { -webkit-tap-highlight-color: transparent; }
 
       /* Subtle scale-down on press for haptic feel */
       .nav__links a:active,
@@ -836,7 +836,8 @@
        CONTACT + MEMBER MODALS
     ═══════════════════════════════════════════ */
     .contact-modal,
-    .member-modal {
+    .member-modal,
+    .camp-modal {
       display: flex; position: fixed; inset: 0;
       z-index: 1100;
       background: rgba(0,0,0,0);
@@ -846,12 +847,14 @@
       transition: background 380ms var(--ease-out), opacity 380ms var(--ease-out);
     }
     .contact-modal.is-open,
-    .member-modal.is-open {
+    .member-modal.is-open,
+    .camp-modal.is-open {
       opacity: 1; pointer-events: all;
       background: rgba(0,0,0,0.72);
     }
     .contact-modal__panel,
-    .member-modal__panel {
+    .member-modal__panel,
+    .camp-modal__panel {
       background: var(--color-bg);
       border: 1px solid var(--color-border);
       width: 100%; max-width: 900px;
@@ -862,54 +865,97 @@
       transition: transform 420ms var(--ease-out), opacity 380ms ease, var(--t-theme);
     }
     .contact-modal.is-open .contact-modal__panel,
-    .member-modal.is-open .member-modal__panel {
+    .member-modal.is-open .member-modal__panel,
+    .camp-modal.is-open .camp-modal__panel {
       transform: scale(1) translateY(0);
       opacity: 1;
     }
     .contact-modal__header,
-    .member-modal__header {
+    .member-modal__header,
+    .camp-modal__header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.2rem clamp(1.5rem, 3vw, 2.5rem);
       border-bottom: 1px solid var(--color-border);
       flex-shrink: 0;
     }
     .contact-modal__title,
-    .member-modal__title {
+    .member-modal__title,
+    .camp-modal__title {
       font-family: var(--font-display);
       font-size: 1.1rem; letter-spacing: 0.06em; text-transform: uppercase;
     }
     .contact-modal__close,
-    .member-modal__close {
+    .member-modal__close,
+    .camp-modal__close {
       background: none; border: none; cursor: pointer;
       color: var(--color-fg); font-size: 0.9rem; opacity: 0.45;
       padding: 0.25rem; transition: opacity 150ms ease, transform 150ms ease;
       flex-shrink: 0;
     }
     .contact-modal__close:hover,
-    .member-modal__close:hover { opacity: 1; transform: scale(1.2); }
+    .member-modal__close:hover,
+    .camp-modal__close:hover { opacity: 1; transform: scale(1.2); }
     .contact-modal__body,
-    .member-modal__body {
+    .member-modal__body,
+    .camp-modal__body {
       overflow-y: auto; padding: clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 3.5vw, 2.5rem);
       display: flex; flex-direction: column; gap: clamp(1rem, 3vw, 2rem);
     }
     .contact-modal__body .form-info,
-    .member-modal__body .form-info {
+    .member-modal__body .form-info,
+    .camp-modal__body .form-info {
       grid-column: unset; padding-right: 0;
       border-right: none;
       border-bottom: 1px solid var(--color-border);
       padding-bottom: 1.5rem;
     }
     .contact-modal__body .form-body,
-    .member-modal__body .form-body { grid-column: unset; }
+    .member-modal__body .form-body,
+    .camp-modal__body .form-body { grid-column: unset; }
     .contact-modal__body .form-grid,
-    .member-modal__body .form-grid { grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
+    .member-modal__body .form-grid,
+    .camp-modal__body .form-grid { grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
     /* Boost contrast inside modals */
     .contact-modal__body .form-info p,
-    .member-modal__body .form-info p { opacity: 0.9; }
+    .member-modal__body .form-info p,
+    .camp-modal__body .form-info p { opacity: 0.9; }
     .contact-modal__body .form-info__detail,
-    .member-modal__body .form-info__detail { opacity: 0.7; }
+    .member-modal__body .form-info__detail,
+    .camp-modal__body .form-info__detail { opacity: 0.7; }
     .contact-modal__body .form-field label,
-    .member-modal__body .form-field label { opacity: 0.85; }
+    .member-modal__body .form-field label,
+    .camp-modal__body .form-field label { opacity: 0.85; }
+
+    /* ── Camp-specific: info table + gallery ── */
+    .camp-info-table {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.75rem 1.5rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .camp-info-table dt {
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
+      opacity: 0.5; font-weight: 700; padding-top: 0.15rem;
+    }
+    .camp-info-table dd { margin: 0; }
+    .camp-modal__gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+    .camp-modal__gallery img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      cursor: pointer;
+      transition: transform 400ms var(--ease-out), filter 300ms ease;
+    }
+    .camp-modal__gallery img:hover { transform: scale(1.03); filter: brightness(1.1); }
+    @media (max-width: 479px) {
+      .camp-modal__gallery { grid-template-columns: repeat(2, 1fr); }
+      .camp-info-table { grid-template-columns: 1fr; gap: 0.25rem 0; }
+      .camp-info-table dt { padding-top: 0.75rem; }
+    }
 
     @media (max-width: 768px) {
       .schedule-row { grid-template-columns: 1fr 1fr; row-gap: 0.5rem; padding: 1.5rem 0; }
@@ -1072,6 +1118,10 @@
     .form-submit:active { transform: scale(0.98); }
     .form-submit--accent { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
     .form-submit--accent:hover { background: var(--color-fg); color: var(--color-bg); border-color: var(--color-fg); }
+    .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .form-msg { margin-top: 1.5rem; padding: 1rem 1.5rem; border-radius: 4px; font-size: 0.95rem; line-height: 1.5; }
+    .form-msg--ok { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+    .form-msg--err { background: #fce4ec; color: #c62828; border: 1px solid #ef9a9a; }
 
     .form-divider {
       grid-column: 1 / -1;
@@ -1451,6 +1501,7 @@
       <li><a href="#preise" data-i18n="nav.pricing">Preise</a></li>
       <li><a href="#team" data-i18n="nav.team">Team</a></li>
       <li><a href="#aktivitaeten" data-i18n="nav.activities">Aktivitäten</a></li>
+      <li><a href="#sommercamp" data-i18n="nav.camp">Sommercamp</a></li>
       <li><a href="#kontakt" data-i18n="nav.contact">Kontakt</a></li>
       <li><a href="#mitglied" class="nav__cta" data-i18n="nav.cta">Mitglied werden</a></li>
     </ul>
@@ -1480,6 +1531,7 @@
     <a href="#preise" data-i18n="nav.pricing">Preise</a>
     <a href="#team" data-i18n="nav.team">Team</a>
     <a href="#aktivitaeten" data-i18n="nav.activities">Aktivitäten</a>
+    <a href="#sommercamp" data-i18n="nav.camp">Sommercamp</a>
     <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
     <a href="#mitglied" class="nav__cta-overlay" data-i18n="nav.cta">Mitglied werden</a>
     <div class="nav__overlay-footer">
@@ -1739,7 +1791,7 @@
         if (id === '#') return;
 
         // #kontakt and #mitglied are handled by delegated modal handler (late script)
-        if (id === '#kontakt' || id === '#mitglied') return;
+        if (id === '#kontakt' || id === '#mitglied' || id === '#sommercamp') return;
 
         const target = document.querySelector(id);
         if (!target) return;
@@ -1871,6 +1923,7 @@
         'nav.pricing': 'Preise',
         'nav.team': 'Team',
         'nav.activities': 'Aktivitäten',
+        'nav.camp': 'Sommercamp',
         'nav.contact': 'Kontakt',
         'nav.cta': 'Mitglied werden',
         'nav.theme.aria': 'Theme wechseln',
@@ -2008,6 +2061,44 @@
         'lightbox.close.aria': 'Schließen',
         'lightbox.prev.aria': 'Vorheriges Bild',
         'lightbox.next.aria': 'Nächstes Bild',
+        'camp.title': 'Sommer Camp 2026',
+        'camp.intro': 'Eine Woche voller Karate, Spiel und Spaß — für Kinder und Jugendliche aller Erfahrungsstufen. Trainiert wird täglich von erfahrenen Trainern in einer freundlichen, motivierenden Atmosphäre.',
+        'camp.cost.label': 'Teilnahmegebühr',
+        'camp.table.dates.label': 'Datum',
+        'camp.table.dates.value': '14.–18. Juli 2026 (Mo–Fr)',
+        'camp.table.times.label': 'Uhrzeit',
+        'camp.table.times.value': '9:00–15:00 Uhr',
+        'camp.table.ages.label': 'Alter',
+        'camp.table.ages.value': '6–14 Jahre',
+        'camp.table.location.label': 'Ort',
+        'camp.table.location.value': 'Volksschule Wolfgang-Schmälzlgasse, 1020 Wien',
+        'camp.table.cost.label': 'Kosten',
+        'camp.table.cost.value': '220 € pro Teilnehmer',
+        'camp.table.payment.label': 'Zahlung',
+        'camp.table.payment.value': 'Überweisung auf IBAN AT81 2011 1843 2757 9400<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)',
+        'camp.table.included.label': 'Inklusive',
+        'camp.table.included.value': 'Karate-Training, Spiele & Bewegung, Mittagessen & Snacks, Urkunde, Camp-T-Shirt',
+        'camp.table.bring.label': 'Mitbringen',
+        'camp.table.bring.value': 'Gi oder Sportkleidung, Trinkflasche, Hallenschuhe',
+        'camp.form.div1': 'Teilnehmer',
+        'camp.form.firstname.label': 'Vorname des Kindes *',
+        'camp.form.firstname.ph': 'Vorname',
+        'camp.form.lastname.label': 'Nachname *',
+        'camp.form.lastname.ph': 'Nachname',
+        'camp.form.dob.label': 'Geburtsdatum *',
+        'camp.form.email.label': 'E-Mail (Eltern) *',
+        'camp.form.email.ph': 'name@beispiel.at',
+        'camp.form.phone.label': 'Telefon (Eltern) *',
+        'camp.form.phone.ph': '+43 ...',
+        'camp.form.div2': 'Training',
+        'camp.form.exp.label': 'Karate-Erfahrung',
+        'camp.form.exp': ['Bitte wählen', 'Keine Erfahrung', 'Anfänger (unter 1 Jahr)', 'Fortgeschritten (1–3 Jahre)', 'Erfahren (über 3 Jahre)'],
+        'camp.form.gi': ' Eigenen Gi (Karateanzug) vorhanden',
+        'camp.form.div3': 'Sonstiges',
+        'camp.form.notes.label': 'Anmerkungen',
+        'camp.form.notes.ph': 'Allergien, gesundheitliche Hinweise, Fragen, etc.',
+        'camp.form.terms': ' Ich bestätige die Anmeldung und überweise die Teilnahmegebühr von 220 € auf das angegebene Konto.',
+        'camp.form.submit': 'Anmeldung absenden →',
         'sticker.label': 'Sommer 2026',
         'sticker.headline': 'Sommer-<br>Camp',
         'sticker.detail': '14 — 18 Juli<br>Kinder &amp; Jugendliche',
@@ -2021,6 +2112,7 @@
         'nav.pricing': 'Prices',
         'nav.team': 'Team',
         'nav.activities': 'Activities',
+        'nav.camp': 'Summer Camp',
         'nav.contact': 'Contact',
         'nav.cta': 'Become a member',
         'nav.theme.aria': 'Switch theme',
@@ -2158,6 +2250,44 @@
         'lightbox.close.aria': 'Close',
         'lightbox.prev.aria': 'Previous image',
         'lightbox.next.aria': 'Next image',
+        'camp.title': 'Summer Camp 2026',
+        'camp.intro': 'A week full of karate, games and fun — for children and young people of all experience levels. Daily training led by experienced instructors in a friendly, motivating atmosphere.',
+        'camp.cost.label': 'Participation fee',
+        'camp.table.dates.label': 'Dates',
+        'camp.table.dates.value': '14–18 July 2026 (Mon–Fri)',
+        'camp.table.times.label': 'Times',
+        'camp.table.times.value': '9:00 AM – 3:00 PM',
+        'camp.table.ages.label': 'Ages',
+        'camp.table.ages.value': '6–14 years',
+        'camp.table.location.label': 'Location',
+        'camp.table.location.value': 'Volksschule Wolfgang-Schmälzlgasse, 1020 Vienna',
+        'camp.table.cost.label': 'Cost',
+        'camp.table.cost.value': '€220 per participant',
+        'camp.table.payment.label': 'Payment',
+        'camp.table.payment.value': 'Bank transfer to IBAN AT81 2011 1843 2757 9400<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)',
+        'camp.table.included.label': 'Included',
+        'camp.table.included.value': 'Karate training, games & activities, lunch & snacks, certificate, camp T-shirt',
+        'camp.table.bring.label': 'What to bring',
+        'camp.table.bring.value': 'Gi or sportswear, water bottle, indoor shoes',
+        'camp.form.div1': 'Participant',
+        'camp.form.firstname.label': 'Child\'s first name *',
+        'camp.form.firstname.ph': 'First name',
+        'camp.form.lastname.label': 'Last name *',
+        'camp.form.lastname.ph': 'Last name',
+        'camp.form.dob.label': 'Date of birth *',
+        'camp.form.email.label': 'E-mail (parent) *',
+        'camp.form.email.ph': 'name@example.com',
+        'camp.form.phone.label': 'Phone (parent) *',
+        'camp.form.phone.ph': '+43 ...',
+        'camp.form.div2': 'Training',
+        'camp.form.exp.label': 'Karate experience',
+        'camp.form.exp': ['Please select', 'No experience', 'Beginner (under 1 year)', 'Intermediate (1–3 years)', 'Experienced (over 3 years)'],
+        'camp.form.gi': ' Own gi (karate uniform) available',
+        'camp.form.div3': 'Other',
+        'camp.form.notes.label': 'Notes',
+        'camp.form.notes.ph': 'Allergies, health information, questions, etc.',
+        'camp.form.terms': ' I confirm the registration and will transfer the participation fee of €220 to the specified account.',
+        'camp.form.submit': 'Submit registration →',
         'sticker.label': 'Summer 2026',
         'sticker.headline': 'Summer<br>Camp',
         'sticker.detail': '14 — 18 July<br>Children &amp; Youth',
@@ -2171,6 +2301,7 @@
         'nav.pricing': 'Fiyatlar',
         'nav.team': 'Ekip',
         'nav.activities': 'Etkinlikler',
+        'nav.camp': 'Yaz Kampı',
         'nav.contact': 'İletişim',
         'nav.cta': 'Üye ol',
         'nav.theme.aria': 'Tema değiştir',
@@ -2308,6 +2439,44 @@
         'lightbox.close.aria': 'Kapat',
         'lightbox.prev.aria': 'Önceki fotoğraf',
         'lightbox.next.aria': 'Sonraki fotoğraf',
+        'camp.title': 'Yaz Kampı 2026',
+        'camp.intro': 'Karate, oyun ve eğlence dolu bir hafta — her deneyim seviyesinden çocuklar ve gençler için. Deneyimli eğitmenler tarafından samimi ve motive edici bir ortamda günlük antrenman.',
+        'camp.cost.label': 'Katılım ücreti',
+        'camp.table.dates.label': 'Tarih',
+        'camp.table.dates.value': '14–18 Temmuz 2026 (Pzt–Cum)',
+        'camp.table.times.label': 'Saat',
+        'camp.table.times.value': '9:00–15:00',
+        'camp.table.ages.label': 'Yaş',
+        'camp.table.ages.value': '6–14 yaş',
+        'camp.table.location.label': 'Yer',
+        'camp.table.location.value': 'Volksschule Wolfgang-Schmälzlgasse, 1020 Viyana',
+        'camp.table.cost.label': 'Ücret',
+        'camp.table.cost.value': 'Katılımcı başına 220 €',
+        'camp.table.payment.label': 'Ödeme',
+        'camp.table.payment.value': 'IBAN AT81 2011 1843 2757 9400 hesabına havale<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)',
+        'camp.table.included.label': 'Dahil',
+        'camp.table.included.value': 'Karate eğitimi, oyunlar ve aktiviteler, öğle yemeği ve atıştırmalıklar, sertifika, kamp tişörtü',
+        'camp.table.bring.label': 'Getirilecekler',
+        'camp.table.bring.value': 'Gi veya spor kıyafeti, su şişesi, salon ayakkabısı',
+        'camp.form.div1': 'Katılımcı',
+        'camp.form.firstname.label': 'Çocuğun adı *',
+        'camp.form.firstname.ph': 'Ad',
+        'camp.form.lastname.label': 'Soyadı *',
+        'camp.form.lastname.ph': 'Soyadı',
+        'camp.form.dob.label': 'Doğum tarihi *',
+        'camp.form.email.label': 'E-posta (ebeveyn) *',
+        'camp.form.email.ph': 'isim@ornek.com',
+        'camp.form.phone.label': 'Telefon (ebeveyn) *',
+        'camp.form.phone.ph': '+43 ...',
+        'camp.form.div2': 'Antrenman',
+        'camp.form.exp.label': 'Karate deneyimi',
+        'camp.form.exp': ['Lütfen seçin', 'Deneyim yok', 'Başlangıç (1 yıldan az)', 'Orta düzey (1–3 yıl)', 'Deneyimli (3 yıldan fazla)'],
+        'camp.form.gi': ' Kendi gi (karate üniforması) mevcut',
+        'camp.form.div3': 'Diğer',
+        'camp.form.notes.label': 'Notlar',
+        'camp.form.notes.ph': 'Alerjiler, sağlık bilgileri, sorular, vb.',
+        'camp.form.terms': ' Kaydı onaylıyor ve 220 € katılım ücretini belirtilen hesaba havale edeceğimi taahhüt ediyorum.',
+        'camp.form.submit': 'Kaydı gönder →',
         'sticker.label': 'Yaz 2026',
         'sticker.headline': 'Yaz<br>Kampı',
         'sticker.detail': '14 — 18 Temmuz<br>Çocuklar &amp; Gençler',
@@ -2321,6 +2490,7 @@
         'nav.pricing': 'Cijene',
         'nav.team': 'Tim',
         'nav.activities': 'Aktivnosti',
+        'nav.camp': 'Ljetni kamp',
         'nav.contact': 'Kontakt',
         'nav.cta': 'Postani član',
         'nav.theme.aria': 'Promijeni temu',
@@ -2458,6 +2628,44 @@
         'lightbox.close.aria': 'Zatvori',
         'lightbox.prev.aria': 'Prethodna slika',
         'lightbox.next.aria': 'Sljedeća slika',
+        'camp.title': 'Ljetni Kamp 2026',
+        'camp.intro': 'Sedmica puna karatea, igara i zabave — za djecu i mlade svih nivoa iskustva. Svakodnevni treninzi pod vodstvom iskusnih trenera u prijateljskoj i motivirajućoj atmosferi.',
+        'camp.cost.label': 'Kotizacija',
+        'camp.table.dates.label': 'Datum',
+        'camp.table.dates.value': '14.–18. juli 2026 (pon–pet)',
+        'camp.table.times.label': 'Vrijeme',
+        'camp.table.times.value': '9:00–15:00',
+        'camp.table.ages.label': 'Uzrast',
+        'camp.table.ages.value': '6–14 godina',
+        'camp.table.location.label': 'Mjesto',
+        'camp.table.location.value': 'Volksschule Wolfgang-Schmälzlgasse, 1020 Beč',
+        'camp.table.cost.label': 'Cijena',
+        'camp.table.cost.value': '220 € po učesniku',
+        'camp.table.payment.label': 'Plaćanje',
+        'camp.table.payment.value': 'Uplata na IBAN AT81 2011 1843 2757 9400<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)',
+        'camp.table.included.label': 'Uključeno',
+        'camp.table.included.value': 'Karate trening, igre i aktivnosti, ručak i užina, certifikat, kamp majica',
+        'camp.table.bring.label': 'Ponijeti',
+        'camp.table.bring.value': 'Gi ili sportska odjeća, boca za vodu, patike za dvoranu',
+        'camp.form.div1': 'Učesnik',
+        'camp.form.firstname.label': 'Ime djeteta *',
+        'camp.form.firstname.ph': 'Ime',
+        'camp.form.lastname.label': 'Prezime *',
+        'camp.form.lastname.ph': 'Prezime',
+        'camp.form.dob.label': 'Datum rođenja *',
+        'camp.form.email.label': 'E-mail (roditelj) *',
+        'camp.form.email.ph': 'ime@primjer.com',
+        'camp.form.phone.label': 'Telefon (roditelj) *',
+        'camp.form.phone.ph': '+43 ...',
+        'camp.form.div2': 'Trening',
+        'camp.form.exp.label': 'Karate iskustvo',
+        'camp.form.exp': ['Molimo odaberite', 'Bez iskustva', 'Početnik (manje od 1 godine)', 'Srednji nivo (1–3 godine)', 'Iskusan (više od 3 godine)'],
+        'camp.form.gi': ' Posjedujem vlastiti gi (karate uniformu)',
+        'camp.form.div3': 'Ostalo',
+        'camp.form.notes.label': 'Napomene',
+        'camp.form.notes.ph': 'Alergije, zdravstvene informacije, pitanja, itd.',
+        'camp.form.terms': ' Potvrđujem prijavu i uplatit ću kotizaciju od 220 € na navedeni račun.',
+        'camp.form.submit': 'Pošalji prijavu →',
         'sticker.label': 'Ljeto 2026',
         'sticker.headline': 'Ljetni<br>Kamp',
         'sticker.detail': '14 — 18 Juli<br>Djeca &amp; Omladina',
@@ -2710,20 +2918,23 @@
           <p data-i18n="contact.intro">Fragen zum Training, zu den Standorten oder zur Anmeldung? Schreib uns einfach — wir melden uns innerhalb von 2 Werktagen.</p>
           <div>
             <p class="form-info__detail" data-i18n="contact.loc1.label">Standort 1</p>
-            <p class="contact__map-link" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990" data-i18n-html="contact.loc1.address">Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Wien</p>
+            <p data-i18n-html="contact.loc1.address">Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Wien</p>
           </div>
           <div>
             <p class="form-info__detail" data-i18n="contact.loc2.label">Standort 2</p>
-            <p class="contact__map-link" data-location="Gymnasium am Augarten" data-address="Karajangasse 14, 1200 Wien" data-lat="48.2292" data-lng="16.3747" data-i18n-html="contact.loc2.address">Gymnasium am Augarten<br>Karajangasse 14, 1200 Wien</p>
+            <p data-i18n-html="contact.loc2.address">Gymnasium am Augarten<br>Karajangasse 14, 1200 Wien</p>
           </div>
           <div>
             <p class="form-info__detail" data-i18n="contact.email.label">E-Mail</p>
             <p><a href="mailto:office@fudoshin.at" style="border-bottom:1px solid var(--color-border);">office@fudoshin.at</a></p>
           </div>
         </div>
-        <form class="form-body" name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="kontakt">
-          <p style="display:none"><input name="bot-field"></p>
+        <form class="form-body" name="kontakt" method="POST" action="https://formsubmit.co/ajax/5e22b81a08dbc507c27809f55303960b">
+          <input type="hidden" name="_subject" value="Fudoshin Karate — Kontaktformular">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="Open Spreadsheet" value="https://docs.google.com/spreadsheets/d/1jK0U-7jsn28zrsrx-rRlyb3lNGp9U2o-CNIlfm0dHtg/edit#gid=773346652">
+          <p style="display:none"><input name="_honey"></p>
           <div class="form-grid">
             <div class="form-field">
               <label for="k-name" data-i18n="contact.form.name.label">Name *</label>
@@ -2741,11 +2952,11 @@
               <label for="k-betreff" data-i18n="contact.form.subject.label">Betreff</label>
               <select id="k-betreff" data-i18n-options="contact.form.subject" name="betreff">
                 <option value="" disabled="" selected="">Bitte wählen</option>
-                <option value="schnupper">Schnupperstunde</option>
-                <option value="anmeldung">Anmeldung</option>
-                <option value="preise">Fragen zu Preisen</option>
-                <option value="training">Trainingszeiten</option>
-                <option value="sonstiges">Sonstiges</option>
+                <option value="Schnupperstunde">Schnupperstunde</option>
+                <option value="Anmeldung">Anmeldung</option>
+                <option value="Fragen zu Preisen">Fragen zu Preisen</option>
+                <option value="Trainingszeiten">Trainingszeiten</option>
+                <option value="Sonstiges">Sonstiges</option>
               </select>
             </div>
             <div class="form-field form-grid--full">
@@ -2775,9 +2986,12 @@
             <p style="font-family:var(--font-display);font-size:2.5rem;line-height:1;"data-i18n-html="member.fee.amount">175€ <span style="font-size:1rem;opacity:0.5;">/ Semester</span></p>
           </div>
         </div>
-        <form class="form-body" name="mitglied" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="mitglied">
-          <p style="display:none"><input name="bot-field"></p>
+        <form class="form-body" name="mitglied" method="POST" action="https://formsubmit.co/ajax/5e22b81a08dbc507c27809f55303960b">
+          <input type="hidden" name="_subject" value="Fudoshin Karate — Mitgliedsanmeldung">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="Open Spreadsheet" value="https://docs.google.com/spreadsheets/d/1jK0U-7jsn28zrsrx-rRlyb3lNGp9U2o-CNIlfm0dHtg/edit#gid=701910726">
+          <p style="display:none"><input name="_honey"></p>
           <div class="form-grid">
             <p class="form-divider" data-i18n="member.form.div1">Persönliche Daten</p>
             <div class="form-field">
@@ -2808,28 +3022,28 @@
             <div class="form-field form-grid--full form-field--check">
               <label data-i18n="member.form.group.label">Gewünschte Gruppe *</label>
               <div class="check-group">
-                <label class="check-item" data-i18n-after="member.form.group.children"><input type="radio" name="gruppe" value="kinder" required=""> Kinder Anfänger (6–10 Jahre)</label>
-                <label class="check-item" data-i18n-after="member.form.group.youth"><input type="radio" name="gruppe" value="jugendliche"> Jugendliche Fortgeschritten (11–18 Jahre)</label>
-                <label class="check-item" data-i18n-after="member.form.group.adults"><input type="radio" name="gruppe" value="erwachsene"> Erwachsene alle Level</label>
+                <label class="check-item" data-i18n-after="member.form.group.children"><input type="radio" name="gruppe" value="Kinder Anfänger (6–10 Jahre)" required=""> Kinder Anfänger (6–10 Jahre)</label>
+                <label class="check-item" data-i18n-after="member.form.group.youth"><input type="radio" name="gruppe" value="Jugendliche Fortgeschritten (11–18 Jahre)"> Jugendliche Fortgeschritten (11–18 Jahre)</label>
+                <label class="check-item" data-i18n-after="member.form.group.adults"><input type="radio" name="gruppe" value="Erwachsene alle Level"> Erwachsene alle Level</label>
               </div>
             </div>
             <div class="form-field">
               <label for="m-erfahrung" data-i18n="member.form.exp.label">Karate-Erfahrung</label>
               <select id="m-erfahrung" data-i18n-options="member.form.exp" name="erfahrung">
                 <option value="" disabled="" selected="">Bitte wählen</option>
-                <option value="keine">Keine Erfahrung</option>
-                <option value="anfaenger">Anfänger (unter 1 Jahr)</option>
-                <option value="fortgeschritten">Fortgeschritten (1–5 Jahre)</option>
-                <option value="erfahren">Erfahren (über 5 Jahre)</option>
+                <option value="Keine Erfahrung">Keine Erfahrung</option>
+                <option value="Anfänger (unter 1 Jahr)">Anfänger (unter 1 Jahr)</option>
+                <option value="Fortgeschritten (1–5 Jahre)">Fortgeschritten (1–5 Jahre)</option>
+                <option value="Erfahren (über 5 Jahre)">Erfahren (über 5 Jahre)</option>
               </select>
             </div>
             <div class="form-field">
               <label for="m-beitrag" data-i18n="member.form.fee.label">Gewünschter Beitrag</label>
               <select id="m-beitrag" data-i18n-options="member.form.fee" name="beitrag">
                 <option value="" disabled="" selected="">Bitte wählen</option>
-                <option value="semester">Semester (175€)</option>
-                <option value="jahr">Jahresbeitrag (320€)</option>
-                <option value="familie">Familie / Geschwister (−20%)</option>
+                <option value="Semester (175€)">Semester (175€)</option>
+                <option value="Jahresbeitrag (320€)">Jahresbeitrag (320€)</option>
+                <option value="Familie / Geschwister (−20%)">Familie / Geschwister (−20%)</option>
               </select>
             </div>
             <div class="form-field form-grid--full form-field--check">
@@ -2850,6 +3064,112 @@
     </div>
   </div>
 
+  <!-- ══════════════ CAMP MODAL (TEMPLATE FOR SPECIAL OFFERS) ══════════════ -->
+  <div class="camp-modal" id="campModal" role="dialog" aria-modal="true">
+    <div class="camp-modal__panel">
+      <div class="camp-modal__header">
+        <div class="camp-modal__title" data-i18n="camp.title">Sommer Camp 2026</div>
+        <button class="camp-modal__close" id="campModalClose" aria-label="Schließen" data-i18n-aria="modal.close.aria">&#10005;</button>
+      </div>
+      <div class="camp-modal__body">
+        <div class="form-info">
+          <p data-i18n="camp.intro">Eine Woche voller Karate, Spiel und Spaß — für Kinder und Jugendliche aller Erfahrungsstufen. Trainiert wird täglich von erfahrenen Trainern in einer freundlichen, motivierenden Atmosphäre.</p>
+          <div>
+            <p class="form-info__detail" data-i18n="camp.cost.label">Teilnahmegebühr</p>
+            <p style="font-family:var(--font-display);font-size:2.5rem;line-height:1;">220€</p>
+          </div>
+        </div>
+
+        <!-- Camp info table -->
+        <dl class="camp-info-table">
+          <dt data-i18n="camp.table.dates.label">Datum</dt>
+          <dd data-i18n="camp.table.dates.value">14.–18. Juli 2026 (Mo–Fr)</dd>
+          <dt data-i18n="camp.table.times.label">Uhrzeit</dt>
+          <dd data-i18n="camp.table.times.value">9:00–15:00 Uhr</dd>
+          <dt data-i18n="camp.table.ages.label">Alter</dt>
+          <dd data-i18n="camp.table.ages.value">6–14 Jahre</dd>
+          <dt data-i18n="camp.table.location.label">Ort</dt>
+          <dd data-i18n="camp.table.location.value">Volksschule Wolfgang-Schmälzlgasse, 1020 Wien</dd>
+          <dt data-i18n="camp.table.cost.label">Kosten</dt>
+          <dd data-i18n="camp.table.cost.value">220 € pro Teilnehmer</dd>
+          <dt data-i18n="camp.table.payment.label">Zahlung</dt>
+          <dd data-i18n-html="camp.table.payment.value">Überweisung auf IBAN AT81 2011 1843 2757 9400<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)</dd>
+          <dt data-i18n="camp.table.included.label">Inklusive</dt>
+          <dd data-i18n="camp.table.included.value">Karate-Training, Spiele &amp; Bewegung, Mittagessen &amp; Snacks, Urkunde, Camp-T-Shirt</dd>
+          <dt data-i18n="camp.table.bring.label">Mitbringen</dt>
+          <dd data-i18n="camp.table.bring.value">Gi oder Sportkleidung, Trinkflasche, Hallenschuhe</dd>
+        </dl>
+
+        <!-- Photo gallery -->
+        <div class="camp-modal__gallery">
+          <img src="images/thumb/photo-04.jpg" data-full="images/full/photo-04.jpg" alt="Fudoshin Sommer Camp">
+          <img src="images/thumb/photo-06.jpg" data-full="images/full/photo-06.jpg" alt="Fudoshin Sommer Camp">
+          <img src="images/thumb/photo-09.jpg" data-full="images/full/photo-09.jpg" alt="Fudoshin Sommer Camp">
+          <img src="images/thumb/photo-12.jpg" data-full="images/full/photo-12.jpg" alt="Fudoshin Sommer Camp">
+        </div>
+
+        <!-- Registration form -->
+        <form class="form-body" name="sommercamp" method="POST" action="https://formsubmit.co/ajax/5e22b81a08dbc507c27809f55303960b">
+          <input type="hidden" name="_subject" value="Fudoshin Karate — Sommercamp-Anmeldung">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="Open Spreadsheet" value="https://docs.google.com/spreadsheets/d/1jK0U-7jsn28zrsrx-rRlyb3lNGp9U2o-CNIlfm0dHtg/edit">
+          <p style="display:none"><input name="_honey"></p>
+          <div class="form-grid">
+            <p class="form-divider" data-i18n="camp.form.div1">Teilnehmer</p>
+            <div class="form-field">
+              <label for="sc-vorname" data-i18n="camp.form.firstname.label">Vorname des Kindes *</label>
+              <input type="text" id="sc-vorname" name="vorname" placeholder="Vorname" data-i18n-placeholder="camp.form.firstname.ph" required="">
+            </div>
+            <div class="form-field">
+              <label for="sc-nachname" data-i18n="camp.form.lastname.label">Nachname *</label>
+              <input type="text" id="sc-nachname" name="nachname" placeholder="Nachname" data-i18n-placeholder="camp.form.lastname.ph" required="">
+            </div>
+            <div class="form-field">
+              <label for="sc-geburt" data-i18n="camp.form.dob.label">Geburtsdatum *</label>
+              <input type="date" id="sc-geburt" name="geburtsdatum" required="">
+            </div>
+            <div class="form-field">
+              <label for="sc-email" data-i18n="camp.form.email.label">E-Mail (Eltern) *</label>
+              <input type="email" id="sc-email" name="email" placeholder="name@beispiel.at" data-i18n-placeholder="camp.form.email.ph" required="">
+            </div>
+            <div class="form-field">
+              <label for="sc-phone" data-i18n="camp.form.phone.label">Telefon (Eltern) *</label>
+              <input type="tel" id="sc-phone" name="telefon" placeholder="+43 ..." data-i18n-placeholder="camp.form.phone.ph" required="">
+            </div>
+            <p class="form-divider" data-i18n="camp.form.div2">Training</p>
+            <div class="form-field">
+              <label for="sc-erfahrung" data-i18n="camp.form.exp.label">Karate-Erfahrung</label>
+              <select id="sc-erfahrung" data-i18n-options="camp.form.exp" name="erfahrung">
+                <option value="" disabled="" selected="">Bitte wählen</option>
+                <option value="Keine Erfahrung">Keine Erfahrung</option>
+                <option value="Anfänger (unter 1 Jahr)">Anfänger (unter 1 Jahr)</option>
+                <option value="Fortgeschritten (1–3 Jahre)">Fortgeschritten (1–3 Jahre)</option>
+                <option value="Erfahren (über 3 Jahre)">Erfahren (über 3 Jahre)</option>
+              </select>
+            </div>
+            <div class="form-field form-grid--full form-field--check">
+              <div class="check-group">
+                <label class="check-item" data-i18n-after="camp.form.gi"><input type="checkbox" name="eigener-gi" value="ja"> Eigenen Gi (Karateanzug) vorhanden</label>
+              </div>
+            </div>
+            <p class="form-divider" data-i18n="camp.form.div3">Sonstiges</p>
+            <div class="form-field form-grid--full">
+              <label for="sc-nachricht" data-i18n="camp.form.notes.label">Anmerkungen</label>
+              <textarea id="sc-nachricht" name="anmerkungen" placeholder="Allergien, gesundheitliche Hinweise, Fragen, etc." data-i18n-placeholder="camp.form.notes.ph"></textarea>
+            </div>
+            <div class="form-field form-grid--full form-field--check">
+              <div class="check-group">
+                <label class="check-item" data-i18n-after="camp.form.terms"><input type="checkbox" name="bedingungen" value="ja" required=""> Ich bestätige die Anmeldung und überweise die Teilnahmegebühr von 220 € auf das angegebene Konto.</label>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="form-submit form-submit--accent" data-i18n="camp.form.submit">Anmeldung absenden →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- ══════════════ STICKER ══════════════ -->
 
   <div class="sticker" id="the-sticker" data-shape="sharp" data-align="left" data-tooltip="Sommer Camp 2026">
@@ -2857,7 +3177,7 @@
       <span class="sticker__label" data-i18n="sticker.label">Sommer 2026</span>
       <div class="sticker__headline" data-i18n-html="sticker.headline">Sommer-<br>Camp</div>
       <div class="sticker__detail" data-i18n-html="sticker.detail">14 — 18 Juli<br>Kinder &amp; Jugendliche</div>
-      <a href="#mitglied" class="sticker__cta" id="sticker-cta" data-i18n="sticker.cta">Anmelden →</a>
+      <a href="#sommercamp" class="sticker__cta" id="sticker-cta" data-i18n="sticker.cta">Anmelden →</a>
     </div>
     <button class="sticker__tab" id="sticker-tab">
       <span class="sticker__tab-text" data-i18n="sticker.tab">Sommer Camp 2026</span>
@@ -2865,7 +3185,7 @@
     </button>
   </div>
 
-  
+  <!-- ══════════════ /STICKER ══════════════ -->
 
   <script>
     // ── STICKER collapse + scroll-driven pill morph ─────────────────
@@ -3015,7 +3335,7 @@
     }
 
     function restoreOverflow() {
-      const anyOpen = document.querySelector('.map-modal.is-open, .legal-modal.is-open, .contact-modal.is-open, .member-modal.is-open, .lightbox.is-open');
+      const anyOpen = document.querySelector('.map-modal.is-open, .legal-modal.is-open, .contact-modal.is-open, .member-modal.is-open, .camp-modal.is-open, .lightbox.is-open');
       if (!anyOpen) document.body.style.overflow = '';
     }
 
@@ -3081,6 +3401,7 @@
     // Initialise custom selects inside modals (parsed after the first init run)
     initCustomSelects(document.getElementById('contactModal'));
     initCustomSelects(document.getElementById('memberModal'));
+    initCustomSelects(document.getElementById('campModal'));
 
     // ── CONTACT MODAL ─────────────────────────────────────────────
     const contactModal = document.getElementById('contactModal');
@@ -3112,11 +3433,27 @@
     document.getElementById('memberModalClose').addEventListener('click', closeMember);
     memberModal.addEventListener('click', e => { if (e.target === memberModal) closeMember(); });
 
+    // ── CAMP MODAL ───────────────────────────────────────────────
+    const campModal = document.getElementById('campModal');
+
+    function openCamp() {
+      campModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCamp() {
+      campModal.classList.remove('is-open');
+      restoreOverflow();
+    }
+
+    document.getElementById('campModalClose').addEventListener('click', closeCamp);
+    campModal.addEventListener('click', e => { if (e.target === campModal) closeCamp(); });
+
     // Escape key for form modals
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         if (contactModal.classList.contains('is-open')) closeContact();
         if (memberModal.classList.contains('is-open')) closeMember();
+        if (campModal.classList.contains('is-open')) closeCamp();
       }
     });
 
@@ -3125,19 +3462,24 @@
       btn.addEventListener('click', openContact));
     document.querySelectorAll('[data-open-modal="member"]').forEach(btn =>
       btn.addEventListener('click', openMember));
+    document.querySelectorAll('[data-open-modal="camp"]').forEach(btn =>
+      btn.addEventListener('click', openCamp));
 
-    // Delegated handler for ALL #kontakt / #mitglied links (nav, sticker, footer, cross-links)
+    // Delegated handler for ALL #kontakt / #mitglied / #sommercamp links (nav, sticker, footer, cross-links)
     document.addEventListener('click', e => {
-      const link = e.target.closest('a[href="#kontakt"], a[href="#mitglied"]');
+      const link = e.target.closest('a[href="#kontakt"], a[href="#mitglied"], a[href="#sommercamp"]');
       if (!link) return;
       const href = link.getAttribute('href');
       e.preventDefault();
-      // Close the other modal if open
+      // Close any open modal first
+      if (contactModal.classList.contains('is-open')) closeContact();
+      if (memberModal.classList.contains('is-open')) closeMember();
+      if (campModal.classList.contains('is-open')) closeCamp();
       if (href === '#kontakt') {
-        if (memberModal.classList.contains('is-open')) closeMember();
         setTimeout(openContact, 60);
+      } else if (href === '#sommercamp') {
+        setTimeout(openCamp, 60);
       } else {
-        if (contactModal.classList.contains('is-open')) closeContact();
         setTimeout(openMember, 60);
       }
     });
@@ -3264,6 +3606,60 @@
         if (e.key === 'ArrowRight') navigate(1);
       });
     })();
+  </script>
+
+  <script>
+    // ── FORM SUBMISSION (Formsubmit.co + Google Sheets) ─────────────
+    var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyqPYHlYH1dbuH7IdE3DHy77gTjl7d2r0lB8t6I9fZkMrsDnC5Yorh-vv8KIAdL9DGH/exec';
+    document.querySelectorAll('form[action*="formsubmit.co"]').forEach(function(form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type="submit"]');
+        var prev = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        var old = form.querySelector('.form-msg');
+        if (old) old.remove();
+        // Collect form data as object for Google Sheets
+        var fd = new FormData(form);
+        var obj = { _formName: form.getAttribute('name') || 'kontakt' };
+        fd.forEach(function(v, k) { if (k.charAt(0) !== '_' && k !== 'Open Spreadsheet') obj[k] = v; });
+        // Send to both endpoints in parallel
+        var emailReq = fetch(form.action, {
+          method: 'POST', body: fd, headers: { 'Accept': 'application/json' }
+        }).then(function(r) { return r.json(); });
+        var sheetReq = fetch(SHEETS_URL, {
+          method: 'POST', mode: 'no-cors', body: JSON.stringify(obj),
+          headers: { 'Content-Type': 'text/plain' }
+        }).catch(function() { return { result: 'ok' }; }); // sheet failure is non-blocking
+        emailReq.then(function(data) {
+          if (data.success) {
+            var msg = document.createElement('div');
+            msg.className = 'form-msg form-msg--ok';
+            var formName = form.getAttribute('name');
+            if (formName === 'kontakt') {
+              msg.textContent = 'Nachricht gesendet! Wir melden uns in Kürze.';
+            } else if (formName === 'sommercamp') {
+              msg.textContent = 'Anmeldung erhalten! Wir bestätigen Ihre Camp-Anmeldung in Kürze.';
+            } else {
+              msg.textContent = 'Anmeldung erhalten! Wir kontaktieren Sie in Kürze.';
+            }
+            form.appendChild(msg);
+            form.reset();
+          } else {
+            throw new Error(data.message || 'Submission failed');
+          }
+        }).catch(function(err) {
+          var msg = document.createElement('div');
+          msg.className = 'form-msg form-msg--err';
+          msg.textContent = 'Something went wrong. Please try again or email us directly.';
+          form.appendChild(msg);
+        }).finally(function() {
+          btn.disabled = false;
+          btn.textContent = prev;
+        });
+      });
+    });
   </script>
 
   <script>
