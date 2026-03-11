@@ -464,6 +464,12 @@
     .reveal-group.revealed > *:nth-child(6) { opacity:1; transform:none; transition-delay:185ms; }
     .reveal-group.revealed > *:nth-child(7) { opacity:1; transform:none; transition-delay:210ms; }
     .reveal-group.revealed > *:nth-child(8) { opacity:1; transform:none; transition-delay:230ms; }
+    .reveal-group.revealed > *:nth-child(9) { opacity:1; transform:none; transition-delay:245ms; }
+    .reveal-group.revealed > *:nth-child(10){ opacity:1; transform:none; transition-delay:256ms; }
+    .reveal-group.revealed > *:nth-child(11){ opacity:1; transform:none; transition-delay:267ms; }
+    .reveal-group.revealed > *:nth-child(12){ opacity:1; transform:none; transition-delay:278ms; }
+    .reveal-group.revealed > *:nth-child(13){ opacity:1; transform:none; transition-delay:289ms; }
+    .reveal-group.revealed > *:nth-child(14){ opacity:1; transform:none; transition-delay:300ms; }
 
     /* ═══════════════════════════════════════════
        HERO
@@ -507,7 +513,7 @@
 
     .section_wrapper {
       position: relative; display: grid;
-      min-height: 90vh; padding: var(--pad);
+      padding: var(--pad);
       grid-template-columns: repeat(6, 1fr);
       column-gap: var(--gap); row-gap: var(--gap);
       border-top: 1px solid var(--color-off);
@@ -806,7 +812,8 @@
        FORM STRIP (placeholder for modal triggers)
     ═══════════════════════════════════════════ */
     .form-strips {
-      display: flex; flex-direction: column; align-items: center;
+      display: flex; flex-direction: column; align-items: stretch;
+      width: fit-content; min-width: 40vw; margin-inline: auto;
       gap: 1rem;
       padding: 3rem var(--pad);
     }
@@ -826,6 +833,7 @@
       font-family: var(--font-display); font-size: clamp(1.1rem, 2vw, 1.5rem);
       letter-spacing: 0.08em; padding: clamp(0.9rem, 1.5vw, 1.2rem) clamp(2rem, 3vw, 3rem);
       cursor: pointer; text-transform: uppercase;
+      white-space: nowrap; width: 100%; height: 10vh;
       transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
     }
     .form-strip__cta:hover { background: var(--color-fg); color: var(--color-bg); }
@@ -947,7 +955,7 @@
     }
     .camp-modal__gallery img {
       width: 100%; aspect-ratio: 3/4; object-fit: cover;
-      cursor: pointer;
+      cursor: default;
       transition: transform 400ms var(--ease-out), filter 300ms ease;
     }
     .camp-modal__gallery img:hover { transform: scale(1.03); filter: brightness(1.1); }
@@ -1565,10 +1573,12 @@
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.values.title">Werte &amp; pädagogischer Ansatz</h3>
               <p data-i18n="about.values.p1">Unser Ansatz ist geduldig und direkt. Wir korrigieren die Technik früh und oft, denn gute Gewohnheiten lassen sich leichter aufbauen, als schlechte abzulegen. Wir halten Kinder und Erwachsene an die gleichen Maßstäbe von Aufmerksamkeit und Respekt — angepasst an das, was vernünftig ist, aber nie aus Bequemlichkeit herabgesetzt. Fortschritt wird hier in Monaten und Jahren gemessen, nicht in Gürteln.</p>
+              <p data-i18n="about.values.p2">Karate lehrt, was es verlangt: Aufmerksamkeit, Geduld und Ehrlichkeit darüber, wo man steht. Wir versuchen, die Voraussetzungen dafür zu schaffen — ein ernsthaftes Trainingsumfeld, klare Anleitung und beständige Erwartungen. Die Werte ergeben sich aus der Praxis, nicht umgekehrt.</p>
             </div>
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.style.title">Welche Stilrichtung?</h3>
-              <p data-i18n-html="about.style.p1">Wir unterrichten traditionelles <strong>Shotokan-Karate</strong> — einen Stil, der auf Präzision, Disziplin und korrekter Form aufbaut. Das Training fördert körperliche und geistige Fitness und entwickelt mit der Zeit Qualitäten, die weiter reichen: Respekt, Beständigkeit und die Fähigkeit, auch unter Druck ruhig zu bleiben.</p>
+              <p data-i18n-html="about.style.p1">Wir unterrichten traditionelles <strong>Shotokan-Karate</strong> — einen Stil, der auf Präzision, Disziplin und korrekter Technik aufgebaut ist. Das Training fördert körperliche und geistige Fitness und entwickelt mit der Zeit Eigenschaften, die darüber hinausgehen: Respekt, Beständigkeit und die Fähigkeit, unter Druck ruhig zu bleiben.</p>
+              <p data-i18n-html="about.style.p2">Karate lehrt nicht, wie man Konflikte sucht — sondern wie man sie erkennt, vermeidet und im Notfall beendet. Diese Unterscheidung ist Teil der Disziplin.</p>
             </div>
           </div>
         </div>
@@ -1579,13 +1589,19 @@
         <div class="section_wrapper">
           <div class="photo-grid reveal-group">
             <div class="wrapper_image"><img src="images/thumb/photo-02.jpg" data-full="images/full/photo-02.jpg" alt="Fudoshin Foto 1"></div>
-            <div class="wrapper_image"><img src="images/thumb/photo-03.jpg" data-full="images/full/photo-03.jpg" alt="Fudoshin Foto 2"></div>
+            <div class="wrapper_image"><img src="images/new/WhatsApp%20Image%202026-03-11%20at%2010.06.34%20(1).jpeg" data-full="images/new/WhatsApp%20Image%202026-03-11%20at%2010.06.34%20(1).jpeg" alt="Fudoshin Foto 2"></div>
             <div class="wrapper_image"><img src="images/thumb/photo-04.jpg" data-full="images/full/photo-04.jpg" alt="Fudoshin Foto 3"></div>
             <div class="wrapper_image"><img src="images/thumb/photo-05.jpg" data-full="images/full/photo-05.jpg" alt="Fudoshin Foto 4"></div>
             <div class="wrapper_image"><img src="images/thumb/photo-06.jpg" data-full="images/full/photo-06.jpg" alt="Fudoshin Foto 5"></div>
-            <div class="wrapper_image"><img src="images/thumb/photo-07.jpg" data-full="images/full/photo-07.jpg" alt="Fudoshin Foto 6"></div>
-            <div class="wrapper_image"><img src="images/thumb/photo-08.jpg" data-full="images/full/photo-08.jpg" alt="Fudoshin Foto 7"></div>
-            <div class="wrapper_image"><img src="images/thumb/photo-09.jpg" data-full="images/full/photo-09.jpg" alt="Fudoshin Foto 8"></div>
+            <div class="wrapper_image"><img src="images/new/WhatsApp%20Image%202026-03-11%20at%2010.06.34.jpeg" data-full="images/new/WhatsApp%20Image%202026-03-11%20at%2010.06.34.jpeg" alt="Fudoshin Foto 6"></div>
+            <div class="wrapper_image"><img src="images/new/WhatsApp%20Image%202026-03-11%20at%2010.06.37%20(3).jpeg" data-full="images/new/WhatsApp%20Image%202026-03-11%20at%2010.06.37%20(3).jpeg" alt="Fudoshin Foto 7"></div>
+            <div class="wrapper_image"><img src="images/new/WhatsApp%20Image%202026-03-11%20at%2010.06.35.jpeg" data-full="images/new/WhatsApp%20Image%202026-03-11%20at%2010.06.35.jpeg" alt="Fudoshin Foto 8"></div>
+            <div class="wrapper_image"><img src="images/new/photo-09.jpeg" data-full="images/new/photo-09.jpeg" alt="Fudoshin Foto 9"></div>
+            <div class="wrapper_image"><img src="images/new/photo-10.jpeg" data-full="images/new/photo-10.jpeg" alt="Fudoshin Foto 10"></div>
+            <div class="wrapper_image"><img src="images/new/camp-01.jpeg" data-full="images/new/camp-01.jpeg" alt="Fudoshin Foto 11"></div>
+            <div class="wrapper_image"><img src="images/new/camp-02.jpeg" data-full="images/new/camp-02.jpeg" alt="Fudoshin Foto 12"></div>
+            <div class="wrapper_image"><img src="images/new/camp-03.jpeg" data-full="images/new/camp-03.jpeg" alt="Fudoshin Foto 13"></div>
+            <div class="wrapper_image"><img src="images/new/camp-04.jpeg" data-full="images/new/camp-04.jpeg" alt="Fudoshin Foto 14"></div>
           </div>
           <p class="caption" data-i18n-html="caption.photos"><em>Aktivitaten</em> / Caption Credits<br><span class="text-span">Fotos – Firstname Lastname</span></p>
         </div>
@@ -1695,13 +1711,19 @@
               <img src="images/thumb/photo-10.jpg" data-full="images/full/photo-10.jpg" alt="Emir Catic">
               <h2 class="heading-4">Emir Catic</h2>
               <p class="heading-3" data-i18n="team.emir.role">Staatlich geprüfter Karate-Instruktor · 2. Dan</p>
-              <p data-i18n="team.emir.bio">Emir praktiziert seit [X] Jahren Karate und trägt den [X. Dan] Schwarzgurt im Shotokan. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Er leitet das Training mit ruhiger Autorität und einem genauen Blick für technische Details.</p>
+              <p data-i18n="team.emir.bio">Emir ist seit 2021 als Karate-Instruktor tätig. In seinem Training verbindet er technische Präzision mit Ruhe und Körperbewusstsein — Disziplin und Respekt sind dabei selbstverständliche Grundlagen. Er arbeitet in der Jugend- und Freizeitpädagogik und bringt langjährige Erfahrung in der Arbeit mit Kindern, Jugendlichen und Gruppen mit — eine Grundlage, die seinen Unterrichtsstil direkt prägt. Neben Karate hat er Erfahrungen im Ju-Jitsu und Brasilianischen Jiu-Jitsu gesammelt, was sein Verständnis für Kampfsport und Körperarbeit vertieft hat. Er nimmt regelmäßig an nationalen und internationalen Seminaren teil und bildet sich kontinuierlich weiter.</p>
             </div>
             <div class="team-card">
               <img src="images/thumb/photo-11.jpg" data-full="images/full/photo-11.jpg" alt="Samir Sijamija">
               <h2 class="heading-4">Samir Sijamija</h2>
               <p class="heading-3" data-i18n="team.samir.role">Staatlich geprüfter Karate-Instruktor · 4. Dan</p>
-              <p data-i18n="team.samir.bio">Samir trainiert seit [X] Jahren Shotokan und trägt den [X. Dan] Schwarzgurt. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Sein Fokus im Dojo liegt auf dem Aufbau solider Grundlagen, unabhängig vom Alter oder Niveau der Schüler.</p>
+              <p data-i18n="team.samir.bio">Samir trainiert traditionelles Shotokan-Karate seit den 1980er-Jahren und trägt den 4. Dan Schwarzgurt. Seine Laufbahn begann in Bosnien, wo er bis 1992 intensiv trainierte und an nationalen und internationalen Meisterschaften teilnahm. Nach seiner Übersiedlung nach Österreich setzte er sein Training fort und unterrichtet seit 2000 Karate — zunächst bei der Sportunion Döbling, wo er bis heute als Trainer tätig ist. Er ist ausgebildeter Karate-Instructor (Sportakademie Linz) und arbeitet als Pädagoge in einer Schule. In seinem Unterricht legt er Wert auf solide Grundlagen, Disziplin und eine respektvolle Trainingsatmosphäre — unabhängig vom Alter oder Erfahrungsniveau der Schüler.</p>
+            </div>
+            <div class="team-card">
+              <img src="images/new/WhatsApp%20Image%202026-03-11%20at%2010.06.37%20(6).jpeg" data-full="images/full/photo-11.jpg" alt="Elena Erzeg" style="object-position:top">
+              <h2 class="heading-4">Elena Erzeg</h2>
+              <p class="heading-3" data-i18n="team.elena.role">Staatlich geprüfter Karate-Instruktor · ?. Dan</p>
+              <p data-i18n="team.elena.bio">Elena trainiert seit [X] Jahren Shotokan und trägt den [X. Dan] Schwarzgurt. [Ein Satz zum Hintergrund — wo sie trainiert hat, Wettkampferfahrung, wie lange sie unterrichtet.] Ihr Fokus im Dojo liegt auf dem Aufbau solider Grundlagen, unabhängig vom Alter oder Niveau der Schüler.</p>
             </div>
           </div>
         </div>
@@ -1939,7 +1961,9 @@
         'about.values.title': 'Werte & pädagogischer Ansatz',
         'about.values.p1': 'Unser Ansatz ist geduldig und direkt. Wir korrigieren die Technik früh und oft, denn gute Gewohnheiten lassen sich leichter aufbauen, als schlechte abzulegen. Wir halten Kinder und Erwachsene an die gleichen Maßstäbe von Aufmerksamkeit und Respekt — angepasst an das, was vernünftig ist, aber nie aus Bequemlichkeit herabgesetzt. Fortschritt wird hier in Monaten und Jahren gemessen, nicht in Gürteln.',
         'about.style.title': 'Welche Stilrichtung?',
-        'about.style.p1': 'Wir unterrichten traditionelles <strong>Shotokan-Karate</strong> — einen Stil, der auf Präzision, Disziplin und korrekter Form aufbaut. Das Training fördert körperliche und geistige Fitness und entwickelt mit der Zeit Qualitäten, die weiter reichen: Respekt, Beständigkeit und die Fähigkeit, auch unter Druck ruhig zu bleiben.',
+        'about.style.p1': 'Wir unterrichten traditionelles <strong>Shotokan-Karate</strong> — einen Stil, der auf Präzision, Disziplin und korrekter Technik aufgebaut ist. Das Training fördert körperliche und geistige Fitness und entwickelt mit der Zeit Eigenschaften, die darüber hinausgehen: Respekt, Beständigkeit und die Fähigkeit, unter Druck ruhig zu bleiben.',
+        'about.style.p2': 'Karate lehrt nicht, wie man Konflikte sucht — sondern wie man sie erkennt, vermeidet und im Notfall beendet. Diese Unterscheidung ist Teil der Disziplin.',
+        'about.values.p2': 'Karate lehrt, was es verlangt: Aufmerksamkeit, Geduld und Ehrlichkeit darüber, wo man steht. Wir versuchen, die Voraussetzungen dafür zu schaffen — ein ernsthaftes Trainingsumfeld, klare Anleitung und beständige Erwartungen. Die Werte ergeben sich aus der Praxis, nicht umgekehrt.',
         'caption.photos': '<em>Aktivitaten</em> / Caption Credits<br><span class="text-span">Fotos – Firstname Lastname</span>',
         'schedule.title': 'Trainingszeiten',
         'schedule.h.group': 'Gruppe',
@@ -1975,9 +1999,11 @@
         'pricing.note': '* Einmalige Aufnahmegebühr wird eingeführt. Kostenlose Schnupperstunde vor Anmeldung möglich.',
         'team.title': 'Team / Trainer',
         'team.emir.role': 'Staatlich geprüfter Karate-Instruktor · 2. Dan',
-        'team.emir.bio': 'Emir praktiziert seit [X] Jahren Karate und trägt den [X. Dan] Schwarzgurt im Shotokan. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Er leitet das Training mit ruhiger Autorität und einem genauen Blick für technische Details.',
+        'team.emir.bio': 'Emir ist seit 2021 als Karate-Instruktor tätig. In seinem Training verbindet er technische Präzision mit Ruhe und Körperbewusstsein — Disziplin und Respekt sind dabei selbstverständliche Grundlagen. Er arbeitet in der Jugend- und Freizeitpädagogik und bringt langjährige Erfahrung in der Arbeit mit Kindern, Jugendlichen und Gruppen mit — eine Grundlage, die seinen Unterrichtsstil direkt prägt. Neben Karate hat er Erfahrungen im Ju-Jitsu und Brasilianischen Jiu-Jitsu gesammelt, was sein Verständnis für Kampfsport und Körperarbeit vertieft hat. Er nimmt regelmäßig an nationalen und internationalen Seminaren teil und bildet sich kontinuierlich weiter.',
         'team.samir.role': 'Staatlich geprüfter Karate-Instruktor · 4. Dan',
-        'team.samir.bio': 'Samir trainiert seit [X] Jahren Shotokan und trägt den [X. Dan] Schwarzgurt. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Sein Fokus im Dojo liegt auf dem Aufbau solider Grundlagen, unabhängig vom Alter oder Niveau der Schüler.',
+        'team.samir.bio': 'Samir trainiert traditionelles Shotokan-Karate seit den 1980er-Jahren und trägt den 4. Dan Schwarzgurt. Seine Laufbahn begann in Bosnien, wo er bis 1992 intensiv trainierte und an nationalen und internationalen Meisterschaften teilnahm. Nach seiner Übersiedlung nach Österreich setzte er sein Training fort und unterrichtet seit 2000 Karate — zunächst bei der Sportunion Döbling, wo er bis heute als Trainer tätig ist. Er ist ausgebildeter Karate-Instructor (Sportakademie Linz) und arbeitet als Pädagoge in einer Schule. In seinem Unterricht legt er Wert auf solide Grundlagen, Disziplin und eine respektvolle Trainingsatmosphäre — unabhängig vom Alter oder Erfahrungsniveau der Schüler.',
+        'team.elena.role': 'Staatlich geprüfter Karate-Instruktor · ?. Dan',
+        'team.elena.bio': 'Elena trainiert seit [X] Jahren Shotokan und trägt den [X. Dan] Schwarzgurt. [Ein Satz zum Hintergrund — wo sie trainiert hat, Wettkampferfahrung, wie lange sie unterrichtet.] Ihr Fokus im Dojo liegt auf dem Aufbau solider Grundlagen, unabhängig vom Alter oder Niveau der Schüler.',
         'activities.title': 'Projekte &amp; Aktivitäten',
         'activities.tournaments': 'Turniere',
         'activities.seminars': 'Lehrgänge',
@@ -2128,7 +2154,9 @@
         'about.values.title': 'Values & Pedagogical Approach',
         'about.values.p1': 'Our approach is patient and direct. We correct technique early and often, because good habits are easier to build than bad ones are to undo. We hold children and adults to the same standards of attention and respect — scaled to what is reasonable, but never lowered out of convenience. Progress here is measured in months and years, not belts.',
         'about.style.title': 'Which Style?',
-        'about.style.p1': 'We teach traditional <strong>Shotokan karate</strong> — a style built on precision, discipline, and correct form. Training develops physical and mental fitness, and over time, qualities that go further: respect, consistency, and the ability to stay steady under pressure.',
+        'about.style.p1': 'We teach traditional <strong>Shotokan karate</strong> — a style built on precision, discipline, and correct technique. Training develops physical and mental fitness, and over time, qualities that go beyond it: respect, consistency, and the ability to stay calm under pressure.',
+        'about.style.p2': 'Karate does not teach how to seek conflict — but how to recognize it, avoid it, and end it when necessary. This distinction is part of the discipline.',
+        'about.values.p2': 'Karate teaches what it demands: attention, patience, and honesty about where you stand. We try to create the conditions for that — a serious training environment, clear instruction, and consistent expectations. The values come from the practice, not the other way around.',
         'caption.photos': '<em>Activities</em> / Caption Credits<br><span class="text-span">Photos – Firstname Lastname</span>',
         'schedule.title': 'Training Schedule',
         'schedule.h.group': 'Group',
@@ -2164,9 +2192,11 @@
         'pricing.note': '* One-time registration fee applies. Free trial class before registration possible.',
         'team.title': 'Team / Trainers',
         'team.emir.role': 'State-certified karate instructor · 2nd Dan',
-        'team.emir.bio': 'Emir has been practicing karate for [X] years and holds a [X. Dan] black belt in Shotokan. [One sentence on background — where he trained, any competitive experience, how long he has been teaching.] He leads training with calm authority and a close attention to technical detail.',
+        'team.emir.bio': 'Emir has been working as a karate instructor since 2021. His training combines technical precision with calm body awareness — discipline and respect are natural foundations. He works in youth and recreational education and brings years of experience working with children, young people, and groups — a background that directly shapes his teaching style. In addition to karate, he has trained in Ju-Jitsu and Brazilian Jiu-Jitsu, deepening his understanding of martial arts and physical movement. He regularly attends national and international seminars and continues to develop his skills.',
         'team.samir.role': 'State-certified karate instructor · 4th Dan',
-        'team.samir.bio': 'Samir has been training in Shotokan for [X] years and holds a [X. Dan] black belt. [One sentence on background — where he trained, any competitive experience, how long he has been teaching.] His focus in the dojo is on building strong foundations, regardless of the age or level of the student.',
+        'team.samir.bio': 'Samir has been training traditional Shotokan karate since the 1980s and holds a 4th Dan black belt. His career began in Bosnia, where he trained intensively until 1992 and competed in national and international championships. After moving to Austria, he continued his training and has been teaching karate since 2000 — first at Sportunion Döbling, where he remains active as an instructor. He is a certified karate instructor (Sports Academy Linz) and works as an educator in a school. In his teaching, he emphasizes solid fundamentals, discipline, and a respectful training atmosphere — regardless of the age or experience level of the student.',
+        'team.elena.role': 'State-certified karate instructor · ?. Dan',
+        'team.elena.bio': 'Elena has been training in Shotokan for [X] years and holds a [X. Dan] black belt. [One sentence on background — where she trained, any competitive experience, how long she has been teaching.] Her focus in the dojo is on building strong foundations, regardless of the age or level of the student.',
         'activities.title': 'Projects &amp; Activities',
         'activities.tournaments': 'Tournaments',
         'activities.seminars': 'Seminars',
@@ -2317,7 +2347,9 @@
         'about.values.title': 'Değerler ve pedagojik yaklaşım',
         'about.values.p1': 'Yaklaşımımız sabırlı ve doğrudandır. Tekniği erken ve sık düzeltiriz, çünkü iyi alışkanlıklar edinmek kötü olanları bırakmaktan daha kolaydır. Çocuklardan ve yetişkinlerden aynı dikkat ve saygı standartlarını bekleriz — makul olana göre ayarlanmış, ama asla kolaylık uğruna düşürülmemiş. Burada ilerleme aylarla ve yıllarla ölçülür, kuşaklarla değil.',
         'about.style.title': 'Hangi Stil?',
-        'about.style.p1': 'Geleneksel <strong>Shotokan karate</strong> öğretiyoruz — hassasiyet, disiplin ve doğru form üzerine kurulu bir stil. Antrenman fiziksel ve zihinsel zindeliği geliştirir ve zamanla daha ileri nitelikler kazandırır: saygı, süreklilik ve baskı altında sakin kalabilme yeteneği.',
+        'about.style.p1': 'Geleneksel <strong>Shotokan karate</strong> öğretiyoruz — hassasiyet, disiplin ve doğru teknik üzerine kurulu bir stil. Antrenman fiziksel ve zihinsel zindeliği geliştirir ve zamanla bunun ötesine geçen özellikler kazandırır: saygı, süreklilik ve baskı altında sakin kalabilme yeteneği.',
+        'about.style.p2': 'Karate çatışma aramayı öğretmez — onu fark etmeyi, ondan kaçınmayı ve gerektiğinde sonlandırmayı öğretir. Bu ayrım disiplinin bir parçasıdır.',
+        'about.values.p2': 'Karate talep ettiğini öğretir: dikkat, sabır ve nerede olduğunuz konusunda dürüstlük. Bunun koşullarını yaratmaya çalışıyoruz — ciddi bir antrenman ortamı, net rehberlik ve tutarlı beklentiler. Değerler pratikten doğar, tersi değil.',
         'caption.photos': '<em>Etkinlikler</em> / Caption Credits<br><span class="text-span">Fotoğraflar – Firstname Lastname</span>',
         'schedule.title': 'Antrenman saatleri',
         'schedule.h.group': 'Grup',
@@ -2353,9 +2385,11 @@
         'pricing.note': '* Tek seferlik kayıt ücreti uygulanır. Kayıt öncesi ücretsiz deneme dersi mümkündür.',
         'team.title': 'Ekip / Antrenörler',
         'team.emir.role': 'Devlet onaylı karate eğitmeni · 2. Dan',
-        'team.emir.bio': 'Emir [X] yıldır karate yapıyor ve Shotokan\'da [X. Dan] siyah kuşak taşıyor. [Arka plan hakkında bir cümle — nerede eğitim aldığı, yarışma deneyimi, ne zamandır öğretmenlik yaptığı.] Antrenmanları sakin bir otoriteyle ve teknik detaylara yakın bir dikkatle yönetiyor.',
+        'team.emir.bio': 'Emir 2021\'den bu yana karate eğitmeni olarak çalışmaktadır. Antrenmanlarında teknik hassasiyeti sakinlik ve beden farkındalığıyla birleştirir — disiplin ve saygı doğal temeller olarak yer alır. Gençlik ve serbest zaman pedagojisi alanında çalışmakta, çocuklar, gençler ve gruplarla çalışma konusunda uzun yıllara dayanan deneyim getirmektedir — bu birikim öğretim tarzını doğrudan şekillendirmektedir. Karatenin yanı sıra Ju-Jitsu ve Brezilya Jiu-Jitsu deneyimi kazanmış, bu da dövüş sporları ve beden çalışması anlayışını derinleştirmiştir. Düzenli olarak ulusal ve uluslararası seminerlere katılmakta ve sürekli olarak kendini geliştirmektedir.',
         'team.samir.role': 'Devlet onaylı karate eğitmeni · 4. Dan',
-        'team.samir.bio': 'Samir [X] yıldır Shotokan eğitimi alıyor ve [X. Dan] siyah kuşak taşıyor. [Arka plan hakkında bir cümle — nerede eğitim aldığı, yarışma deneyimi, ne zamandır öğretmenlik yaptığı.] Dojo\'daki odağı, öğrencinin yaşı veya seviyesinden bağımsız olarak sağlam temeller oluşturmak.',
+        'team.samir.bio': 'Samir 1980\'lerden bu yana geleneksel Shotokan karate eğitimi almaktadır ve 4. Dan siyah kuşak taşımaktadır. Kariyerine Bosna\'da başlamış, 1992\'ye kadar yoğun antrenman yapmış ve ulusal ve uluslararası şampiyonalara katılmıştır. Avusturya\'ya taşındıktan sonra eğitimine devam etmiş ve 2000 yılından bu yana karate öğretmektedir — ilk olarak hâlâ eğitmen olarak aktif olduğu Sportunion Döbling\'de. Sertifikalı karate eğitmenidir (Linz Spor Akademisi) ve bir okulda pedagog olarak çalışmaktadır. Öğretiminde sağlam temellere, disipline ve saygılı bir antrenman atmosferine önem verir — öğrencinin yaşına veya deneyim düzeyine bakılmaksızın.',
+        'team.elena.role': 'Devlet onaylı karate eğitmeni · ?. Dan',
+        'team.elena.bio': 'Elena [X] yıldır Shotokan eğitimi almaktadır ve [X. Dan] siyah kuşak taşımaktadır. [Arka plan hakkında bir cümle — nerede eğitim aldığı, yarışma deneyimi, ne zamandır öğretmenlik yaptığı.] Dojo\'daki odağı, öğrencinin yaşı veya seviyesinden bağımsız olarak sağlam temeller oluşturmaktır.',
         'activities.title': 'Projeler &amp; Etkinlikler',
         'activities.tournaments': 'Turnuvalar',
         'activities.seminars': 'Seminerler',
@@ -2506,7 +2540,9 @@
         'about.values.title': 'Vrijednosti i pedagoški pristup',
         'about.values.p1': 'Naš pristup je strpljiv i direktan. Tehniku ispravljamo rano i često, jer je dobre navike lakše izgraditi nego loše ispraviti. Od djece i odraslih očekujemo iste standarde pažnje i poštovanja — prilagođene onome što je razumno, ali nikada snižene iz udobnosti. Napredak se ovdje mjeri mjesecima i godinama, ne pojasevima.',
         'about.style.title': 'Koji Stil?',
-        'about.style.p1': 'Predajemo tradicionalni <strong>Shotokan karate</strong> — stil utemeljen na preciznosti, disciplini i ispravnoj formi. Trening razvija fizičku i mentalnu kondiciju, a s vremenom i kvalitete koje sežu dalje: poštovanje, postojanost i sposobnost da ostanete mirni pod pritiskom.',
+        'about.style.p1': 'Predajemo tradicionalni <strong>Shotokan karate</strong> — stil utemeljen na preciznosti, disciplini i ispravnoj tehnici. Trening razvija fizičku i mentalnu kondiciju, a s vremenom i osobine koje nadilaze to: poštovanje, postojanost i sposobnost da ostanete mirni pod pritiskom.',
+        'about.style.p2': 'Karate ne uči kako tražiti sukob — već kako ga prepoznati, izbjeći i po potrebi okončati. Ta razlika je dio discipline.',
+        'about.values.p2': 'Karate uči ono što zahtijeva: pažnju, strpljenje i iskrenost o tome gdje se nalazite. Pokušavamo stvoriti uslove za to — ozbiljno okruženje za trening, jasne upute i dosljedna očekivanja. Vrijednosti proizlaze iz prakse, ne obrnuto.',
         'caption.photos': '<em>Aktivnosti</em> / Caption Credits<br><span class="text-span">Fotografije – Firstname Lastname</span>',
         'schedule.title': 'Raspored treninga',
         'schedule.h.group': 'Grupa',
@@ -2542,9 +2578,11 @@
         'pricing.note': '* Jednokratna upisnina se naplaćuje. Besplatan probni trening prije upisa je moguć.',
         'team.title': 'Tim / Treneri',
         'team.emir.role': 'Državno certificirani karate instruktor · 2. Dan',
-        'team.emir.bio': 'Emir se bavi karateom [X] godina i nosi [X. Dan] crni pojas u Shotokanu. [Jedna rečenica o pozadini — gdje je trenirao, takmičarsko iskustvo, koliko dugo predaje.] Trening vodi sa mirnim autoritetom i pažljivim okom za tehničke detalje.',
+        'team.emir.bio': 'Emir radi kao karate instruktor od 2021. godine. U svom treningu spaja tehničku preciznost sa smirenošću i tjelesnom sviješću — disciplina i poštovanje su prirodne osnove. Radi u oblasti omladinske i slobodnovremenke pedagogije i donosi dugogodišnje iskustvo u radu sa djecom, mladima i grupama — pozadina koja direktno oblikuje njegov stil podučavanja. Pored karatea, iskustvo je stekao u Ju-Jitsuu i Brazilskom Jiu-Jitsuu, što je produbilo njegovo razumijevanje borilačkih vještina i rada s tijelom. Redovno učestvuje na nacionalnim i međunarodnim seminarima i kontinuirano se usavršava.',
         'team.samir.role': 'Državno certificirani karate instruktor · 4. Dan',
-        'team.samir.bio': 'Samir trenira Shotokan [X] godina i nosi [X. Dan] crni pojas. [Jedna rečenica o pozadini — gdje je trenirao, takmičarsko iskustvo, koliko dugo predaje.] Njegov fokus u dojou je na izgradnji čvrstih temelja, bez obzira na uzrast ili nivo učenika.',
+        'team.samir.bio': 'Samir trenira tradicionalni Shotokan karate od 1980-ih i nosi crni pojas 4. Dan. Njegova karijera je počela u Bosni, gdje je intenzivno trenirao do 1992. i učestvovao na državnim i međunarodnim prvenstvima. Nakon preseljenja u Austriju nastavio je sa treningom i od 2000. godine predaje karate — najprije u Sportunion Döbling, gdje je i danas aktivan kao trener. Certificirani je karate instruktor (Sportska akademija Linz) i radi kao pedagog u školi. U svom podučavanju naglašava čvrste temelje, disciplinu i atmosferu poštovanja na treningu — bez obzira na uzrast ili nivo iskustva učenika.',
+        'team.elena.role': 'Državno certificirani karate instruktor · ?. Dan',
+        'team.elena.bio': 'Elena trenira Shotokan [X] godina i nosi [X. Dan] crni pojas. [Jedna rečenica o pozadini — gdje je trenirala, takmičarsko iskustvo, koliko dugo predaje.] Njen fokus u dojou je na izgradnji čvrstih temelja, bez obzira na uzrast ili nivo učenika.',
         'activities.title': 'Projekti &amp; Aktivnosti',
         'activities.tournaments': 'Turniri',
         'activities.seminars': 'Seminari',
@@ -3102,10 +3140,10 @@
 
         <!-- Photo gallery -->
         <div class="camp-modal__gallery">
-          <img src="images/thumb/photo-04.jpg" data-full="images/full/photo-04.jpg" alt="Fudoshin Sommer Camp">
-          <img src="images/thumb/photo-06.jpg" data-full="images/full/photo-06.jpg" alt="Fudoshin Sommer Camp">
-          <img src="images/thumb/photo-09.jpg" data-full="images/full/photo-09.jpg" alt="Fudoshin Sommer Camp">
-          <img src="images/thumb/photo-12.jpg" data-full="images/full/photo-12.jpg" alt="Fudoshin Sommer Camp">
+          <img src="images/new/camp-01.jpeg" alt="Fudoshin Sommer Camp">
+          <img src="images/new/camp-02.jpeg" alt="Fudoshin Sommer Camp">
+          <img src="images/new/camp-03.jpeg" alt="Fudoshin Sommer Camp">
+          <img src="images/new/camp-04.jpeg" alt="Fudoshin Sommer Camp">
         </div>
 
         <!-- Registration form -->
