@@ -200,27 +200,6 @@
     .nav__links li:nth-child(6) a { transition-delay: 100ms; }
     .nav__links li:nth-child(7) a { transition-delay: 120ms; }
     .nav__links a:hover { background: var(--color-fg); color: var(--color-bg); }
-
-    /* Scrollspy — active section highlight */
-    .nav__links a.is-active {
-      color: var(--color-accent);
-      box-shadow: inset 0 -2px 0 var(--color-accent);
-    }
-    .nav__links a.is-active:hover {
-      background: var(--color-fg); color: var(--color-bg);
-      box-shadow: none;
-    }
-
-    /* Action links separator — modal openers are a different kind of thing */
-    .nav__links .nav__action-sep {
-      display: flex; align-items: center;
-      padding: 0 0.2rem;
-      opacity: 0.15;
-      font-size: 0.5rem;
-      letter-spacing: 0;
-      user-select: none;
-    }
-
     .nav__links a.nav__cta {
       background: var(--color-accent); color: #fff;
       border-left-color: var(--color-accent); font-weight: 700;
@@ -449,7 +428,7 @@
       z-index: 1001;
       transition: color 150ms ease, transform 200ms ease;
     }
-    .nav__close:hover { color: var(--color-accent); transform: scale(1.15); }
+    .nav__close:hover { color: var(--color-accent); transform: scale(1.2); }
 
     /* ═══════════════════════════════════════════
        LAYOUT
@@ -485,12 +464,6 @@
     .reveal-group.revealed > *:nth-child(6) { opacity:1; transform:none; transition-delay:185ms; }
     .reveal-group.revealed > *:nth-child(7) { opacity:1; transform:none; transition-delay:210ms; }
     .reveal-group.revealed > *:nth-child(8) { opacity:1; transform:none; transition-delay:230ms; }
-    .reveal-group.revealed > *:nth-child(9) { opacity:1; transform:none; transition-delay:245ms; }
-    .reveal-group.revealed > *:nth-child(10){ opacity:1; transform:none; transition-delay:256ms; }
-    .reveal-group.revealed > *:nth-child(11){ opacity:1; transform:none; transition-delay:267ms; }
-    .reveal-group.revealed > *:nth-child(12){ opacity:1; transform:none; transition-delay:278ms; }
-    .reveal-group.revealed > *:nth-child(13){ opacity:1; transform:none; transition-delay:289ms; }
-    .reveal-group.revealed > *:nth-child(14){ opacity:1; transform:none; transition-delay:300ms; }
 
     /* ═══════════════════════════════════════════
        HERO
@@ -534,7 +507,7 @@
 
     .section_wrapper {
       position: relative; display: grid;
-      padding: var(--pad);
+      min-height: 90vh; padding: var(--pad);
       grid-template-columns: repeat(6, 1fr);
       column-gap: var(--gap); row-gap: var(--gap);
       border-top: 1px solid var(--color-off);
@@ -574,29 +547,14 @@
     ═══════════════════════════════════════════ */
     .photo-grid {
       grid-column: 1 / -1; display: grid;
-      grid-template-columns: repeat(3, 1fr); gap: var(--gap);
+      grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
     }
     .wrapper_image { width: 100%; overflow: hidden; cursor: pointer; }
     .wrapper_image img {
-      width: 100%; aspect-ratio: 3/2; object-fit: cover;
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
       transition: transform 500ms var(--ease-out), filter 300ms ease;
     }
-    .wrapper_image:hover img { transform: scale(1.03); filter: brightness(1.08); }
-    .photo-grid__link {
-      grid-column: 1 / -1;
-      text-align: center;
-      margin-top: 0.5rem;
-    }
-    .photo-grid__link a {
-      font-size: 0.8rem;
-      color: var(--color-text);
-      opacity: 0.35;
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      transition: opacity 200ms;
-    }
-    .photo-grid__link a:hover { opacity: 0.8; }
-    .wrapper_image--hidden { display: none; }
+    .wrapper_image:hover img { transform: scale(1.03); filter: brightness(1.1); }
 
     /* ═══════════════════════════════════════════
        TRAININGSZEITEN
@@ -608,69 +566,69 @@
       grid-column: 1 / -1;
       display: flex; flex-direction: column;
     }
-    .schedule--days {
+    /* Header sits above the table, consistent with site's h3_subtitle spacing */
+    .schedule-header {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    .schedule-card {
-      border: 1px solid var(--color-border);
-      border-radius: 6px;
-      overflow: hidden;
-      transition: border-color 200ms ease;
-    }
-    .schedule-card:hover {
-      border-color: var(--color-accent);
-    }
-    .schedule-card__header {
-      padding: 1.2rem 1.4rem;
+      grid-template-columns: 2fr 1fr 1.2fr 1.4fr;
+      column-gap: 2rem;
+      padding-bottom: 1.25rem;
       border-bottom: 1px solid var(--color-border);
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
+      margin-bottom: 0;
     }
-    .schedule-card__day {
+    .schedule-header span {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      opacity: 0.35;
+    }
+    .schedule-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.2fr 1.4fr;
+      column-gap: 2rem;
+      align-items: center;
+      padding: 2.2rem 0;
+      border-bottom: 1px solid var(--color-border);
+      transition: border-color 200ms ease;
+      cursor: default;
+    }
+    .schedule-row:hover {
+      border-bottom-color: var(--color-accent);
+    }
+    .schedule-row__group {
       font-family: var(--font-display);
-      font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+      font-size: clamp(1.8rem, 2.6vw, 2.6rem);
       line-height: 1; text-transform: uppercase;
       letter-spacing: 0.01em;
     }
-    .schedule-card__location {
-      font-size: 0.8rem; font-weight: 700;
-      letter-spacing: 0.02em;
-      display: flex; align-items: center; gap: 0.4rem;
-      cursor: pointer;
-      opacity: 0.55;
-      transition: color 150ms ease, opacity 150ms ease;
-    }
-    .schedule-card__location:hover { color: var(--color-accent); opacity: 1; }
-    .schedule-card__slots {
-      padding: 0.6rem 1.4rem 1rem;
-    }
-    .schedule-slot {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
-    }
-    .schedule-slot:last-child { border-bottom: none; }
-    .schedule-slot__time {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      letter-spacing: 0.04em;
-    }
-    .schedule-slot__group {
-      font-size: 0.82rem; font-weight: 700;
-      letter-spacing: 0.06em; opacity: 0.5;
+    .schedule-row__age {
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.06em; opacity: 0.45;
       text-transform: uppercase;
     }
+    .schedule-row__days {
+      display: flex; gap: 0.4rem; flex-wrap: wrap;
+    }
+    .schedule-row__day {
+      font-family: var(--font-display);
+      font-size: 1.15rem; letter-spacing: 0.08em;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--color-border);
+      text-transform: uppercase;
+      transition: var(--t-theme);
+    }
+    .schedule-row__location {
+      font-size: 0.95rem; font-weight: 700;
+      letter-spacing: 0.02em;
+      display: flex; align-items: center; gap: 0.5rem;
+      cursor: pointer;
+      transition: color 150ms ease;
+    }
+    .schedule-row__location:hover { color: var(--color-accent); }
     .schedule-row__location-pin {
       font-size: 0.75rem; opacity: 0.4;
       flex-shrink: 0;
       transition: opacity 150ms ease;
     }
-    .schedule-card__location:hover .schedule-row__location-pin { opacity: 1; }
+    .schedule-row__location:hover .schedule-row__location-pin { opacity: 1; }
 
     .contact__map-link {
       cursor: pointer;
@@ -724,11 +682,11 @@
     }
     .map-modal__close {
       background: none; border: none; cursor: pointer;
-      color: var(--color-fg); font-size: 0.9rem; opacity: 0.55;
+      color: var(--color-fg); font-size: 0.9rem; opacity: 0.45;
       padding: 0.25rem; transition: opacity 150ms ease, transform 150ms ease;
       flex-shrink: 0;
     }
-    .map-modal__close:hover { opacity: 1; transform: scale(1.15); color: var(--color-accent); }
+    .map-modal__close:hover { opacity: 1; transform: scale(1.2); }
     .map-modal__map-wrap {
       position: relative;
       flex: 1;
@@ -824,11 +782,11 @@
     }
     .legal-modal__close {
       background: none; border: none; cursor: pointer;
-      color: var(--color-fg); font-size: 0.9rem; opacity: 0.55;
+      color: var(--color-fg); font-size: 0.9rem; opacity: 0.45;
       padding: 0.25rem; transition: opacity 150ms ease, transform 150ms ease;
       flex-shrink: 0;
     }
-    .legal-modal__close:hover { opacity: 1; transform: scale(1.15); color: var(--color-accent); }
+    .legal-modal__close:hover { opacity: 1; transform: scale(1.2); }
     .legal-modal__body {
       overflow-y: auto; padding: 1.5rem 1.25rem;
       font-size: 0.88rem; line-height: 1.7;
@@ -848,8 +806,7 @@
        FORM STRIP (placeholder for modal triggers)
     ═══════════════════════════════════════════ */
     .form-strips {
-      display: flex; flex-direction: column; align-items: stretch;
-      width: fit-content; min-width: 40vw; margin-inline: auto;
+      display: flex; flex-direction: column; align-items: center;
       gap: 1rem;
       padding: 3rem var(--pad);
     }
@@ -869,8 +826,6 @@
       font-family: var(--font-display); font-size: clamp(1.1rem, 2vw, 1.5rem);
       letter-spacing: 0.08em; padding: clamp(0.9rem, 1.5vw, 1.2rem) clamp(2rem, 3vw, 3rem);
       cursor: pointer; text-transform: uppercase;
-      white-space: nowrap; width: 100%; height: 10vh;
-      border-radius: 4px;
       transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
     }
     .form-strip__cta:hover { background: var(--color-fg); color: var(--color-bg); }
@@ -933,13 +888,13 @@
     .member-modal__close,
     .camp-modal__close {
       background: none; border: none; cursor: pointer;
-      color: var(--color-fg); font-size: 0.9rem; opacity: 0.55;
+      color: var(--color-fg); font-size: 0.9rem; opacity: 0.45;
       padding: 0.25rem; transition: opacity 150ms ease, transform 150ms ease;
       flex-shrink: 0;
     }
     .contact-modal__close:hover,
     .member-modal__close:hover,
-    .camp-modal__close:hover { opacity: 1; transform: scale(1.15); color: var(--color-accent); }
+    .camp-modal__close:hover { opacity: 1; transform: scale(1.2); }
     .contact-modal__body,
     .member-modal__body,
     .camp-modal__body {
@@ -972,90 +927,41 @@
     .camp-modal__body .form-field label { opacity: 0.85; }
 
     /* ── Camp-specific: info table + gallery ── */
-    .camp-intro { padding-bottom: 1.2rem; }
-    .camp-intro__activities {
-      font-size: 0.9rem; opacity: 0.6;
-      letter-spacing: 0.03em;
-      margin-top: 0.4rem;
-    }
-    .camp-details {
+    .camp-info-table {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.8rem;
-      padding: 1.2rem 0;
+      grid-template-columns: auto 1fr;
+      gap: 0.75rem 1.5rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
     }
-    .camp-details__card {
-      padding: 1.2rem 1.3rem;
-      border: 1px solid var(--color-border);
-      border-radius: 6px;
-      display: flex; flex-direction: column; gap: 0.35rem;
-      transition: border-color 200ms ease;
+    .camp-info-table dt {
+      font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
+      opacity: 0.5; font-weight: 700; padding-top: 0.15rem;
     }
-    .camp-details__card--interactive { cursor: pointer; }
-    .camp-details__card--interactive:hover { border-color: var(--color-accent); }
-    .camp-details__label {
-      font-size: 0.72rem; text-transform: uppercase;
-      letter-spacing: 0.12em; opacity: 0.4; font-weight: 700;
-    }
-    .camp-details__value--primary {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      line-height: 1.2;
-    }
-    .camp-details__value--price { color: var(--color-accent); }
-    .camp-details__card--interactive .camp-details__value--primary {
-      display: flex; align-items: center; gap: 0.4rem;
-    }
-    .camp-details__pin {
-      font-size: 0.7rem; opacity: 0.4;
-      transition: opacity 150ms ease;
-    }
-    .camp-details__card--interactive:hover .camp-details__pin { opacity: 1; }
-    .camp-secondary { padding: 0.8rem 0 1.2rem; }
-    .camp-secondary__row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
-      gap: 1rem;
-    }
-    .camp-secondary__row:last-child { border-bottom: none; }
-    .camp-secondary__label {
-      font-size: 0.72rem; text-transform: uppercase;
-      letter-spacing: 0.1em; opacity: 0.4; font-weight: 700;
-      flex-shrink: 0;
-    }
-    .camp-secondary__value {
-      font-size: 0.88rem; opacity: 0.7;
-      text-align: right;
-    }
-    .camp-secondary__row--note {
-      padding-top: 0.8rem;
-    }
-    .camp-secondary__row--note .camp-secondary__value {
-      text-align: left;
-      font-style: italic;
-      opacity: 0.5;
-    }
+    .camp-info-table dd { margin: 0; }
     .camp-modal__gallery {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 0.75rem;
     }
     .camp-modal__gallery img {
       width: 100%; aspect-ratio: 3/4; object-fit: cover;
-      cursor: default;
+      cursor: pointer;
       transition: transform 400ms var(--ease-out), filter 300ms ease;
     }
-    .camp-modal__gallery img:hover { transform: scale(1.03); filter: brightness(1.08); }
+    .camp-modal__gallery img:hover { transform: scale(1.03); filter: brightness(1.1); }
     @media (max-width: 479px) {
       .camp-modal__gallery { grid-template-columns: repeat(2, 1fr); }
-      .camp-details { grid-template-columns: 1fr; }
+      .camp-info-table { grid-template-columns: 1fr; gap: 0.25rem 0; }
+      .camp-info-table dt { padding-top: 0.75rem; }
     }
 
     @media (max-width: 768px) {
-      .schedule--days { grid-template-columns: 1fr; }
+      .schedule-row { grid-template-columns: 1fr 1fr; row-gap: 0.5rem; padding: 1.5rem 0; }
+      .schedule-header { display: none; }
+      .schedule-row__group { grid-column: 1 / -1; }
+      .schedule-row__days { justify-content: flex-end; }
       .map-modal { padding: 1rem; }
       .map-modal__panel { height: 90vh; max-height: none; }
       .legal-modal { padding: 1rem; }
@@ -1068,47 +974,23 @@
     ═══════════════════════════════════════════ */
     .preise-grid {
       grid-column: 1 / -1; display: grid;
-      grid-template-columns: repeat(3, 1fr); gap: 1rem;
+      grid-template-columns: repeat(3, 1fr); gap: var(--gap);
     }
     .preise-card {
-      padding: 1.4rem 1.2rem; border: 1px solid var(--color-border);
-      border-radius: 6px;
-      display: grid; row-gap: 0.6rem; align-content: start;
-      transition: border-color 200ms ease, var(--t-theme);
+      padding: 2rem; border: 1px solid var(--color-border);
+      display: grid; row-gap: 1rem; align-content: start;
+      transition: border-color 250ms ease, var(--t-theme);
     }
     .preise-card:hover { border-color: var(--color-accent); }
-    .preise-card__label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.45; font-weight: 700; }
-    .preise-card__price { font-family: var(--font-display); font-size: 2.2rem; line-height: 1; }
-    .preise-card__unit  { font-size: 0.8rem; opacity: 0.45; margin-top: -0.3rem; }
-    .preise-card__features { list-style: none; padding-top: 0.6rem; border-top: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent); display: grid; row-gap: 0.35rem; }
-    .preise-card__features li { font-size: 0.82rem; opacity: 0.6; padding-left: 0.9rem; position: relative; }
-    .preise-card__features li::before { content: '—'; position: absolute; left: 0; opacity: 0.3; }
+    .preise-card__label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.5; font-weight: 700; }
+    .preise-card__price { font-family: var(--font-display); font-size: 4rem; line-height: 1; }
+    .preise-card__unit  { font-size: 0.9rem; opacity: 0.5; margin-top: -0.5rem; padding-top: 0; }
+    .preise-card__features { list-style: none; padding-top: 1rem; border-top: 1px solid var(--color-border); display: grid; row-gap: 0.5rem; }
+    .preise-card__features li { font-size: 0.95rem; opacity: 0.75; padding-left: 1rem; position: relative; }
+    .preise-card__features li::before { content: '—'; position: absolute; left: 0; opacity: 0.4; }
     .preise-card--highlight { border-color: var(--color-accent); }
     .preise-card--highlight .preise-card__price { color: var(--color-accent); }
-    .preise-note { grid-column: 1 / -1; font-size: 0.82rem; opacity: 0.4; padding-top: 0.8rem; }
-    .preise-cta {
-      grid-column: 1 / -1;
-      display: flex;
-      justify-content: center;
-      padding-top: 1.5rem;
-    }
-    .preise-cta__btn {
-      font-family: var(--font-display);
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 0.8rem 2rem;
-      border: 1px solid var(--color-accent);
-      color: var(--color-accent);
-      background: transparent;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 200ms ease, color 200ms ease;
-    }
-    .preise-cta__btn:hover {
-      background: var(--color-accent);
-      color: var(--color-bg);
-    }
+    .preise-note { grid-column: 1 / -1; font-size: 0.9rem; opacity: 0.5; padding-top: 1rem; }
 
     /* ═══════════════════════════════════════════
        TEAM
@@ -1116,267 +998,20 @@
     .team-grid { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
     .team-card { display: grid; row-gap: 0.75rem; }
     .team-card img {
-      width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: top;
+      width: 100%; aspect-ratio: 1; object-fit: cover;
       transition: filter 350ms ease;
     }
-    .team-card:hover img { transform: scale(1.03); filter: brightness(1.08); }
+    .team-card:hover img { filter: brightness(1.08); }
     .heading-4 { font-family: var(--font-display); font-size: 2.2rem; font-weight: 400; text-align: center; padding: 0.5rem 0; }
     .heading-3 { font-size: 1rem; font-weight: 400; text-align: center; line-height: 1.6; opacity: 0.65; }
-
-    /* Team secondary grid — compact trainer cards */
-    .team-grid--secondary {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1.2rem;
-      margin-top: 3rem;
-      padding-top: 3rem;
-      border-top: 1px solid var(--color-border);
-    }
-    .team-card--small {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 1.2rem 0.8rem;
-      border-radius: 6px;
-    }
-    .team-card--small img {
-      width: 180px; height: 180px;
-      border-radius: 4px;
-      object-fit: cover;
-      margin-bottom: 0.8rem;
-      transition: transform 500ms var(--ease-out), filter 300ms ease;
-    }
-    .team-card--small:hover img { transform: scale(1.03); filter: brightness(1.08); }
-    .team-card--small .team-small__name {
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.01em;
-      line-height: 1.2;
-    }
-    .team-card--small .team-small__role {
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      opacity: 0.5;
-      margin-top: 0.3rem;
-    }
-    .team-card--small .team-small__since {
-      font-size: 0.72rem;
-      opacity: 0.35;
-      margin-top: 0.15rem;
-    }
-
-    /* Team small — expandable bio */
-    .team-card--small .team-small__bio {
-      font-size: 0.8rem; line-height: 1.6;
-      opacity: 0; max-height: 0; overflow: hidden;
-      transition: max-height 400ms ease, opacity 300ms ease, margin 300ms ease;
-      margin-top: 0;
-    }
-    .team-card--small.is-expanded .team-small__bio {
-      opacity: 0.6; max-height: 30rem;
-      margin-top: 0.6rem;
-    }
-    .team-card--small[data-expandable] { cursor: pointer; }
-    .team-card--small[data-expandable] .team-small__name::after {
-      content: ' +'; font-size: 0.6em; opacity: 0.4;
-      transition: transform 200ms ease; display: inline-block;
-    }
-    .team-card--small[data-expandable].is-expanded .team-small__name::after {
-      content: ' −';
-    }
-
-    /* ═══════════════════════════════════════════
-       FUNAKOSHI RULES — LASSO UNFOLD
-    ═══════════════════════════════════════════ */
-    .rules-lasso {
-      padding: 8rem 0 6rem;
-      border-top: 1px solid color-mix(in srgb, var(--color-border) 15%, transparent);
-    }
-    .rules-lasso .section_wrapper {
-      max-width: 56rem;
-    }
-    .rules-lasso__header {
-      grid-column: 1 / -1;
-      text-align: center;
-      margin-bottom: 5rem;
-      opacity: 0; transform: translateY(20px);
-      transition: opacity 900ms ease, transform 900ms ease;
-    }
-    .rules-lasso__header.revealed { opacity: 1; transform: none; }
-    .rules-lasso__subtitle {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      opacity: 0.3;
-      margin-bottom: 0.6rem;
-    }
-    .rules-lasso__title {
-      font-family: var(--font-display);
-      font-size: clamp(2.4rem, 4vw, 3.6rem);
-      text-transform: uppercase;
-      letter-spacing: 0.01em;
-      line-height: 1;
-    }
-    .rules-lasso__author {
-      font-family: var(--font-display);
-      font-size: clamp(1.1rem, 2vw, 1.6rem);
-      text-transform: uppercase;
-      opacity: 0.4;
-      margin-top: 0.3rem;
-    }
-
-    /* Track — contains rope SVG + rule items */
-    .rules-lasso__track {
-      position: relative;
-      grid-column: 1 / -1;
-    }
-    .rules-lasso__rope {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-    }
-    .rules-lasso__path {
-      fill: none;
-      stroke: var(--color-accent);
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      opacity: 0.3;
-    }
-
-    /* Individual rule items */
-    .rules-lasso__item {
-      position: relative;
-      display: flex;
-      align-items: flex-start;
-      gap: 1.2rem;
-      padding: 1.8rem 0;
-      width: 65%;
-      opacity: 0;
-      transition: opacity 700ms ease, transform 700ms ease;
-    }
-    .rules-lasso__item.revealed {
-      opacity: 1;
-      transform: none !important;
-    }
-    /* Alternating sides with asymmetric indents */
-    .rules-lasso__item--left  { margin-right: auto; transform: translateX(-25px); }
-    .rules-lasso__item--right { margin-left: auto; flex-direction: row-reverse; text-align: right; transform: translateX(25px); }
-
-    /* Asymmetric indentation — irregular, organic */
-    .rules-lasso__item:nth-child(1)  { margin-left: 3%; }
-    .rules-lasso__item:nth-child(2)  { margin-right: 1%; }
-    .rules-lasso__item:nth-child(3)  { margin-left: 8%; }
-    .rules-lasso__item:nth-child(4)  { margin-right: 5%; }
-    .rules-lasso__item:nth-child(5)  { margin-left: 2%; }
-    .rules-lasso__item:nth-child(6)  { margin-right: 3%; }
-    .rules-lasso__item:nth-child(7)  { margin-left: 10%; }
-    .rules-lasso__item:nth-child(8)  { margin-right: 2%; }
-    .rules-lasso__item:nth-child(9)  { margin-left: 5%; }
-    .rules-lasso__item:nth-child(10) { margin-right: 7%; }
-    .rules-lasso__item:nth-child(11) { margin-left: 2%; }
-    .rules-lasso__item:nth-child(12) { margin-right: 4%; }
-    .rules-lasso__item:nth-child(13) { margin-left: 12%; }
-    .rules-lasso__item:nth-child(14) { margin-right: 2%; }
-    .rules-lasso__item:nth-child(15) { margin-left: 4%; }
-    .rules-lasso__item:nth-child(16) { margin-right: 8%; }
-    .rules-lasso__item:nth-child(17) { margin-left: 6%; }
-    .rules-lasso__item:nth-child(18) { margin-right: 5%; }
-    .rules-lasso__item:nth-child(19) { margin-left: 5%; }
-    .rules-lasso__item:nth-child(20) { margin-left: 12%; width: 70%; }
-
-    /* Knot dot */
-    .rules-lasso__knot {
-      position: absolute;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--color-accent);
-      top: 2.6rem;
-      opacity: 0;
-      transition: opacity 400ms ease 200ms;
-    }
-    .rules-lasso__item.revealed .rules-lasso__knot { opacity: 1; }
-    .rules-lasso__item--left  .rules-lasso__knot { right: -2rem; }
-    .rules-lasso__item--right .rules-lasso__knot { left: -2rem; }
-    .rules-lasso__knot::after {
-      content: '';
-      position: absolute;
-      top: -7px; left: -7px;
-      width: 24px; height: 24px;
-      border-radius: 50%;
-      border: 1.5px solid var(--color-accent);
-      opacity: 0.2;
-    }
-
-    /* Number */
-    .rules-lasso__num {
-      font-family: var(--font-display);
-      font-size: clamp(2.4rem, 3.5vw, 3.2rem);
-      line-height: 1;
-      color: var(--color-accent);
-      opacity: 0.7;
-      flex-shrink: 0;
-    }
-
-    /* Rule text */
-    .rules-lasso__text {
-      font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-      line-height: 1.7;
-      opacity: 0.75;
-      padding-top: 0.5rem;
-    }
-
-    /* Mobile */
-    @media (max-width: 700px) {
-      .rules-lasso__item {
-        max-width: 85%;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-      }
-      .rules-lasso__item--left  { margin-left: 2rem; }
-      .rules-lasso__item--right { margin-right: 2rem; }
-      .rules-lasso__knot { display: none; }
-      .rules-lasso__rope { display: none; }
-    }
 
     /* ═══════════════════════════════════════════
        AKTIVITÄTEN
     ═══════════════════════════════════════════ */
     .aktivitaeten-grid { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
-    .aktivitaet-card { cursor: pointer; overflow: hidden; }
-    .aktivitaet-card figure { overflow: hidden; border-radius: 6px; margin: 0; }
-    .aktivitaet-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 500ms var(--ease-out); }
-    .aktivitaet-card:hover img { transform: scale(1.03); filter: brightness(1.08); }
-    .heading-4._2 { font-family: var(--font-display); font-size: 2rem; font-weight: 400; margin-top: 1rem; }
-    .aktivitaet-card__desc {
-      font-size: 0.88rem;
-      line-height: 1.6;
-      opacity: 0.65;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 400ms ease, opacity 300ms ease, margin 300ms ease;
-      margin-top: 0;
-    }
-    .aktivitaet-card.is-open .aktivitaet-card__desc {
-      max-height: 20rem;
-      margin-top: 0.8rem;
-      opacity: 0.65;
-    }
-    .aktivitaet-card .heading-4._2::after {
-      content: ' +';
-      font-size: 0.7em;
-      opacity: 0.5;
-      transition: transform 200ms ease;
-      display: inline-block;
-    }
-    .aktivitaet-card.is-open .heading-4._2::after {
-      content: ' −';
-    }
+    .aktivitaet-card img { width: 100%; aspect-ratio: 4/3; object-fit: cover; margin-bottom: 1rem; transition: transform 500ms var(--ease-out); }
+    .aktivitaet-card:hover img { transform: scale(1.02); }
+    .heading-4._2 { font-family: var(--font-display); font-size: 2rem; font-weight: 400; }
 
     /* ═══════════════════════════════════════════
        FORMS
@@ -1476,7 +1111,6 @@
       color: var(--color-fg);
       font-family: var(--font-display); font-size: 1.4rem;
       letter-spacing: 0.08em; padding: 1rem 2rem;
-      border-radius: 4px;
       cursor: pointer; margin-top: var(--gap);
       transition: background 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease;
     }
@@ -1520,17 +1154,6 @@
     .footer__col ul   { list-style: none; display: grid; row-gap: 0.75rem; }
     .footer__col ul li a { font-size: 0.95rem; opacity: 0.65; transition: opacity 150ms ease; }
     .footer__col ul li a:hover { opacity: 1; }
-    .footer__sportunion {
-      font-size: 0.75rem; opacity: 0.35; margin-top: 1.2rem;
-    }
-    .footer__sponsor-cta {
-      margin-top: 0.4rem;
-    }
-    .footer__sponsor-cta a {
-      font-size: 0.75rem; opacity: 0.5;
-      transition: opacity 150ms ease;
-    }
-    .footer__sponsor-cta a:hover { opacity: 1; }
     .footer__bottom {
       grid-column: 1 / -1; padding-top: 2rem;
       border-top: 1px solid transparent;
@@ -1555,7 +1178,7 @@
       .nav__lang     { border-right: 1px solid var(--color-border); }
       .section_wrapper { grid-template-columns: 1fr; padding: 3rem 2rem; min-height: auto; }
       .grid { grid-template-columns: 1fr; min-height: auto; }
-      .aktivitaeten-grid { grid-template-columns: repeat(3, 1fr); }
+      .aktivitaeten-grid { grid-template-columns: 1fr; }
       .preise-grid   { grid-template-columns: repeat(2, 1fr); }
       .form-info { grid-column: 1 / -1; padding-right: 0; border-right: none; border-bottom: 1px solid var(--color-border); padding-bottom: 2rem; }
       .form-body { grid-column: 1 / -1; }
@@ -1571,7 +1194,6 @@
       .team-grid { grid-template-columns: 1fr; }
       .team-card { justify-items: center; }
       .team-card img { max-width: 400px; }
-      .team-grid--secondary { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; }
       .photo-grid { grid-template-columns: repeat(2, 1fr); }
       .preise-grid { grid-template-columns: 1fr; }
     }
@@ -1663,20 +1285,6 @@
       transition: background 200ms ease, color 200ms ease;
     }
     .sticker__cta:hover { opacity: 0.8; }
-
-    /* ── Sticker close — unified dismiss pattern ── */
-    .sticker__close {
-      position: absolute; top: 0.5rem; right: 0.5rem;
-      background: none; border: none;
-      color: inherit; font-size: 0.7rem;
-      opacity: 0.4; cursor: pointer;
-      padding: 0.25rem;
-      transition: opacity 150ms ease, transform 150ms ease;
-      z-index: 1;
-    }
-    .sticker__close:hover { opacity: 1; transform: scale(1.15); }
-    .sticker.is-pill .sticker__close { display: none; }
-
     .sticker__tab {
       display: flex; align-items: center; justify-content: center;
       padding: 1rem 1.2rem;
@@ -1724,8 +1332,8 @@
     }
     .sticker.is-pill .sticker__chevron {
       margin: 0;
-      font-size: 0.75rem;
-      transform: none;
+      font-size: 0.55rem;
+      transform: rotate(180deg);
       display: flex; align-items: center; justify-content: center;
     }
 
@@ -1771,10 +1379,10 @@
     .lightbox__close {
       position: absolute; top: 1.5rem; right: 1.5rem;
       background: none; border: none; color: var(--color-fg); font-size: 2rem;
-      cursor: pointer; opacity: 0.55; transition: opacity 150ms ease, transform 150ms ease, color 150ms ease;
+      cursor: pointer; opacity: 0.7; transition: opacity 200ms, transform 200ms;
       z-index: 1201;
     }
-    .lightbox__close:hover { opacity: 1; transform: scale(1.15); color: var(--color-accent); }
+    .lightbox__close:hover { opacity: 1; transform: scale(1.2); }
     .lightbox__nav {
       position: absolute; top: 10vh; bottom: 10vh; width: 25vw;
       background: none; border: none; color: var(--color-fg); font-size: 2.5rem;
@@ -1893,8 +1501,6 @@
       <li><a href="#preise" data-i18n="nav.pricing">Preise</a></li>
       <li><a href="#team" data-i18n="nav.team">Team</a></li>
       <li><a href="#aktivitaeten" data-i18n="nav.activities">Aktivitäten</a></li>
-      <li><a href="galerie.html">Galerie</a></li>
-      <li class="nav__action-sep" aria-hidden="true">·</li>
       <li><a href="#sommercamp" data-i18n="nav.camp">Sommercamp</a></li>
       <li><a href="#kontakt" data-i18n="nav.contact">Kontakt</a></li>
       <li><a href="#mitglied" class="nav__cta" data-i18n="nav.cta">Mitglied werden</a></li>
@@ -1909,7 +1515,7 @@
         <li><button data-lang="de" role="menuitem">DE</button></li>
         <li><button data-lang="en" role="menuitem">EN</button></li>
         <li><button data-lang="tr" role="menuitem">TR</button></li>
-        <li><button data-lang="bs" role="menuitem">BKS</button></li>
+        <li><button data-lang="bs" role="menuitem">BCMS</button></li>
       </ul>
     </div>
     <button class="nav__hamburger" id="hamburger" aria-label="Menü öffnen" data-i18n-aria="nav.hamburger.aria" aria-expanded="false" aria-controls="nav-overlay">
@@ -1925,7 +1531,6 @@
     <a href="#preise" data-i18n="nav.pricing">Preise</a>
     <a href="#team" data-i18n="nav.team">Team</a>
     <a href="#aktivitaeten" data-i18n="nav.activities">Aktivitäten</a>
-    <a href="galerie.html">Galerie</a>
     <a href="#sommercamp" data-i18n="nav.camp">Sommercamp</a>
     <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
     <a href="#mitglied" class="nav__cta-overlay" data-i18n="nav.cta">Mitglied werden</a>
@@ -1953,46 +1558,34 @@
         <div class="section_wrapper">
           <h2 class="reveal" data-i18n="about.title">Über den Verein</h2>
           <div class="grid reveal-group">
-            <div class="wrapper_text" style="grid-column:1/-1; max-width:48rem;">
-              <h3 class="h3_subtitle" data-i18n="about.concept.title">Fudoshin — 不動心</h3>
-              <p data-i18n="about.concept.p1">Fudoshin (不動心) ist ein zentraler Begriff im Karate und bedeutet wörtlich „unbewegter Geist". Es beschreibt einen mentalen Zustand, in dem man ruhig und gefasst bleibt, sich nicht von Angst, Druck oder Emotionen beeinflussen lässt und auch in stressigen Situationen klar und konzentriert handelt — nicht gefühllos zu sein, sondern innerlich stabil zu bleiben, egal ob im Training, im Wettkampf oder im Alltag. Einfach gesagt: Fudoshin ist die Fähigkeit, auch unter Druck einen klaren Kopf zu bewahren und kontrolliert zu reagieren.</p>
-            </div>
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.history.title">Geschichte des Vereins</h3>
-              <p data-i18n="about.history.p1">Seit 2020 steht Fudoshin für authentisches, traditionelles Shotokan-Karate, kombiniert mit moderner Trainingsmethodik und echter Leidenschaft für die Kampfkunst. Ob Kinder, Jugendliche oder Erwachsene – bei uns findet jeder seinen Einstieg und seinen eigenen Weg im Karate. Unser Training wird von pädagogisch ausgebildeten Instruktoren sowie erfahrenen Dan-Trägern geleitet, die ihr Wissen mit Kompetenz, Disziplin und Begeisterung weitergeben. Mehr als nur Karate: Wir stärken Körper und Geist, fördern Selbstvertrauen und vermitteln Werte wie Respekt, Durchhaltevermögen und Achtsamkeit. Zusätzlich bieten wir Selbstverteidigungskurse für alle Altersgruppen und Geschlechter, praxisnah, effektiv und alltagstauglich. Starte jetzt deinen Weg mit uns!</p>
+              <p data-i18n="about.history.p1">Fudoshin lehrt seit [Jahr] traditionelles Karate in Wien. Wir trainieren Kinder, Jugendliche und Erwachsene. Der Schwerpunkt liegt auf korrekter Technik, Respekt und Beständigkeit — nicht auf Wettkampfergebnissen oder Urkunden. Schauen Sie gerne vorbei, bevor Sie sich entscheiden.</p>
             </div>
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.values.title">Werte &amp; pädagogischer Ansatz</h3>
               <p data-i18n="about.values.p1">Unser Ansatz ist geduldig und direkt. Wir korrigieren die Technik früh und oft, denn gute Gewohnheiten lassen sich leichter aufbauen, als schlechte abzulegen. Wir halten Kinder und Erwachsene an die gleichen Maßstäbe von Aufmerksamkeit und Respekt — angepasst an das, was vernünftig ist, aber nie aus Bequemlichkeit herabgesetzt. Fortschritt wird hier in Monaten und Jahren gemessen, nicht in Gürteln.</p>
-              <p data-i18n="about.values.p2">Karate lehrt, was es verlangt: Aufmerksamkeit, Geduld und Ehrlichkeit darüber, wo man steht. Wir versuchen, die Voraussetzungen dafür zu schaffen — ein ernsthaftes Trainingsumfeld, klare Anleitung und beständige Erwartungen. Die Werte ergeben sich aus der Praxis, nicht umgekehrt.</p>
             </div>
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.style.title">Welche Stilrichtung?</h3>
-              <p data-i18n-html="about.style.p1">Wir unterrichten traditionelles <strong>Shotokan-Karate</strong> — einen Stil, der auf Präzision, Disziplin und korrekter Technik aufgebaut ist. Das Training fördert körperliche und geistige Fitness und entwickelt mit der Zeit Eigenschaften, die darüber hinausgehen: Respekt, Beständigkeit und die Fähigkeit, unter Druck ruhig zu bleiben.</p>
-              <p data-i18n-html="about.style.p2">Karate lehrt nicht, wie man Konflikte sucht — sondern wie man sie erkennt, vermeidet und im Notfall beendet. Diese Unterscheidung ist Teil der Disziplin.</p>
+              <p data-i18n-html="about.style.p1">Wir unterrichten traditionelles <strong>Shotokan-Karate</strong> — einen Stil, der auf Präzision, Disziplin und korrekter Form aufbaut. Das Training fördert körperliche und geistige Fitness und entwickelt mit der Zeit Qualitäten, die weiter reichen: Respekt, Beständigkeit und die Fähigkeit, auch unter Druck ruhig zu bleiben.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- FUNAKOSHI RULES -->
       <!-- GALERIE -->
       <section class="section" id="fotos">
         <div class="section_wrapper">
           <div class="photo-grid reveal-group">
-            <div class="wrapper_image"><img src="images/fudoshin-karate-do-wien_header-01.jpg" data-full="images/fudoshin-karate-do-wien_header-01.jpg" alt="Fudoshin Karate Training 1"></div>
-            <div class="wrapper_image"><img src="images/fudoshin-karate-do-wien_header-02.jpg" data-full="images/fudoshin-karate-do-wien_header-02.jpg" alt="Fudoshin Karate Training 2"></div>
-            <div class="wrapper_image"><img src="images/fudoshin-karate-do-wien_header-03.jpg" data-full="images/fudoshin-karate-do-wien_header-03.jpg" alt="Fudoshin Karate Training 3"></div>
-            <div class="wrapper_image"><img src="images/fudoshin-karate-do-wien_header-04.jpg" data-full="images/fudoshin-karate-do-wien_header-04.jpg" alt="Fudoshin Karate Training 4"></div>
-            <div class="wrapper_image"><img src="images/fudoshin-karate-do-wien_header-05.jpg" data-full="images/fudoshin-karate-do-wien_header-05.jpg" alt="Fudoshin Karate Training 5"></div>
-            <div class="wrapper_image"><img src="images/fudoshin-karate-do-wien_header-06.jpg" data-full="images/fudoshin-karate-do-wien_header-06.jpg" alt="Fudoshin Karate Training 6"></div>
-            <div class="wrapper_image"><img src="images/fudoshin-karate-do-wien_header-07.jpg" data-full="images/fudoshin-karate-do-wien_header-07.jpg" alt="Fudoshin Karate Training 7"></div>
-            <div class="wrapper_image"><img src="images/fudoshin-karate-do-wien_header-08.jpg" data-full="images/fudoshin-karate-do-wien_header-08.jpg" alt="Fudoshin Karate Training 8"></div>
-            <div class="wrapper_image"><img src="images/fudoshin-karate-do-wien_header-09.jpg" data-full="images/fudoshin-karate-do-wien_header-09.jpg" alt="Fudoshin Karate Training 9"></div>
-            <!-- Easter eggs: hidden from grid, visible in lightbox carousel -->
-            <div class="wrapper_image wrapper_image--hidden"><img src="images/fudoshin-karate-do-wien_header-10.jpg" data-full="images/fudoshin-karate-do-wien_header-10.jpg" alt="Fudoshin Karate 10"></div>
-            <div class="wrapper_image wrapper_image--hidden"><img src="images/fudoshin-karate-do-wien_header-11.jpg" data-full="images/fudoshin-karate-do-wien_header-11.jpg" alt="Fudoshin Karate 11"></div>
-            <div class="wrapper_image wrapper_image--hidden"><img src="images/fudoshin-karate-do-wien_header-12.jpg" data-full="images/fudoshin-karate-do-wien_header-12.jpg" alt="Fudoshin Karate 12"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-02.jpg" data-full="images/full/photo-02.jpg" alt="Fudoshin Foto 1"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-03.jpg" data-full="images/full/photo-03.jpg" alt="Fudoshin Foto 2"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-04.jpg" data-full="images/full/photo-04.jpg" alt="Fudoshin Foto 3"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-05.jpg" data-full="images/full/photo-05.jpg" alt="Fudoshin Foto 4"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-06.jpg" data-full="images/full/photo-06.jpg" alt="Fudoshin Foto 5"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-07.jpg" data-full="images/full/photo-07.jpg" alt="Fudoshin Foto 6"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-08.jpg" data-full="images/full/photo-08.jpg" alt="Fudoshin Foto 7"></div>
+            <div class="wrapper_image"><img src="images/thumb/photo-09.jpg" data-full="images/full/photo-09.jpg" alt="Fudoshin Foto 8"></div>
           </div>
           <p class="caption" data-i18n-html="caption.photos"><em>Aktivitaten</em> / Caption Credits<br><span class="text-span">Fotos – Firstname Lastname</span></p>
         </div>
@@ -2014,11 +1607,11 @@
               <div class="schedule-row__group" data-i18n-html="schedule.r1.group">Kinder<br>Anfänger</div>
               <div class="schedule-row__age" data-i18n="schedule.r1.age">6–10 Jahre</div>
               <div class="schedule-row__days">
-                <span class="schedule-row__day" data-i18n="schedule.day.mi">Mi</span>
-                <span class="schedule-row__day" data-i18n="schedule.day.do">Do</span>
-                <span class="schedule-row__day" data-i18n="schedule.day.fr">Fr</span>
+                <span class="schedule-row__day">Mi</span>
+                <span class="schedule-row__day">Do</span>
+                <span class="schedule-row__day">Fr</span>
               </div>
-              <div class="schedule-row__location" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990">
+              <div class="schedule-row__location" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.399">
                 <span class="schedule-row__location-pin">⊙</span>
                 Volksschule Wolfgang-Schmälzlgasse, 1020 Wien
               </div>
@@ -2028,8 +1621,8 @@
               <div class="schedule-row__group" data-i18n-html="schedule.r2.group">Jugendliche<br>Fortgeschritten</div>
               <div class="schedule-row__age" data-i18n="schedule.r2.age">11–18 Jahre</div>
               <div class="schedule-row__days">
-                <span class="schedule-row__day" data-i18n="schedule.day.do">Do</span>
-                <span class="schedule-row__day" data-i18n="schedule.day.fr">Fr</span>
+                <span class="schedule-row__day">Do</span>
+                <span class="schedule-row__day">Fr</span>
               </div>
               <div class="schedule-row__location" data-location="Gymnasium am Augarten" data-address="Karajangasse 14, 1200 Wien" data-lat="48.2292" data-lng="16.3747">
                 <span class="schedule-row__location-pin">⊙</span>
@@ -2041,9 +1634,9 @@
               <div class="schedule-row__group" data-i18n-html="schedule.r3.group">Erwachsene<br>Alle Level</div>
               <div class="schedule-row__age" data-i18n="schedule.r3.age">Ab 18 Jahren</div>
               <div class="schedule-row__days">
-                <span class="schedule-row__day" data-i18n="schedule.day.fr">Fr</span>
+                <span class="schedule-row__day">Fr</span>
               </div>
-              <div class="schedule-row__location" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990">
+              <div class="schedule-row__location" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.399">
                 <span class="schedule-row__location-pin">⊙</span>
                 Volksschule Wolfgang-Schmälzlgasse, 1020 Wien
               </div>
@@ -2067,7 +1660,7 @@
                 <li data-i18n="pricing.s.f3">Zugang zu beiden Standorten</li>
               </ul>
             </div>
-            <div class="preise-card preise-card--highlight">
+            <div class="preise-card">
               <span class="preise-card__label" data-i18n="pricing.a.label">Jahresbeitrag</span>
               <div class="preise-card__price">320€</div>
               <p class="preise-card__unit" data-i18n="pricing.a.unit">pro Jahr · 2 Semester</p>
@@ -2090,9 +1683,6 @@
             </div>
           </div>
           <p class="preise-note" data-i18n="pricing.note">* Einmalige Aufnahmegebühr wird eingeführt. Kostenlose Schnupperstunde vor Anmeldung möglich.</p>
-          <div class="preise-cta">
-            <button class="preise-cta__btn" data-open-modal="member" data-i18n="pricing.cta">Jetzt anmelden →</button>
-          </div>
         </div>
       </section>
 
@@ -2100,66 +1690,18 @@
       <section class="section" id="team">
         <div class="section_wrapper">
           <h2 class="reveal" data-i18n="team.title">Team / Trainer</h2>
-          <!-- Primary trainers -->
           <div class="team-grid reveal-group">
             <div class="team-card">
-              <img src="images/fudoshin-karate-do-wien_emir-catic.jpg" alt="Emir Catic — Fudoshin Karate-Do Wien">
+              <img src="images/thumb/photo-10.jpg" data-full="images/full/photo-10.jpg" alt="Emir Catic">
               <h2 class="heading-4">Emir Catic</h2>
-              <p class="heading-3" data-i18n="team.emir.role">Staatlich geprüfter Karate-Instruktor · 3. Dan</p>
-              <p data-i18n="team.emir.bio">Emir ist seit 2021 als Karate-Instruktor tätig und trägt den 3. Dan Schwarzgurt. In seinem Training stehen Technik, Disziplin, Respekt und Freude an der Bewegung im Mittelpunkt. Beruflich arbeitet er seit mehreren Jahren als Freizeitpädagoge und bringt umfangreiche Erfahrung in der Arbeit mit Kindern, Jugendlichen und Gruppen mit — eine Kompetenz, die seinen Unterrichtsstil direkt prägt. Neben Shotokan-Karate hat er Erfahrung im Ju-Jitsu und Brasilianischen Jiu-Jitsu gesammelt und dadurch sein Verständnis für unterschiedliche Kampfsportarten erweitert. Durch regelmäßige Teilnahme an nationalen und internationalen Seminaren bildet er sich kontinuierlich weiter. Sein Ziel ist qualitativ hochwertiges Karate-Training für Kinder, Jugendliche und Erwachsene.</p>
+              <p class="heading-3" data-i18n="team.emir.role">Staatlich geprüfter Karate-Instruktor · 2. Dan</p>
+              <p data-i18n="team.emir.bio">Emir praktiziert seit [X] Jahren Karate und trägt den [X. Dan] Schwarzgurt im Shotokan. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Er leitet das Training mit ruhiger Autorität und einem genauen Blick für technische Details.</p>
             </div>
             <div class="team-card">
-              <img src="images/fudoshin-karate-do-wien_samir-sijamija.jpg" alt="Samir Sijamija — Fudoshin Karate-Do Wien">
+              <img src="images/thumb/photo-11.jpg" data-full="images/full/photo-11.jpg" alt="Samir Sijamija">
               <h2 class="heading-4">Samir Sijamija</h2>
               <p class="heading-3" data-i18n="team.samir.role">Staatlich geprüfter Karate-Instruktor · 4. Dan</p>
-              <p data-i18n="team.samir.bio">Samir trainiert traditionelles Shotokan-Karate seit den 1980er-Jahren und trägt den 4. Dan Schwarzgurt. Seine Laufbahn begann in Bosnien, wo er bis 1992 intensiv trainierte und an zahlreichen nationalen und internationalen Meisterschaften teilnahm. Neben Karate sammelte er auch Erfahrung im Kickboxen und Judo, wodurch er sein Verständnis für Kampfkunst und Bewegung erweitern konnte. Nach seiner Übersiedlung nach Österreich setzte er sein Training fort und unterrichtet seit 2000 Karate bei der Sportunion Döbling, wo er bis heute als Trainer tätig ist. Er ist ausgebildeter Karate-Instruktor (Sportakademie Linz) und arbeitet als Pädagoge an einer Schule. Seine pädagogische Erfahrung prägt seinen Unterrichtsstil, der auf Geduld, Motivation und persönlicher Entwicklung basiert — unabhängig vom Alter oder Erfahrungsniveau der Schüler.</p>
-            </div>
-          </div>
-          <!-- Secondary trainers -->
-          <div class="team-grid--secondary reveal-group">
-            <div class="team-card--small" data-expandable>
-              <img src="images/fudoshin-karate-do-wien_helena-erzog.jpg" alt="Helena Erzog — Fudoshin Karate-Do Wien">
-              <span class="team-small__name">Helena Erzog</span>
-              <span class="team-small__role" data-i18n="team.helena.role">Übungsleiterin · 1. Dan</span>
-              <span class="team-small__since" data-i18n="team.helena.since">Karate seit 2015</span>
-              <span class="team-small__bio" data-i18n="team.helena.bio">Helena trainiert seit 2015 traditionelles Shotokan-Karate und trägt den 1. Dan Schwarzgurt. Als Übungsleiterin unterstützt sie das Trainerteam mit Engagement und Einfühlungsvermögen — besonders im Training mit Kindern und Anfängern.</span>
-            </div>
-            <div class="team-card--small">
-              <img src="images/fudoshin-karate-do-wien_gerhard-fritzer.jpg" alt="Gerhard Fritzer — Fudoshin Karate-Do Wien">
-              <span class="team-small__name">Dipl.-Ing. Gerhard Fritzer</span>
-              <span class="team-small__role" data-i18n="team.gfritzer.role">Übungsleiter · 1. Dan</span>
-              <span class="team-small__since" data-i18n="team.gfritzer.since">Karate seit 1982</span>
-            </div>
-            <div class="team-card--small">
-              <img src="images/fudoshin-karate-do-wien_florian-fritzer.jpg" alt="Florian Fritzer — Fudoshin Karate-Do Wien">
-              <span class="team-small__name">MSc Florian Fritzer</span>
-              <span class="team-small__role" data-i18n="team.ffritzer.role">Übungsleiter · 1. Dan</span>
-              <span class="team-small__since" data-i18n="team.ffritzer.since">Karate seit 2012</span>
-            </div>
-            <div class="team-card--small">
-              <img src="images/fudoshin-karate-do-wien_mehmed-sijamija.jpg" alt="Mehmed Sijamija — Fudoshin Karate-Do Wien">
-              <span class="team-small__name">Mehmed Sijamija</span>
-              <span class="team-small__role" data-i18n="team.mehmed.role">Übungsleiter · 1. Dan</span>
-              <span class="team-small__since" data-i18n="team.mehmed.since">Karate seit 1997</span>
-            </div>
-            <div class="team-card--small">
-              <img src="images/fudoshin-karate-do-wien_grujica-peric.jpg" alt="Grujica Peric — Fudoshin Karate-Do Wien">
-              <span class="team-small__name">Grujica Peric</span>
-              <span class="team-small__role" data-i18n="team.peric.role">4. Dan</span>
-              <span class="team-small__since" data-i18n="team.peric.since">Karate seit 1983</span>
-            </div>
-            <div class="team-card--small" data-expandable>
-              <img src="images/fudoshin-karate-do-wien_felix-mueller.jpg" alt="Dr. Felix Müller — Fudoshin Karate-Do Wien">
-              <span class="team-small__name">Dr. Felix Müller</span>
-              <span class="team-small__role" data-i18n="team.mueller.role">3. Dan</span>
-              <span class="team-small__since" data-i18n="team.mueller.since">Karate seit 1993</span>
-              <span class="team-small__bio" data-i18n="team.mueller.bio">Felix trainiert seit 1993 traditionelles Shotokan-Karate und trägt den 3. Dan. Seine Laufbahn begann in Berlin, wo er u.a. bei Ronald Dorau und Uwe Waskow trainierte und erste Erfahrungen als Trainer sammelte. Einen prägenden Einfluss hatte Václav Liška aus Budweis. Seit rund vier Jahren ist er bei der Sportunion Döbling aktiv. Felix lässt sich bewusst von anderen Stilrichtungen inspirieren — Capoeira, südchinesisches Kung-Fu und Yoga ergänzen sein Karate und prägen einen offenen, vielseitigen Trainingsstil.</span>
-            </div>
-            <div class="team-card--small">
-              <img src="images/fudoshin-karate-do-wien_adam-ghanem.jpg" alt="Adam Ghanem — Fudoshin Karate-Do Wien">
-              <span class="team-small__name">Adam Ghanem</span>
-              <span class="team-small__role" data-i18n="team.ghanem.role">Übungsleiter · 1. Kyu</span>
-              <span class="team-small__since" data-i18n="team.ghanem.since">Karate seit 2015</span>
+              <p data-i18n="team.samir.bio">Samir trainiert seit [X] Jahren Shotokan und trägt den [X. Dan] Schwarzgurt. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Sein Fokus im Dojo liegt auf dem Aufbau solider Grundlagen, unabhängig vom Alter oder Niveau der Schüler.</p>
             </div>
           </div>
         </div>
@@ -2171,15 +1713,15 @@
           <h2 class="reveal" data-i18n-html="activities.title">Projekte &amp; Aktivitäten</h2>
           <div class="aktivitaeten-grid reveal-group">
             <div class="aktivitaet-card">
-              <img src="images/fudoshin-karate-do-wien_activity-turniere.jpg" data-full="images/fudoshin-karate-do-wien_activity-turniere.jpg" alt="Turniere">
+              <figure><img src="images/thumb/photo-12.jpg" data-full="images/full/photo-12.jpg" alt="Turniere"><figcaption>Photo by ?</figcaption></figure>
               <h2 class="heading-4 _2" data-i18n="activities.tournaments">Turniere</h2>
             </div>
             <div class="aktivitaet-card">
-              <img src="images/fudoshin-karate-do-wien_activity-lehrgaenge.jpg" data-full="images/fudoshin-karate-do-wien_activity-lehrgaenge.jpg" alt="Lehrgänge">
+              <figure><img src="images/thumb/photo-13.jpg" data-full="images/full/photo-13.jpg" alt="Lehrgänge"></figure>
               <h2 class="heading-4 _2" data-i18n="activities.seminars">Lehrgänge</h2>
             </div>
             <div class="aktivitaet-card">
-              <img src="images/fudoshin-karate-do-wien_activity-feriencamps.jpg" data-full="images/fudoshin-karate-do-wien_activity-feriencamps.jpg" alt="Ferien-Camps">
+              <figure><img src="images/thumb/photo-14.jpg" data-full="images/full/photo-14.jpg" alt="Ferien-Camps"></figure>
               <h2 class="heading-4 _2" data-i18n="activities.camps">Ferien-Camps</h2>
             </div>
           </div>
@@ -2194,122 +1736,6 @@
           </div>
           <div class="form-strip" id="mitglied">
             <button class="form-strip__cta form-strip__cta--accent" data-open-modal="member" data-i18n="member.strip.cta">Anmeldung öffnen →</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- DIE 20 REGELN — LASSO UNFOLD -->
-      <section class="section rules-lasso" id="regeln">
-        <div class="section_wrapper">
-          <div class="rules-lasso__header">
-            <p class="rules-lasso__subtitle" data-i18n="rules.subtitle">Die Grundsätze des Karate-Do</p>
-            <h2 class="rules-lasso__title" data-i18n="rules.title">Die 20 Regeln</h2>
-            <p class="rules-lasso__author">Gichin Funakoshi</p>
-          </div>
-          <div class="rules-lasso__track">
-            <svg class="rules-lasso__rope" aria-hidden="true" preserveAspectRatio="none">
-              <path class="rules-lasso__path" d=""/>
-            </svg>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="1">
-              <span class="rules-lasso__num">01</span>
-              <span class="rules-lasso__text" data-i18n="rules.r1">Karate-Do beginnt mit Respekt und endet mit Respekt.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--right" data-rule="2">
-              <span class="rules-lasso__num">02</span>
-              <span class="rules-lasso__text" data-i18n="rules.r2">Im Karate gibt es keinen ersten Angriff.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="3">
-              <span class="rules-lasso__num">03</span>
-              <span class="rules-lasso__text" data-i18n="rules.r3">Karate ist ein Helfer der Gerechtigkeit.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--right" data-rule="4">
-              <span class="rules-lasso__num">04</span>
-              <span class="rules-lasso__text" data-i18n="rules.r4">Erkenne zuerst dich selbst, dann den anderen.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="5">
-              <span class="rules-lasso__num">05</span>
-              <span class="rules-lasso__text" data-i18n="rules.r5">Die Kunst des Geistes kommt vor der Kunst der Technik.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--right" data-rule="6">
-              <span class="rules-lasso__num">06</span>
-              <span class="rules-lasso__text" data-i18n="rules.r6">Lerne deinen Geist zu kontrollieren und befreie ihn dann.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="7">
-              <span class="rules-lasso__num">07</span>
-              <span class="rules-lasso__text" data-i18n="rules.r7">Unglück geschieht immer durch Unachtsamkeit.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--right" data-rule="8">
-              <span class="rules-lasso__num">08</span>
-              <span class="rules-lasso__text" data-i18n="rules.r8">Denke nicht, dass Karate nur im Dojo stattfindet.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="9">
-              <span class="rules-lasso__num">09</span>
-              <span class="rules-lasso__text" data-i18n="rules.r9">Karate üben heißt ein Leben lang arbeiten. Darin gibt es keine Grenzen.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--right" data-rule="10">
-              <span class="rules-lasso__num">10</span>
-              <span class="rules-lasso__text" data-i18n="rules.r10">Verbinde dein alltägliches Leben mit Karate, dann wirst du geistige Reife erlangen.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="11">
-              <span class="rules-lasso__num">11</span>
-              <span class="rules-lasso__text" data-i18n="rules.r11">Karate ist wie heißes Wasser, das abkühlt, wenn du es nicht ständig warmhältst.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--right" data-rule="12">
-              <span class="rules-lasso__num">12</span>
-              <span class="rules-lasso__text" data-i18n="rules.r12">Denke nicht an das Gewinnen, doch denke darüber nach, wie man nicht verliert.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="13">
-              <span class="rules-lasso__num">13</span>
-              <span class="rules-lasso__text" data-i18n="rules.r13">Wandle dich abhängig vom Gegner.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--right" data-rule="14">
-              <span class="rules-lasso__num">14</span>
-              <span class="rules-lasso__text" data-i18n="rules.r14">Der Kampf hängt von der Handhabung des Treffens und des Nicht-Treffens ab.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="15">
-              <span class="rules-lasso__num">15</span>
-              <span class="rules-lasso__text" data-i18n="rules.r15">Stelle dir deine Hand und deinen Fuß als Schwert vor.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--right" data-rule="16">
-              <span class="rules-lasso__num">16</span>
-              <span class="rules-lasso__text" data-i18n="rules.r16">Wenn man das Tor zur Jugend verlässt, hat man viele Gegner.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="17">
-              <span class="rules-lasso__num">17</span>
-              <span class="rules-lasso__text" data-i18n="rules.r17">Die Haltung des Anfängers muss frei sein von eigenen Urteilen, damit er später ein natürliches Verständnis gewinnt.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--right" data-rule="18">
-              <span class="rules-lasso__num">18</span>
-              <span class="rules-lasso__text" data-i18n="rules.r18">Die Kata darf nicht verändert werden, im Kampf jedoch gilt das Gegenteil.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="19">
-              <span class="rules-lasso__num">19</span>
-              <span class="rules-lasso__text" data-i18n="rules.r19">Hart und weich, Spannung und Entspannung, langsam und schnell, alles in Verbindung mit der richtigen Atmung.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
-            <div class="rules-lasso__item rules-lasso__item--left" data-rule="20">
-              <span class="rules-lasso__num">20</span>
-              <span class="rules-lasso__text" data-i18n="rules.r20">Denke immer nach und versuche dich ständig an Neuem.</span>
-              <span class="rules-lasso__knot"></span>
-            </div>
           </div>
         </div>
       </section>
@@ -2343,16 +1769,13 @@
     <div class="footer__col">
       <h3 data-i18n="footer.locations.title">Standorte</h3>
       <ul>
-        <li><a href="#" class="footer__map-link" data-location="Pöchlarnstraße 14" data-address="Pöchlarnstraße 14, 1200 Wien" data-lat="48.2333" data-lng="16.3881">Pöchlarnstraße 14, 1200</a></li>
-        <li><a href="#" class="footer__map-link" data-location="Wolfgang-Schmälzl-Gasse 13" data-address="Wolfgang-Schmälzl-Gasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990">Wolfgang-Schmälzl-Gasse 13, 1020</a></li>
-        <li><a href="#" class="footer__map-link" data-location="Karajangasse 14" data-address="Karajangasse 14, 1200 Wien" data-lat="48.2292" data-lng="16.3747">Karajangasse 14, 1200</a></li>
+        <li><a href="#" class="footer__map-link" data-location="Volksschule Wolfgang-Schmälzlgasse" data-address="Wolfgang-Schmälzlgasse 13, 1020 Wien" data-lat="48.2202" data-lng="16.3990">Volksschule Wolfgang-Schmälzlgasse</a></li>
+        <li><a href="#" class="footer__map-link" data-location="Gymnasium am Augarten" data-address="Karajangasse 14, 1200 Wien" data-lat="48.2292" data-lng="16.3747">Gymnasium am Augarten</a></li>
       </ul>
     </div>
     <div class="footer__col">
       <h3 data-i18n="footer.credit.title">Website Design</h3>
       <ul><li><a href="https://sethweiner.org" target="_blank" rel="noopener">Seth Weiner</a></li></ul>
-      <p class="footer__sportunion" data-i18n="footer.sportunion">Mitglied der Sportunion Wien</p>
-      <p class="footer__sponsor-cta"><a href="mailto:office@fudoshin.at?subject=Sponsoring-Anfrage" data-i18n="footer.sponsor">Sponsoring-Anfrage →</a></p>
     </div>
     <div class="footer__bottom">
       <span data-i18n="footer.copyright">© 2026 Fudoshin Karate-Do Club Wien</span>
@@ -2362,24 +1785,6 @@
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ── 1. SMOOTH SCROLL — easeOutQuint, 1800ms (slow, cinematic) ──
-
-    // Logo = back-to-top
-    document.querySelector('.nav__logo').addEventListener('click', e => {
-      e.preventDefault();
-      const start = window.scrollY;
-      if (start === 0) return;
-      const duration = 1800;
-      let t0 = null;
-      const ease = t => 1 - Math.pow(1 - t, 5);
-      const step = ts => {
-        if (!t0) t0 = ts;
-        const p = Math.min((ts - t0) / duration, 1);
-        window.scrollTo(0, start * (1 - ease(p)));
-        if (p < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
-    });
-
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', e => {
         const id = link.getAttribute('href');
@@ -2475,175 +1880,886 @@
 
     revealEls.forEach(el => observer.observe(el));
 
-    // ── 4a. SCROLLSPY — highlight current section in nav ───────────
-    (function initScrollspy() {
-      const navLinks = document.querySelectorAll('.nav__links a[href^="#"]');
-      const pairs = [];
+    // ── 5. LANGUAGE TOGGLE ───────────────────────────────────────────
+    const langToggle = document.getElementById('langToggle');
+    const langBtn    = langToggle.querySelector('.nav__lang-btn');
 
-      navLinks.forEach(link => {
-        const id = link.getAttribute('href');
-        if (id === '#kontakt' || id === '#mitglied' || id === '#sommercamp') return;
-        const section = document.querySelector(id);
-        if (section) pairs.push({ el: section, link });
+    langBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = langToggle.classList.contains('is-open');
+      langToggle.classList.toggle('is-open', !isOpen);
+      langBtn.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    langToggle.querySelectorAll('[data-lang]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        langBtn.childNodes[0].textContent = btn.dataset.lang === 'bs' ? 'BCMS' : btn.dataset.lang.toUpperCase();
+        langToggle.classList.remove('is-open');
+        langBtn.setAttribute('aria-expanded', 'false');
+        setLanguage(btn.dataset.lang);
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!langToggle.contains(e.target)) {
+        langToggle.classList.remove('is-open');
+        langBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        langToggle.classList.remove('is-open');
+        langBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+
+    // ── I18N TRANSLATIONS ──────────────────────────────────────────
+    const translations = {
+      de: {
+        'nav.aria': 'Hauptnavigation',
+        'nav.about': 'Über uns',
+        'nav.schedule': 'Trainingszeiten',
+        'nav.pricing': 'Preise',
+        'nav.team': 'Team',
+        'nav.activities': 'Aktivitäten',
+        'nav.camp': 'Sommercamp',
+        'nav.contact': 'Kontakt',
+        'nav.cta': 'Mitglied werden',
+        'nav.theme.aria': 'Theme wechseln',
+        'nav.hamburger.aria': 'Menü öffnen',
+        'nav.overlay.aria': 'Navigation',
+        'nav.close.aria': 'Menü schließen',
+        'nav.overlay.brand': 'Fudoshin Karate-Do · Wien',
+        'nav.overlay.meta': 'Shotokan · Seit 2010',
+        'hero.intro': 'Das Wort Fudoshin beschreibt einen Zustand innerer Stille, der nicht erschüttert werden kann. Es ist das Ziel, auf das Karate hinweist — nicht in der Theorie, sondern durch Jahre geduldiger Praxis.',
+        'about.title': 'Über den Verein',
+        'about.history.title': 'Geschichte des Vereins',
+        'about.history.p1': 'Fudoshin lehrt seit [Jahr] traditionelles Karate in Wien. Wir trainieren Kinder, Jugendliche und Erwachsene. Der Schwerpunkt liegt auf korrekter Technik, Respekt und Beständigkeit — nicht auf Wettkampfergebnissen oder Urkunden. Schauen Sie gerne vorbei, bevor Sie sich entscheiden.',
+        'about.values.title': 'Werte & pädagogischer Ansatz',
+        'about.values.p1': 'Unser Ansatz ist geduldig und direkt. Wir korrigieren die Technik früh und oft, denn gute Gewohnheiten lassen sich leichter aufbauen, als schlechte abzulegen. Wir halten Kinder und Erwachsene an die gleichen Maßstäbe von Aufmerksamkeit und Respekt — angepasst an das, was vernünftig ist, aber nie aus Bequemlichkeit herabgesetzt. Fortschritt wird hier in Monaten und Jahren gemessen, nicht in Gürteln.',
+        'about.style.title': 'Welche Stilrichtung?',
+        'about.style.p1': 'Wir unterrichten traditionelles <strong>Shotokan-Karate</strong> — einen Stil, der auf Präzision, Disziplin und korrekter Form aufbaut. Das Training fördert körperliche und geistige Fitness und entwickelt mit der Zeit Qualitäten, die weiter reichen: Respekt, Beständigkeit und die Fähigkeit, auch unter Druck ruhig zu bleiben.',
+        'caption.photos': '<em>Aktivitaten</em> / Caption Credits<br><span class="text-span">Fotos – Firstname Lastname</span>',
+        'schedule.title': 'Trainingszeiten',
+        'schedule.h.group': 'Gruppe',
+        'schedule.h.age': 'Alter / Level',
+        'schedule.h.days': 'Trainingstage',
+        'schedule.h.location': 'Standort',
+        'schedule.r1.group': 'Kinder<br>Anfänger',
+        'schedule.r1.age': '6–10 Jahre',
+        'schedule.r2.group': 'Jugendliche<br>Fortgeschritten',
+        'schedule.r2.age': '11–18 Jahre',
+        'schedule.r3.group': 'Erwachsene<br>Alle Level',
+        'schedule.r3.age': 'Ab 18 Jahren',
+        'schedule.day.mi': 'Mi',
+        'schedule.day.do': 'Do',
+        'schedule.day.fr': 'Fr',
+        'pricing.title': 'Preise',
+        'pricing.s.label': 'Semester',
+        'pricing.s.unit': 'pro Semester',
+        'pricing.s.f1': 'Alle Trainingseinheiten',
+        'pricing.s.f2': 'Gürtelprüfungen inklusive',
+        'pricing.s.f3': 'Zugang zu beiden Standorten',
+        'pricing.a.label': 'Jahresbeitrag',
+        'pricing.a.unit': 'pro Jahr · 2 Semester',
+        'pricing.a.f1': 'Alle Trainingseinheiten',
+        'pricing.a.f2': 'Gürtelprüfungen inklusive',
+        'pricing.a.f3': 'Zugang zu beiden Standorten',
+        'pricing.a.f4': 'Ersparnis gegenüber Einzelsemester',
+        'pricing.f.label': 'Familie / Geschwister',
+        'pricing.f.unit': 'Rabatt ab 2 Personen',
+        'pricing.f.f1': 'Gilt für Geschwister',
+        'pricing.f.f2': 'Gilt für Eltern-Kind-Kombination',
+        'pricing.f.f3': 'Auf Anfrage',
+        'pricing.note': '* Einmalige Aufnahmegebühr wird eingeführt. Kostenlose Schnupperstunde vor Anmeldung möglich.',
+        'team.title': 'Team / Trainer',
+        'team.emir.role': 'Staatlich geprüfter Karate-Instruktor · 2. Dan',
+        'team.emir.bio': 'Emir praktiziert seit [X] Jahren Karate und trägt den [X. Dan] Schwarzgurt im Shotokan. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Er leitet das Training mit ruhiger Autorität und einem genauen Blick für technische Details.',
+        'team.samir.role': 'Staatlich geprüfter Karate-Instruktor · 4. Dan',
+        'team.samir.bio': 'Samir trainiert seit [X] Jahren Shotokan und trägt den [X. Dan] Schwarzgurt. [Ein Satz zum Hintergrund — wo er trainiert hat, Wettkampferfahrung, wie lange er unterrichtet.] Sein Fokus im Dojo liegt auf dem Aufbau solider Grundlagen, unabhängig vom Alter oder Niveau der Schüler.',
+        'activities.title': 'Projekte &amp; Aktivitäten',
+        'activities.tournaments': 'Turniere',
+        'activities.seminars': 'Lehrgänge',
+        'activities.camps': 'Ferien-Camps',
+        'contact.title': 'Kontakt',
+        'contact.intro': 'Fragen zum Training, zu den Standorten oder zur Anmeldung? Schreib uns einfach — wir melden uns innerhalb von 2 Werktagen.',
+        'contact.loc1.label': 'Standort 1',
+        'contact.loc1.address': 'Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Wien',
+        'contact.loc2.label': 'Standort 2',
+        'contact.loc2.address': 'Gymnasium am Augarten<br>Karajangasse 14, 1200 Wien',
+        'contact.email.label': 'E-Mail',
+        'contact.form.name.label': 'Name *',
+        'contact.form.email.label': 'E-Mail *',
+        'contact.form.phone.label': 'Telefon',
+        'contact.form.subject.label': 'Betreff',
+        'contact.form.message.label': 'Nachricht *',
+        'contact.form.submit': 'Nachricht senden →',
+        'contact.strip.cta': 'Kontaktformular öffnen →',
+        'contact.form.name.ph': 'Vorname Nachname',
+        'contact.form.email.ph': 'name@beispiel.at',
+        'contact.form.phone.ph': '+43 ...',
+        'contact.form.message.ph': 'Deine Nachricht…',
+        'contact.form.subject': ['Bitte wählen', 'Schnupperstunde', 'Anmeldung', 'Fragen zu Preisen', 'Trainingszeiten', 'Sonstiges'],
+        'member.title': 'Mitglied werden',
+        'member.intro': 'Bereit, mit dem Training zu beginnen? Füll das Formular aus — wir kontaktieren dich, um alle Details zu besprechen und einen Einstiegstermin zu vereinbaren.',
+        'member.alt': 'Nicht sicher? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Schreib uns zuerst</a> oder komm zur kostenlosen Schnupperstunde.',
+        'member.fee.label': 'Beitrag ab',
+        'member.fee.amount': '175€ <span style="font-size:1rem;opacity:0.5;">/ Semester</span>',
+        'member.form.div1': 'Persönliche Daten',
+        'member.form.firstname.label': 'Vorname *',
+        'member.form.lastname.label': 'Nachname *',
+        'member.form.dob.label': 'Geburtsdatum *',
+        'member.form.email.label': 'E-Mail *',
+        'member.form.phone.label': 'Telefon *',
+        'member.form.address.label': 'Adresse',
+        'member.form.div2': 'Training',
+        'member.form.group.label': 'Gewünschte Gruppe *',
+        'member.form.exp.label': 'Karate-Erfahrung',
+        'member.form.fee.label': 'Gewünschter Beitrag',
+        'member.form.extra.label': 'Zusätzliches',
+        'member.form.notes.label': 'Anmerkungen',
+        'member.form.submit': 'Anmeldung absenden →',
+        'member.strip.cta': 'Anmeldung öffnen →',
+        'member.form.firstname.ph': 'Vorname',
+        'member.form.lastname.ph': 'Nachname',
+        'member.form.email.ph': 'name@beispiel.at',
+        'member.form.phone.ph': '+43 ...',
+        'member.form.address.ph': 'Straße, PLZ, Ort',
+        'member.form.notes.ph': 'Gesundheitliche Hinweise, Fragen, etc.',
+        'member.form.group.children': 'Kinder Anfänger (6–10 Jahre)',
+        'member.form.group.youth': 'Jugendliche Fortgeschritten (11–18 Jahre)',
+        'member.form.group.adults': 'Erwachsene alle Level',
+        'member.form.extra.trial': 'Ich möchte zuerst eine kostenlose Schnupperstunde',
+        'member.form.extra.news': 'Über Turniere und Veranstaltungen informiert werden',
+        'member.form.exp': ['Bitte wählen', 'Keine Erfahrung', 'Anfänger (unter 1 Jahr)', 'Fortgeschritten (1–5 Jahre)', 'Erfahren (über 5 Jahre)'],
+        'member.form.fee': ['Bitte wählen', 'Semester (175€)', 'Jahresbeitrag (320€)', 'Familie / Geschwister (−20%)'],
+        'footer.tagline': 'Shotokan Karate · Wien, Österreich',
+        'footer.nav.title': 'Navigation',
+        'footer.locations.title': 'Standorte',
+        'footer.copyright': '© 2026 Fudoshin Karate-Do Club Wien',
+        'footer.credit.title': 'Website Design',
+        'footer.legal': '<a href="#">Impressum</a> · <a href="#">Datenschutz</a>',
+        'modal.close.aria': 'Schließen',
+        'modal.map.footer': 'Auf Google Maps öffnen ↗',
+        'modal.map.directions': 'Route planen',
+        'legal.tab.impressum': 'Impressum',
+        'legal.tab.datenschutz': 'Datenschutz',
+        'legal.phone': 'Telefonnummern',
+        'legal.bank': 'Bankverbindung',
+        'legal.privacy.title': 'Datenschutzerklärung',
+        'legal.privacy.p1': 'Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Wir verarbeiten Ihre Daten ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, DSG, TKG 2003).',
+        'legal.privacy.contact.title': 'Kontaktaufnahme',
+        'legal.privacy.contact.p1': 'Wenn Sie per Formular auf der Website oder per E-Mail Kontakt mit uns aufnehmen, werden Ihre angegebenen Daten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO.',
+        'legal.privacy.membership.title': 'Mitgliederverwaltung',
+        'legal.privacy.membership.p1': 'Im Rahmen Ihrer Vereinsmitgliedschaft verarbeiten wir Name, Geburtsdatum, Adresse, E-Mail und Telefonnummer. Die Verarbeitung erfolgt zur Erfüllung des Mitgliedschaftsvertrags gemäß Art. 6 Abs. 1 lit. b DSGVO.',
+        'legal.privacy.rights.title': 'Ihre Rechte',
+        'legal.privacy.rights.p1': 'Ihnen stehen grundsätzlich die Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch zu. Wenn Sie glauben, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt, können Sie sich bei der Datenschutzbehörde (dsb.gv.at) beschweren.',
+        'legal.privacy.cookies.title': 'Cookies',
+        'legal.privacy.cookies.p1': 'Diese Website verwendet nur technisch notwendige Cookies (Spracheinstellung). Es werden keine Tracking- oder Analyse-Cookies eingesetzt.',
+        'lightbox.aria': 'Foto-Galerie',
+        'lightbox.close.aria': 'Schließen',
+        'lightbox.prev.aria': 'Vorheriges Bild',
+        'lightbox.next.aria': 'Nächstes Bild',
+        'camp.title': 'Sommer Camp 2026',
+        'camp.intro': 'Eine Woche voller Karate, Spiel und Spaß — für Kinder und Jugendliche aller Erfahrungsstufen. Trainiert wird täglich von erfahrenen Trainern in einer freundlichen, motivierenden Atmosphäre.',
+        'camp.cost.label': 'Teilnahmegebühr',
+        'camp.table.dates.label': 'Datum',
+        'camp.table.dates.value': '14.–18. Juli 2026 (Mo–Fr)',
+        'camp.table.times.label': 'Uhrzeit',
+        'camp.table.times.value': '9:00–15:00 Uhr',
+        'camp.table.ages.label': 'Alter',
+        'camp.table.ages.value': '6–14 Jahre',
+        'camp.table.location.label': 'Ort',
+        'camp.table.location.value': 'Volksschule Wolfgang-Schmälzlgasse, 1020 Wien',
+        'camp.table.cost.label': 'Kosten',
+        'camp.table.cost.value': '220 € pro Teilnehmer',
+        'camp.table.payment.label': 'Zahlung',
+        'camp.table.payment.value': 'Überweisung auf IBAN AT81 2011 1843 2757 9400<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)',
+        'camp.table.included.label': 'Inklusive',
+        'camp.table.included.value': 'Karate-Training, Spiele & Bewegung, Mittagessen & Snacks, Urkunde, Camp-T-Shirt',
+        'camp.table.bring.label': 'Mitbringen',
+        'camp.table.bring.value': 'Gi oder Sportkleidung, Trinkflasche, Hallenschuhe',
+        'camp.form.div1': 'Teilnehmer',
+        'camp.form.firstname.label': 'Vorname des Kindes *',
+        'camp.form.firstname.ph': 'Vorname',
+        'camp.form.lastname.label': 'Nachname *',
+        'camp.form.lastname.ph': 'Nachname',
+        'camp.form.dob.label': 'Geburtsdatum *',
+        'camp.form.email.label': 'E-Mail (Eltern) *',
+        'camp.form.email.ph': 'name@beispiel.at',
+        'camp.form.phone.label': 'Telefon (Eltern) *',
+        'camp.form.phone.ph': '+43 ...',
+        'camp.form.div2': 'Training',
+        'camp.form.exp.label': 'Karate-Erfahrung',
+        'camp.form.exp': ['Bitte wählen', 'Keine Erfahrung', 'Anfänger (unter 1 Jahr)', 'Fortgeschritten (1–3 Jahre)', 'Erfahren (über 3 Jahre)'],
+        'camp.form.gi': ' Eigenen Gi (Karateanzug) vorhanden',
+        'camp.form.div3': 'Sonstiges',
+        'camp.form.notes.label': 'Anmerkungen',
+        'camp.form.notes.ph': 'Allergien, gesundheitliche Hinweise, Fragen, etc.',
+        'camp.form.terms': ' Ich bestätige die Anmeldung und überweise die Teilnahmegebühr von 220 € auf das angegebene Konto.',
+        'camp.form.submit': 'Anmeldung absenden →',
+        'sticker.label': 'Sommer 2026',
+        'sticker.headline': 'Sommer-<br>Camp',
+        'sticker.detail': '14 — 18 Juli<br>Kinder &amp; Jugendliche',
+        'sticker.cta': 'Anmelden →',
+        'sticker.tab': 'Sommer Camp 2026'
+      },
+      en: {
+        'nav.aria': 'Main navigation',
+        'nav.about': 'About us',
+        'nav.schedule': 'Training schedule',
+        'nav.pricing': 'Prices',
+        'nav.team': 'Team',
+        'nav.activities': 'Activities',
+        'nav.camp': 'Summer Camp',
+        'nav.contact': 'Contact',
+        'nav.cta': 'Become a member',
+        'nav.theme.aria': 'Switch theme',
+        'nav.hamburger.aria': 'Open menu',
+        'nav.overlay.aria': 'Navigation',
+        'nav.close.aria': 'Close menu',
+        'nav.overlay.brand': 'Fudoshin Karate-Do · Vienna',
+        'nav.overlay.meta': 'Shotokan · Since 2010',
+        'hero.intro': 'The word fudoshin describes a state of inner stillness that cannot be disturbed. It is the goal karate points toward — not in theory, but through years of patient practice.',
+        'about.title': 'About the Club',
+        'about.history.title': 'Club History',
+        'about.history.p1': 'Fudoshin has been teaching traditional karate in Vienna since [year]. We train children, young people, and adults. The emphasis is on correct technique, respect, and consistency — not competition results or certificates. Feel free to come and watch before you decide to join.',
+        'about.values.title': 'Values & Pedagogical Approach',
+        'about.values.p1': 'Our approach is patient and direct. We correct technique early and often, because good habits are easier to build than bad ones are to undo. We hold children and adults to the same standards of attention and respect — scaled to what is reasonable, but never lowered out of convenience. Progress here is measured in months and years, not belts.',
+        'about.style.title': 'Which Style?',
+        'about.style.p1': 'We teach traditional <strong>Shotokan karate</strong> — a style built on precision, discipline, and correct form. Training develops physical and mental fitness, and over time, qualities that go further: respect, consistency, and the ability to stay steady under pressure.',
+        'caption.photos': '<em>Activities</em> / Caption Credits<br><span class="text-span">Photos – Firstname Lastname</span>',
+        'schedule.title': 'Training Schedule',
+        'schedule.h.group': 'Group',
+        'schedule.h.age': 'Age / Level',
+        'schedule.h.days': 'Training days',
+        'schedule.h.location': 'Location',
+        'schedule.r1.group': 'Children<br>Beginners',
+        'schedule.r1.age': '6–10 years',
+        'schedule.r2.group': 'Youth<br>Advanced',
+        'schedule.r2.age': '11–18 years',
+        'schedule.r3.group': 'Adults<br>All levels',
+        'schedule.r3.age': '18 years and up',
+        'schedule.day.mi': 'Wed',
+        'schedule.day.do': 'Thu',
+        'schedule.day.fr': 'Fri',
+        'pricing.title': 'Prices',
+        'pricing.s.label': 'Semester',
+        'pricing.s.unit': 'per semester',
+        'pricing.s.f1': 'All training sessions',
+        'pricing.s.f2': 'Belt exams included',
+        'pricing.s.f3': 'Access to both locations',
+        'pricing.a.label': 'Annual fee',
+        'pricing.a.unit': 'per year · 2 semesters',
+        'pricing.a.f1': 'All training sessions',
+        'pricing.a.f2': 'Belt exams included',
+        'pricing.a.f3': 'Access to both locations',
+        'pricing.a.f4': 'Savings compared to single semester',
+        'pricing.f.label': 'Family / Siblings',
+        'pricing.f.unit': 'Discount for 2+ persons',
+        'pricing.f.f1': 'Applies to siblings',
+        'pricing.f.f2': 'Applies to parent-child combination',
+        'pricing.f.f3': 'On request',
+        'pricing.note': '* One-time registration fee applies. Free trial class before registration possible.',
+        'team.title': 'Team / Trainers',
+        'team.emir.role': 'State-certified karate instructor · 2nd Dan',
+        'team.emir.bio': 'Emir has been practicing karate for [X] years and holds a [X. Dan] black belt in Shotokan. [One sentence on background — where he trained, any competitive experience, how long he has been teaching.] He leads training with calm authority and a close attention to technical detail.',
+        'team.samir.role': 'State-certified karate instructor · 4th Dan',
+        'team.samir.bio': 'Samir has been training in Shotokan for [X] years and holds a [X. Dan] black belt. [One sentence on background — where he trained, any competitive experience, how long he has been teaching.] His focus in the dojo is on building strong foundations, regardless of the age or level of the student.',
+        'activities.title': 'Projects &amp; Activities',
+        'activities.tournaments': 'Tournaments',
+        'activities.seminars': 'Seminars',
+        'activities.camps': 'Holiday Camps',
+        'contact.title': 'Contact',
+        'contact.intro': 'Questions about training, locations, or registration? Just write to us — we will get back to you within 2 business days.',
+        'contact.loc1.label': 'Location 1',
+        'contact.loc1.address': 'Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Vienna',
+        'contact.loc2.label': 'Location 2',
+        'contact.loc2.address': 'Gymnasium am Augarten<br>Karajangasse 14, 1200 Vienna',
+        'contact.email.label': 'Email',
+        'contact.form.name.label': 'Name *',
+        'contact.form.email.label': 'Email *',
+        'contact.form.phone.label': 'Phone',
+        'contact.form.subject.label': 'Subject',
+        'contact.form.message.label': 'Message *',
+        'contact.form.submit': 'Send message →',
+        'contact.strip.cta': 'Open contact form →',
+        'contact.form.name.ph': 'First name Last name',
+        'contact.form.email.ph': 'name@example.at',
+        'contact.form.phone.ph': '+43 ...',
+        'contact.form.message.ph': 'Your message…',
+        'contact.form.subject': ['Please select', 'Trial class', 'Registration', 'Questions about prices', 'Training schedule', 'Other'],
+        'member.title': 'Become a Member',
+        'member.intro': 'Ready to start training? Fill out the form — we will contact you to discuss all details and arrange a start date.',
+        'member.alt': 'Not sure? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Write to us first</a> or come to a free trial class.',
+        'member.fee.label': 'Fees from',
+        'member.fee.amount': '175€ <span style="font-size:1rem;opacity:0.5;">/ Semester</span>',
+        'member.form.div1': 'Personal details',
+        'member.form.firstname.label': 'First name *',
+        'member.form.lastname.label': 'Last name *',
+        'member.form.dob.label': 'Date of birth *',
+        'member.form.email.label': 'Email *',
+        'member.form.phone.label': 'Phone *',
+        'member.form.address.label': 'Address',
+        'member.form.div2': 'Training',
+        'member.form.group.label': 'Preferred group *',
+        'member.form.exp.label': 'Karate experience',
+        'member.form.fee.label': 'Preferred fee',
+        'member.form.extra.label': 'Additional',
+        'member.form.notes.label': 'Notes',
+        'member.form.submit': 'Submit registration →',
+        'member.strip.cta': 'Open registration →',
+        'member.form.firstname.ph': 'First name',
+        'member.form.lastname.ph': 'Last name',
+        'member.form.email.ph': 'name@example.at',
+        'member.form.phone.ph': '+43 ...',
+        'member.form.address.ph': 'Street, Postal code, City',
+        'member.form.notes.ph': 'Health notes, questions, etc.',
+        'member.form.group.children': 'Children Beginners (6–10 years)',
+        'member.form.group.youth': 'Youth Advanced (11–18 years)',
+        'member.form.group.adults': 'Adults all levels',
+        'member.form.extra.trial': 'I would like a free trial class first',
+        'member.form.extra.news': 'Be informed about tournaments and events',
+        'member.form.exp': ['Please select', 'No experience', 'Beginner (under 1 year)', 'Advanced (1–5 years)', 'Experienced (over 5 years)'],
+        'member.form.fee': ['Please select', 'Semester (175€)', 'Annual fee (320€)', 'Family / Siblings (−20%)'],
+        'footer.tagline': 'Shotokan Karate · Vienna, Austria',
+        'footer.nav.title': 'Navigation',
+        'footer.locations.title': 'Locations',
+        'footer.copyright': '© 2026 Fudoshin Karate-Do Club Vienna',
+        'footer.credit.title': 'Website Design',
+        'footer.legal': '<a href="#">Legal Notice</a> · <a href="#">Privacy Policy</a>',
+        'modal.close.aria': 'Close',
+        'modal.map.footer': 'Open in Google Maps ↗',
+        'modal.map.directions': 'Get directions',
+        'legal.tab.impressum': 'Legal Notice',
+        'legal.tab.datenschutz': 'Privacy Policy',
+        'legal.phone': 'Phone Numbers',
+        'legal.bank': 'Bank Details',
+        'legal.privacy.title': 'Privacy Policy',
+        'legal.privacy.p1': 'The protection of your personal data is of particular concern to us. We process your data exclusively on the basis of legal provisions (GDPR, DSG, TKG 2003).',
+        'legal.privacy.contact.title': 'Contact',
+        'legal.privacy.contact.p1': 'If you contact us via the website form or email, your data will be stored for the purpose of processing the inquiry and in case of follow-up questions. We will not share this data without your consent. Processing is based on Art. 6(1)(b) GDPR.',
+        'legal.privacy.membership.title': 'Membership Management',
+        'legal.privacy.membership.p1': 'As part of your club membership, we process your name, date of birth, address, email, and phone number. Processing is carried out to fulfil the membership contract pursuant to Art. 6(1)(b) GDPR.',
+        'legal.privacy.rights.title': 'Your Rights',
+        'legal.privacy.rights.p1': 'You have the right to access, rectification, erasure, restriction, data portability, and objection. If you believe that the processing of your data violates data protection law, you may file a complaint with the Data Protection Authority (dsb.gv.at).',
+        'legal.privacy.cookies.title': 'Cookies',
+        'legal.privacy.cookies.p1': 'This website uses only technically necessary cookies (language setting). No tracking or analytics cookies are used.',
+        'lightbox.aria': 'Photo gallery',
+        'lightbox.close.aria': 'Close',
+        'lightbox.prev.aria': 'Previous image',
+        'lightbox.next.aria': 'Next image',
+        'camp.title': 'Summer Camp 2026',
+        'camp.intro': 'A week full of karate, games and fun — for children and young people of all experience levels. Daily training led by experienced instructors in a friendly, motivating atmosphere.',
+        'camp.cost.label': 'Participation fee',
+        'camp.table.dates.label': 'Dates',
+        'camp.table.dates.value': '14–18 July 2026 (Mon–Fri)',
+        'camp.table.times.label': 'Times',
+        'camp.table.times.value': '9:00 AM – 3:00 PM',
+        'camp.table.ages.label': 'Ages',
+        'camp.table.ages.value': '6–14 years',
+        'camp.table.location.label': 'Location',
+        'camp.table.location.value': 'Volksschule Wolfgang-Schmälzlgasse, 1020 Vienna',
+        'camp.table.cost.label': 'Cost',
+        'camp.table.cost.value': '€220 per participant',
+        'camp.table.payment.label': 'Payment',
+        'camp.table.payment.value': 'Bank transfer to IBAN AT81 2011 1843 2757 9400<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)',
+        'camp.table.included.label': 'Included',
+        'camp.table.included.value': 'Karate training, games & activities, lunch & snacks, certificate, camp T-shirt',
+        'camp.table.bring.label': 'What to bring',
+        'camp.table.bring.value': 'Gi or sportswear, water bottle, indoor shoes',
+        'camp.form.div1': 'Participant',
+        'camp.form.firstname.label': 'Child\'s first name *',
+        'camp.form.firstname.ph': 'First name',
+        'camp.form.lastname.label': 'Last name *',
+        'camp.form.lastname.ph': 'Last name',
+        'camp.form.dob.label': 'Date of birth *',
+        'camp.form.email.label': 'E-mail (parent) *',
+        'camp.form.email.ph': 'name@example.com',
+        'camp.form.phone.label': 'Phone (parent) *',
+        'camp.form.phone.ph': '+43 ...',
+        'camp.form.div2': 'Training',
+        'camp.form.exp.label': 'Karate experience',
+        'camp.form.exp': ['Please select', 'No experience', 'Beginner (under 1 year)', 'Intermediate (1–3 years)', 'Experienced (over 3 years)'],
+        'camp.form.gi': ' Own gi (karate uniform) available',
+        'camp.form.div3': 'Other',
+        'camp.form.notes.label': 'Notes',
+        'camp.form.notes.ph': 'Allergies, health information, questions, etc.',
+        'camp.form.terms': ' I confirm the registration and will transfer the participation fee of €220 to the specified account.',
+        'camp.form.submit': 'Submit registration →',
+        'sticker.label': 'Summer 2026',
+        'sticker.headline': 'Summer<br>Camp',
+        'sticker.detail': '14 — 18 July<br>Children &amp; Youth',
+        'sticker.cta': 'Register →',
+        'sticker.tab': 'Summer Camp 2026'
+      },
+      tr: {
+        'nav.aria': 'Ana gezinti',
+        'nav.about': 'Hakkımızda',
+        'nav.schedule': 'Antrenman saatleri',
+        'nav.pricing': 'Fiyatlar',
+        'nav.team': 'Ekip',
+        'nav.activities': 'Etkinlikler',
+        'nav.camp': 'Yaz Kampı',
+        'nav.contact': 'İletişim',
+        'nav.cta': 'Üye ol',
+        'nav.theme.aria': 'Tema değiştir',
+        'nav.hamburger.aria': 'Menüyü aç',
+        'nav.overlay.aria': 'Gezinti',
+        'nav.close.aria': 'Menüyü kapat',
+        'nav.overlay.brand': 'Fudoshin Karate-Do · Viyana',
+        'nav.overlay.meta': 'Shotokan · 2010\'dan beri',
+        'hero.intro': 'Fudoshin kelimesi, sarsılamayan bir iç huzur durumunu tanımlar. Karatenin işaret ettiği hedef budur — teoride değil, yılların sabırlı pratiğiyle.',
+        'about.title': 'Kulüp hakkında',
+        'about.history.title': 'Kulüp tarihi',
+        'about.history.p1': 'Fudoshin, [yıl] yılından bu yana Viyana\'da geleneksel karate öğretmektedir. Çocukları, gençleri ve yetişkinleri eğitiyoruz. Vurgu doğru teknik, saygı ve tutarlılık üzerinedir — yarışma sonuçları ya da sertifikalar değil. Katılmaya karar vermeden önce gelip izleyebilirsiniz.',
+        'about.values.title': 'Değerler ve pedagojik yaklaşım',
+        'about.values.p1': 'Yaklaşımımız sabırlı ve doğrudandır. Tekniği erken ve sık düzeltiriz, çünkü iyi alışkanlıklar edinmek kötü olanları bırakmaktan daha kolaydır. Çocuklardan ve yetişkinlerden aynı dikkat ve saygı standartlarını bekleriz — makul olana göre ayarlanmış, ama asla kolaylık uğruna düşürülmemiş. Burada ilerleme aylarla ve yıllarla ölçülür, kuşaklarla değil.',
+        'about.style.title': 'Hangi Stil?',
+        'about.style.p1': 'Geleneksel <strong>Shotokan karate</strong> öğretiyoruz — hassasiyet, disiplin ve doğru form üzerine kurulu bir stil. Antrenman fiziksel ve zihinsel zindeliği geliştirir ve zamanla daha ileri nitelikler kazandırır: saygı, süreklilik ve baskı altında sakin kalabilme yeteneği.',
+        'caption.photos': '<em>Etkinlikler</em> / Caption Credits<br><span class="text-span">Fotoğraflar – Firstname Lastname</span>',
+        'schedule.title': 'Antrenman saatleri',
+        'schedule.h.group': 'Grup',
+        'schedule.h.age': 'Yaş / Seviye',
+        'schedule.h.days': 'Antrenman günleri',
+        'schedule.h.location': 'Konum',
+        'schedule.r1.group': 'Çocuklar<br>Başlangıç',
+        'schedule.r1.age': '6–10 yaş',
+        'schedule.r2.group': 'Gençler<br>İleri seviye',
+        'schedule.r2.age': '11–18 yaş',
+        'schedule.r3.group': 'Yetişkinler<br>Tüm seviyeler',
+        'schedule.r3.age': '18 yaş ve üzeri',
+        'schedule.day.mi': 'Çar',
+        'schedule.day.do': 'Per',
+        'schedule.day.fr': 'Cum',
+        'pricing.title': 'Fiyatlar',
+        'pricing.s.label': 'Sömestr',
+        'pricing.s.unit': 'dönem başına',
+        'pricing.s.f1': 'Tüm antrenman seansları',
+        'pricing.s.f2': 'Kuşak sınavları dahil',
+        'pricing.s.f3': 'Her iki konuma erişim',
+        'pricing.a.label': 'Yıllık aidat',
+        'pricing.a.unit': 'yıllık · 2 sömestr',
+        'pricing.a.f1': 'Tüm antrenman seansları',
+        'pricing.a.f2': 'Kuşak sınavları dahil',
+        'pricing.a.f3': 'Her iki konuma erişim',
+        'pricing.a.f4': 'Tek döneme göre tasarruf',
+        'pricing.f.label': 'Aile / Kardeşler',
+        'pricing.f.unit': '2+ kişi için indirim',
+        'pricing.f.f1': 'Kardeşler için geçerli',
+        'pricing.f.f2': 'Ebeveyn-çocuk kombinasyonu için geçerli',
+        'pricing.f.f3': 'Talep üzerine',
+        'pricing.note': '* Tek seferlik kayıt ücreti uygulanır. Kayıt öncesi ücretsiz deneme dersi mümkündür.',
+        'team.title': 'Ekip / Antrenörler',
+        'team.emir.role': 'Devlet onaylı karate eğitmeni · 2. Dan',
+        'team.emir.bio': 'Emir [X] yıldır karate yapıyor ve Shotokan\'da [X. Dan] siyah kuşak taşıyor. [Arka plan hakkında bir cümle — nerede eğitim aldığı, yarışma deneyimi, ne zamandır öğretmenlik yaptığı.] Antrenmanları sakin bir otoriteyle ve teknik detaylara yakın bir dikkatle yönetiyor.',
+        'team.samir.role': 'Devlet onaylı karate eğitmeni · 4. Dan',
+        'team.samir.bio': 'Samir [X] yıldır Shotokan eğitimi alıyor ve [X. Dan] siyah kuşak taşıyor. [Arka plan hakkında bir cümle — nerede eğitim aldığı, yarışma deneyimi, ne zamandır öğretmenlik yaptığı.] Dojo\'daki odağı, öğrencinin yaşı veya seviyesinden bağımsız olarak sağlam temeller oluşturmak.',
+        'activities.title': 'Projeler &amp; Etkinlikler',
+        'activities.tournaments': 'Turnuvalar',
+        'activities.seminars': 'Seminerler',
+        'activities.camps': 'Tatil kampları',
+        'contact.title': 'İletişim',
+        'contact.intro': 'Antrenman, konumlar veya kayıt hakkında sorularınız mı var? Bize yazın — 2 iş günü içinde size geri döneceğiz.',
+        'contact.loc1.label': 'Konum 1',
+        'contact.loc1.address': 'Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Viyana',
+        'contact.loc2.label': 'Konum 2',
+        'contact.loc2.address': 'Gymnasium am Augarten<br>Karajangasse 14, 1200 Viyana',
+        'contact.email.label': 'E-posta',
+        'contact.form.name.label': 'İsim *',
+        'contact.form.email.label': 'E-posta *',
+        'contact.form.phone.label': 'Telefon',
+        'contact.form.subject.label': 'Konu',
+        'contact.form.message.label': 'Mesaj *',
+        'contact.form.submit': 'Mesaj gönder →',
+        'contact.strip.cta': 'İletişim formunu aç →',
+        'contact.form.name.ph': 'Ad Soyad',
+        'contact.form.email.ph': 'isim@ornek.at',
+        'contact.form.phone.ph': '+43 ...',
+        'contact.form.message.ph': 'Mesajınız…',
+        'contact.form.subject': ['Lütfen seçin', 'Deneme dersi', 'Kayıt', 'Fiyat soruları', 'Antrenman saatleri', 'Diğer'],
+        'member.title': 'Üye ol',
+        'member.intro': 'Antrenmana başlamaya hazır mısınız? Formu doldurun — tüm detayları görüşmek ve bir başlangıç tarihi belirlemek için sizinle iletişime geçeceğiz.',
+        'member.alt': 'Emin değil misiniz? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Önce bize yazın</a> veya ücretsiz deneme dersine gelin.',
+        'member.fee.label': 'Aidat',
+        'member.fee.amount': '175€ <span style="font-size:1rem;opacity:0.5;">/ Sömestr</span>',
+        'member.form.div1': 'Kişisel bilgiler',
+        'member.form.firstname.label': 'Ad *',
+        'member.form.lastname.label': 'Soyad *',
+        'member.form.dob.label': 'Doğum tarihi *',
+        'member.form.email.label': 'E-posta *',
+        'member.form.phone.label': 'Telefon *',
+        'member.form.address.label': 'Adres',
+        'member.form.div2': 'Antrenman',
+        'member.form.group.label': 'Tercih edilen grup *',
+        'member.form.exp.label': 'Karate deneyimi',
+        'member.form.fee.label': 'Tercih edilen aidat',
+        'member.form.extra.label': 'Ek bilgiler',
+        'member.form.notes.label': 'Notlar',
+        'member.form.submit': 'Kaydı gönder →',
+        'member.strip.cta': 'Kayıt formunu aç →',
+        'member.form.firstname.ph': 'Ad',
+        'member.form.lastname.ph': 'Soyad',
+        'member.form.email.ph': 'isim@ornek.at',
+        'member.form.phone.ph': '+43 ...',
+        'member.form.address.ph': 'Sokak, Posta kodu, Şehir',
+        'member.form.notes.ph': 'Sağlık notları, sorular, vb.',
+        'member.form.group.children': 'Çocuklar Başlangıç (6–10 yaş)',
+        'member.form.group.youth': 'Gençler İleri seviye (11–18 yaş)',
+        'member.form.group.adults': 'Yetişkinler tüm seviyeler',
+        'member.form.extra.trial': 'Önce ücretsiz bir deneme dersi istiyorum',
+        'member.form.extra.news': 'Turnuvalar ve etkinlikler hakkında bilgilendirilmek istiyorum',
+        'member.form.exp': ['Lütfen seçin', 'Deneyim yok', 'Başlangıç (1 yıldan az)', 'İleri seviye (1–5 yıl)', 'Deneyimli (5 yıldan fazla)'],
+        'member.form.fee': ['Lütfen seçin', 'Sömestr (175€)', 'Yıllık aidat (320€)', 'Aile / Kardeşler (−20%)'],
+        'footer.tagline': 'Shotokan Karate · Viyana, Avusturya',
+        'footer.nav.title': 'Gezinti',
+        'footer.locations.title': 'Konumlar',
+        'footer.copyright': '© 2026 Fudoshin Karate-Do Kulübü Viyana',
+        'footer.credit.title': 'Website Design',
+        'footer.legal': '<a href="#">Yasal Bilgiler</a> · <a href="#">Gizlilik Politikası</a>',
+        'modal.close.aria': 'Kapat',
+        'modal.map.footer': 'Google Maps\'te aç ↗',
+        'modal.map.directions': 'Yol tarifi al',
+        'legal.tab.impressum': 'Yasal Bilgiler',
+        'legal.tab.datenschutz': 'Gizlilik Politikası',
+        'legal.phone': 'Telefon Numaraları',
+        'legal.bank': 'Banka Bilgileri',
+        'legal.privacy.title': 'Gizlilik Politikası',
+        'legal.privacy.p1': 'Kişisel verilerinizin korunması bizim için özellikle önemlidir. Verilerinizi yalnızca yasal düzenlemeler (GDPR, DSG, TKG 2003) çerçevesinde işliyoruz.',
+        'legal.privacy.contact.title': 'İletişim',
+        'legal.privacy.contact.p1': 'Web sitesi formu veya e-posta yoluyla bizimle iletişime geçerseniz, verileriniz talebin işlenmesi ve olası takip soruları için saklanacaktır. Bu verileri onayınız olmadan paylaşmayız. İşleme, GDPR Madde 6(1)(b) temelinde gerçekleştirilir.',
+        'legal.privacy.membership.title': 'Üyelik Yönetimi',
+        'legal.privacy.membership.p1': 'Kulüp üyeliğiniz kapsamında adınızı, doğum tarihinizi, adresinizi, e-postanızı ve telefon numaranızı işliyoruz. İşleme, GDPR Madde 6(1)(b) uyarınca üyelik sözleşmesini yerine getirmek amacıyla yapılır.',
+        'legal.privacy.rights.title': 'Haklarınız',
+        'legal.privacy.rights.p1': 'Erişim, düzeltme, silme, kısıtlama, veri taşınabilirliği ve itiraz haklarına sahipsiniz. Verilerinizin işlenmesinin veri koruma yasasını ihlal ettiğine inanıyorsanız, Veri Koruma Kurumu\'na (dsb.gv.at) şikayette bulunabilirsiniz.',
+        'legal.privacy.cookies.title': 'Çerezler',
+        'legal.privacy.cookies.p1': 'Bu web sitesi yalnızca teknik olarak gerekli çerezleri (dil ayarı) kullanır. İzleme veya analiz çerezleri kullanılmaz.',
+        'lightbox.aria': 'Fotoğraf galerisi',
+        'lightbox.close.aria': 'Kapat',
+        'lightbox.prev.aria': 'Önceki fotoğraf',
+        'lightbox.next.aria': 'Sonraki fotoğraf',
+        'camp.title': 'Yaz Kampı 2026',
+        'camp.intro': 'Karate, oyun ve eğlence dolu bir hafta — her deneyim seviyesinden çocuklar ve gençler için. Deneyimli eğitmenler tarafından samimi ve motive edici bir ortamda günlük antrenman.',
+        'camp.cost.label': 'Katılım ücreti',
+        'camp.table.dates.label': 'Tarih',
+        'camp.table.dates.value': '14–18 Temmuz 2026 (Pzt–Cum)',
+        'camp.table.times.label': 'Saat',
+        'camp.table.times.value': '9:00–15:00',
+        'camp.table.ages.label': 'Yaş',
+        'camp.table.ages.value': '6–14 yaş',
+        'camp.table.location.label': 'Yer',
+        'camp.table.location.value': 'Volksschule Wolfgang-Schmälzlgasse, 1020 Viyana',
+        'camp.table.cost.label': 'Ücret',
+        'camp.table.cost.value': 'Katılımcı başına 220 €',
+        'camp.table.payment.label': 'Ödeme',
+        'camp.table.payment.value': 'IBAN AT81 2011 1843 2757 9400 hesabına havale<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)',
+        'camp.table.included.label': 'Dahil',
+        'camp.table.included.value': 'Karate eğitimi, oyunlar ve aktiviteler, öğle yemeği ve atıştırmalıklar, sertifika, kamp tişörtü',
+        'camp.table.bring.label': 'Getirilecekler',
+        'camp.table.bring.value': 'Gi veya spor kıyafeti, su şişesi, salon ayakkabısı',
+        'camp.form.div1': 'Katılımcı',
+        'camp.form.firstname.label': 'Çocuğun adı *',
+        'camp.form.firstname.ph': 'Ad',
+        'camp.form.lastname.label': 'Soyadı *',
+        'camp.form.lastname.ph': 'Soyadı',
+        'camp.form.dob.label': 'Doğum tarihi *',
+        'camp.form.email.label': 'E-posta (ebeveyn) *',
+        'camp.form.email.ph': 'isim@ornek.com',
+        'camp.form.phone.label': 'Telefon (ebeveyn) *',
+        'camp.form.phone.ph': '+43 ...',
+        'camp.form.div2': 'Antrenman',
+        'camp.form.exp.label': 'Karate deneyimi',
+        'camp.form.exp': ['Lütfen seçin', 'Deneyim yok', 'Başlangıç (1 yıldan az)', 'Orta düzey (1–3 yıl)', 'Deneyimli (3 yıldan fazla)'],
+        'camp.form.gi': ' Kendi gi (karate üniforması) mevcut',
+        'camp.form.div3': 'Diğer',
+        'camp.form.notes.label': 'Notlar',
+        'camp.form.notes.ph': 'Alerjiler, sağlık bilgileri, sorular, vb.',
+        'camp.form.terms': ' Kaydı onaylıyor ve 220 € katılım ücretini belirtilen hesaba havale edeceğimi taahhüt ediyorum.',
+        'camp.form.submit': 'Kaydı gönder →',
+        'sticker.label': 'Yaz 2026',
+        'sticker.headline': 'Yaz<br>Kampı',
+        'sticker.detail': '14 — 18 Temmuz<br>Çocuklar &amp; Gençler',
+        'sticker.cta': 'Kayıt ol →',
+        'sticker.tab': 'Yaz Kampı 2026'
+      },
+      bs: {
+        'nav.aria': 'Glavna navigacija',
+        'nav.about': 'O nama',
+        'nav.schedule': 'Raspored treninga',
+        'nav.pricing': 'Cijene',
+        'nav.team': 'Tim',
+        'nav.activities': 'Aktivnosti',
+        'nav.camp': 'Ljetni kamp',
+        'nav.contact': 'Kontakt',
+        'nav.cta': 'Postani član',
+        'nav.theme.aria': 'Promijeni temu',
+        'nav.hamburger.aria': 'Otvori meni',
+        'nav.overlay.aria': 'Navigacija',
+        'nav.close.aria': 'Zatvori meni',
+        'nav.overlay.brand': 'Fudoshin Karate-Do · Beč',
+        'nav.overlay.meta': 'Shotokan · Od 2010.',
+        'hero.intro': 'Riječ fudoshin opisuje stanje unutrašnje tišine koja se ne može pokolebati. To je cilj na koji karate upućuje — ne u teoriji, već kroz godine strpljive prakse.',
+        'about.title': 'O klubu',
+        'about.history.title': 'Historija kluba',
+        'about.history.p1': 'Fudoshin podučava tradicionalni karate u Beču od [godine]. Treniramo djecu, mlade i odrasle. Naglasak je na pravilnoj tehnici, poštovanju i dosljednosti — ne na rezultatima takmičenja ili diplomama. Slobodno dođite i pogledajte prije nego što se odlučite za članstvo.',
+        'about.values.title': 'Vrijednosti i pedagoški pristup',
+        'about.values.p1': 'Naš pristup je strpljiv i direktan. Tehniku ispravljamo rano i često, jer je dobre navike lakše izgraditi nego loše ispraviti. Od djece i odraslih očekujemo iste standarde pažnje i poštovanja — prilagođene onome što je razumno, ali nikada snižene iz udobnosti. Napredak se ovdje mjeri mjesecima i godinama, ne pojasevima.',
+        'about.style.title': 'Koji Stil?',
+        'about.style.p1': 'Predajemo tradicionalni <strong>Shotokan karate</strong> — stil utemeljen na preciznosti, disciplini i ispravnoj formi. Trening razvija fizičku i mentalnu kondiciju, a s vremenom i kvalitete koje sežu dalje: poštovanje, postojanost i sposobnost da ostanete mirni pod pritiskom.',
+        'caption.photos': '<em>Aktivnosti</em> / Caption Credits<br><span class="text-span">Fotografije – Firstname Lastname</span>',
+        'schedule.title': 'Raspored treninga',
+        'schedule.h.group': 'Grupa',
+        'schedule.h.age': 'Dob / Nivo',
+        'schedule.h.days': 'Dani treninga',
+        'schedule.h.location': 'Lokacija',
+        'schedule.r1.group': 'Djeca<br>Početnici',
+        'schedule.r1.age': '6–10 godina',
+        'schedule.r2.group': 'Omladina<br>Napredni',
+        'schedule.r2.age': '11–18 godina',
+        'schedule.r3.group': 'Odrasli<br>Svi nivoi',
+        'schedule.r3.age': 'Od 18 godina',
+        'schedule.day.mi': 'Sri',
+        'schedule.day.do': 'Čet',
+        'schedule.day.fr': 'Pet',
+        'pricing.title': 'Cijene',
+        'pricing.s.label': 'Semestar',
+        'pricing.s.unit': 'po semestru',
+        'pricing.s.f1': 'Svi treninzi',
+        'pricing.s.f2': 'Polaganje pojaseva uključeno',
+        'pricing.s.f3': 'Pristup na obje lokacije',
+        'pricing.a.label': 'Godišnja članarina',
+        'pricing.a.unit': 'godišnje · 2 semestra',
+        'pricing.a.f1': 'Svi treninzi',
+        'pricing.a.f2': 'Polaganje pojaseva uključeno',
+        'pricing.a.f3': 'Pristup na obje lokacije',
+        'pricing.a.f4': 'Ušteda u odnosu na pojedinačni semestar',
+        'pricing.f.label': 'Porodica / Braća i sestre',
+        'pricing.f.unit': 'Popust za 2+ osobe',
+        'pricing.f.f1': 'Važi za braću i sestre',
+        'pricing.f.f2': 'Važi za kombinaciju roditelj-dijete',
+        'pricing.f.f3': 'Na upit',
+        'pricing.note': '* Jednokratna upisnina se naplaćuje. Besplatan probni trening prije upisa je moguć.',
+        'team.title': 'Tim / Treneri',
+        'team.emir.role': 'Državno certificirani karate instruktor · 2. Dan',
+        'team.emir.bio': 'Emir se bavi karateom [X] godina i nosi [X. Dan] crni pojas u Shotokanu. [Jedna rečenica o pozadini — gdje je trenirao, takmičarsko iskustvo, koliko dugo predaje.] Trening vodi sa mirnim autoritetom i pažljivim okom za tehničke detalje.',
+        'team.samir.role': 'Državno certificirani karate instruktor · 4. Dan',
+        'team.samir.bio': 'Samir trenira Shotokan [X] godina i nosi [X. Dan] crni pojas. [Jedna rečenica o pozadini — gdje je trenirao, takmičarsko iskustvo, koliko dugo predaje.] Njegov fokus u dojou je na izgradnji čvrstih temelja, bez obzira na uzrast ili nivo učenika.',
+        'activities.title': 'Projekti &amp; Aktivnosti',
+        'activities.tournaments': 'Turniri',
+        'activities.seminars': 'Seminari',
+        'activities.camps': 'Ljetni kampovi',
+        'contact.title': 'Kontakt',
+        'contact.intro': 'Pitanja o treningu, lokacijama ili prijavi? Jednostavno nam pišite — javit ćemo vam se u roku od 2 radna dana.',
+        'contact.loc1.label': 'Lokacija 1',
+        'contact.loc1.address': 'Volksschule Wolfgang-Schmälzlgasse<br>Wolfgang-Schmälzlgasse 13, 1020 Beč',
+        'contact.loc2.label': 'Lokacija 2',
+        'contact.loc2.address': 'Gymnasium am Augarten<br>Karajangasse 14, 1200 Beč',
+        'contact.email.label': 'E-mail',
+        'contact.form.name.label': 'Ime *',
+        'contact.form.email.label': 'E-mail *',
+        'contact.form.phone.label': 'Telefon',
+        'contact.form.subject.label': 'Predmet',
+        'contact.form.message.label': 'Poruka *',
+        'contact.form.submit': 'Pošalji poruku →',
+        'contact.strip.cta': 'Otvori kontakt formu →',
+        'contact.form.name.ph': 'Ime Prezime',
+        'contact.form.email.ph': 'ime@primjer.at',
+        'contact.form.phone.ph': '+43 ...',
+        'contact.form.message.ph': 'Vaša poruka…',
+        'contact.form.subject': ['Molimo odaberite', 'Probni trening', 'Prijava', 'Pitanja o cijenama', 'Raspored treninga', 'Ostalo'],
+        'member.title': 'Postani član',
+        'member.intro': 'Spremni za početak treninga? Popunite formular — kontaktirat ćemo vas kako bismo razgovarali o svim detaljima i dogovorili datum početka.',
+        'member.alt': 'Niste sigurni? <a href="#kontakt" style="border-bottom:1px solid var(--color-border);">Pišite nam prvo</a> ili dođite na besplatan probni trening.',
+        'member.fee.label': 'Članarina od',
+        'member.fee.amount': '175€ <span style="font-size:1rem;opacity:0.5;">/ Semestar</span>',
+        'member.form.div1': 'Lični podaci',
+        'member.form.firstname.label': 'Ime *',
+        'member.form.lastname.label': 'Prezime *',
+        'member.form.dob.label': 'Datum rođenja *',
+        'member.form.email.label': 'E-mail *',
+        'member.form.phone.label': 'Telefon *',
+        'member.form.address.label': 'Adresa',
+        'member.form.div2': 'Trening',
+        'member.form.group.label': 'Željena grupa *',
+        'member.form.exp.label': 'Karate iskustvo',
+        'member.form.fee.label': 'Željeni doprinos',
+        'member.form.extra.label': 'Dodatno',
+        'member.form.notes.label': 'Napomene',
+        'member.form.submit': 'Pošalji prijavu →',
+        'member.strip.cta': 'Otvori prijavu →',
+        'member.form.firstname.ph': 'Ime',
+        'member.form.lastname.ph': 'Prezime',
+        'member.form.email.ph': 'ime@primjer.at',
+        'member.form.phone.ph': '+43 ...',
+        'member.form.address.ph': 'Ulica, Poštanski broj, Grad',
+        'member.form.notes.ph': 'Zdravstvene napomene, pitanja, itd.',
+        'member.form.group.children': 'Djeca Početnici (6–10 godina)',
+        'member.form.group.youth': 'Omladina Napredni (11–18 godina)',
+        'member.form.group.adults': 'Odrasli svi nivoi',
+        'member.form.extra.trial': 'Želim prvo besplatan probni trening',
+        'member.form.extra.news': 'Biti obaviješten o turnirima i događajima',
+        'member.form.exp': ['Molimo odaberite', 'Bez iskustva', 'Početnik (manje od 1 godine)', 'Napredni (1–5 godina)', 'Iskusni (preko 5 godina)'],
+        'member.form.fee': ['Molimo odaberite', 'Semestar (175€)', 'Godišnja članarina (320€)', 'Porodica / Braća i sestre (−20%)'],
+        'footer.tagline': 'Shotokan Karate · Beč, Austrija',
+        'footer.nav.title': 'Navigacija',
+        'footer.locations.title': 'Lokacije',
+        'footer.copyright': '© 2026 Fudoshin Karate-Do Klub Beč',
+        'footer.credit.title': 'Website Design',
+        'footer.legal': '<a href="#">Pravne informacije</a> · <a href="#">Politika privatnosti</a>',
+        'modal.close.aria': 'Zatvori',
+        'modal.map.footer': 'Otvori u Google Maps ↗',
+        'modal.map.directions': 'Planiraj rutu',
+        'legal.tab.impressum': 'Pravne informacije',
+        'legal.tab.datenschutz': 'Politika privatnosti',
+        'legal.phone': 'Telefonski brojevi',
+        'legal.bank': 'Bankovni podaci',
+        'legal.privacy.title': 'Izjava o zaštiti podataka',
+        'legal.privacy.p1': 'Zaštita vaših ličnih podataka nam je posebno važna. Vaše podatke obrađujemo isključivo na osnovu zakonskih propisa (GDPR, DSG, TKG 2003).',
+        'legal.privacy.contact.title': 'Kontakt',
+        'legal.privacy.contact.p1': 'Ako nas kontaktirate putem obrasca na web stranici ili e-mailom, vaši podaci će biti pohranjeni u svrhu obrade upita i za slučaj naknadnih pitanja. Ove podatke nećemo dijeliti bez vašeg pristanka. Obrada se vrši na osnovu čl. 6 st. 1 tač. b GDPR-a.',
+        'legal.privacy.membership.title': 'Upravljanje članstvom',
+        'legal.privacy.membership.p1': 'U okviru vašeg članstva u klubu obrađujemo ime, datum rođenja, adresu, e-mail i broj telefona. Obrada se vrši radi ispunjenja ugovora o članstvu u skladu s čl. 6 st. 1 tač. b GDPR-a.',
+        'legal.privacy.rights.title': 'Vaša prava',
+        'legal.privacy.rights.p1': 'Imate pravo na pristup, ispravku, brisanje, ograničenje, prenosivost podataka i prigovor. Ako smatrate da obrada vaših podataka krši zakon o zaštiti podataka, možete podnijeti žalbu Agenciji za zaštitu podataka (dsb.gv.at).',
+        'legal.privacy.cookies.title': 'Kolačići',
+        'legal.privacy.cookies.p1': 'Ova web stranica koristi samo tehnički neophodne kolačiće (postavka jezika). Ne koriste se kolačići za praćenje ili analitiku.',
+        'lightbox.aria': 'Foto galerija',
+        'lightbox.close.aria': 'Zatvori',
+        'lightbox.prev.aria': 'Prethodna slika',
+        'lightbox.next.aria': 'Sljedeća slika',
+        'camp.title': 'Ljetni Kamp 2026',
+        'camp.intro': 'Sedmica puna karatea, igara i zabave — za djecu i mlade svih nivoa iskustva. Svakodnevni treninzi pod vodstvom iskusnih trenera u prijateljskoj i motivirajućoj atmosferi.',
+        'camp.cost.label': 'Kotizacija',
+        'camp.table.dates.label': 'Datum',
+        'camp.table.dates.value': '14.–18. juli 2026 (pon–pet)',
+        'camp.table.times.label': 'Vrijeme',
+        'camp.table.times.value': '9:00–15:00',
+        'camp.table.ages.label': 'Uzrast',
+        'camp.table.ages.value': '6–14 godina',
+        'camp.table.location.label': 'Mjesto',
+        'camp.table.location.value': 'Volksschule Wolfgang-Schmälzlgasse, 1020 Beč',
+        'camp.table.cost.label': 'Cijena',
+        'camp.table.cost.value': '220 € po učesniku',
+        'camp.table.payment.label': 'Plaćanje',
+        'camp.table.payment.value': 'Uplata na IBAN AT81 2011 1843 2757 9400<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)',
+        'camp.table.included.label': 'Uključeno',
+        'camp.table.included.value': 'Karate trening, igre i aktivnosti, ručak i užina, certifikat, kamp majica',
+        'camp.table.bring.label': 'Ponijeti',
+        'camp.table.bring.value': 'Gi ili sportska odjeća, boca za vodu, patike za dvoranu',
+        'camp.form.div1': 'Učesnik',
+        'camp.form.firstname.label': 'Ime djeteta *',
+        'camp.form.firstname.ph': 'Ime',
+        'camp.form.lastname.label': 'Prezime *',
+        'camp.form.lastname.ph': 'Prezime',
+        'camp.form.dob.label': 'Datum rođenja *',
+        'camp.form.email.label': 'E-mail (roditelj) *',
+        'camp.form.email.ph': 'ime@primjer.com',
+        'camp.form.phone.label': 'Telefon (roditelj) *',
+        'camp.form.phone.ph': '+43 ...',
+        'camp.form.div2': 'Trening',
+        'camp.form.exp.label': 'Karate iskustvo',
+        'camp.form.exp': ['Molimo odaberite', 'Bez iskustva', 'Početnik (manje od 1 godine)', 'Srednji nivo (1–3 godine)', 'Iskusan (više od 3 godine)'],
+        'camp.form.gi': ' Posjedujem vlastiti gi (karate uniformu)',
+        'camp.form.div3': 'Ostalo',
+        'camp.form.notes.label': 'Napomene',
+        'camp.form.notes.ph': 'Alergije, zdravstvene informacije, pitanja, itd.',
+        'camp.form.terms': ' Potvrđujem prijavu i uplatit ću kotizaciju od 220 € na navedeni račun.',
+        'camp.form.submit': 'Pošalji prijavu →',
+        'sticker.label': 'Ljeto 2026',
+        'sticker.headline': 'Ljetni<br>Kamp',
+        'sticker.detail': '14 — 18 Juli<br>Djeca &amp; Omladina',
+        'sticker.cta': 'Prijavi se →',
+        'sticker.tab': 'Ljetni Kamp 2026'
+      },
+    };
+
+    let currentLang = 'de';
+
+    function setLanguage(lang) {
+      const t = translations[lang];
+      if (!t) return;
+      currentLang = lang;
+
+      // textContent
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const val = t[el.dataset.i18n];
+        if (val) el.textContent = val;
       });
 
-      if (!pairs.length) return;
+      // innerHTML
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const val = t[el.dataset.i18nHtml];
+        if (val) el.innerHTML = val;
+      });
 
-      let current = null;
-      let ticking = false;
+      // placeholder
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const val = t[el.dataset.i18nPlaceholder];
+        if (val) el.placeholder = val;
+      });
 
-      function update() {
-        const vh = window.innerHeight;
-        const zone = vh * 0.3; // check-point at 30% from top
+      // aria-label
+      document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const val = t[el.dataset.i18nAria];
+        if (val) el.setAttribute('aria-label', val);
+      });
 
-        let found = null;
-        // Walk backwards — last section whose top is above the zone wins
-        for (let i = pairs.length - 1; i >= 0; i--) {
-          if (pairs[i].el.getBoundingClientRect().top <= zone) {
-            found = pairs[i].link;
-            break;
-          }
-        }
-
-        // Clear if at very top of page (hero area)
-        if (window.scrollY < 200) found = null;
-
-        if (found !== current) {
-          if (current) current.classList.remove('is-active');
-          if (found) found.classList.add('is-active');
-          current = found;
-        }
-      }
-
-      window.addEventListener('scroll', () => {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(() => { update(); ticking = false; });
-        }
-      }, { passive: true });
-
-      update(); // initial check
-    })();
-
-    // ── 4b. LASSO UNFOLD — rope animation ────────────────────────────
-    (function initLasso() {
-      const track = document.querySelector('.rules-lasso__track');
-      const svg   = document.querySelector('.rules-lasso__rope');
-      const path  = document.querySelector('.rules-lasso__path');
-      const items = document.querySelectorAll('.rules-lasso__item');
-      const header = document.querySelector('.rules-lasso__header');
-      if (!track || !svg || !path || !items.length) return;
-
-      // Build rope path from knot positions after layout
-      function buildRope() {
-        const trackRect = track.getBoundingClientRect();
-        const scrollTop = window.scrollY;
-        const tX = trackRect.left;
-        const tY = trackRect.top + scrollTop;
-        const tW = trackRect.width;
-        const tH = trackRect.height;
-
-        svg.setAttribute('viewBox', `0 0 ${tW} ${tH}`);
-
-        const knots = [];
-        items.forEach(item => {
-          const knot = item.querySelector('.rules-lasso__knot');
-          if (!knot) return;
-          const kr = knot.getBoundingClientRect();
-          knots.push({
-            x: kr.left + kr.width / 2 - tX,
-            y: kr.top + kr.height / 2 + scrollTop - tY
+      // select options + custom select sync
+      document.querySelectorAll('[data-i18n-options]').forEach(select => {
+        const key = select.dataset.i18nOptions;
+        const opts = t[key];
+        if (!opts) return;
+        // Update native option text
+        Array.from(select.options).forEach((opt, i) => {
+          if (opts[i] !== undefined) opt.text = opts[i];
+        });
+        // Sync custom select wrapper
+        const wrapper = select.closest('.custom-select');
+        if (wrapper) {
+          const buttons = wrapper.querySelectorAll('.custom-select__dropdown button');
+          const visibleOpts = opts.slice(1); // custom dropdown skips disabled placeholder
+          buttons.forEach((btn, i) => {
+            if (visibleOpts[i] !== undefined) btn.textContent = visibleOpts[i];
           });
-        });
-
-        if (knots.length < 2) return;
-
-        // Start from top center
-        let d = `M ${tW / 2} 0`;
-        // Curve to first knot
-        d += ` C ${tW / 2} ${knots[0].y * 0.3}, ${knots[0].x} ${knots[0].y * 0.6}, ${knots[0].x} ${knots[0].y}`;
-        // Smooth curves through remaining knots
-        for (let i = 1; i < knots.length; i++) {
-          const prev = knots[i - 1];
-          const curr = knots[i];
-          const midY = (prev.y + curr.y) / 2;
-          // Control points create asymmetric curves
-          const cpx1 = prev.x + (curr.x - prev.x) * 0.1;
-          const cpx2 = curr.x - (curr.x - prev.x) * 0.1;
-          d += ` C ${cpx1} ${midY}, ${cpx2} ${midY}, ${curr.x} ${curr.y}`;
+          const trigger = wrapper.querySelector('.custom-select__trigger');
+          if (trigger) {
+            if (select.value) {
+              trigger.textContent = select.options[select.selectedIndex].text;
+            } else {
+              trigger.textContent = opts[0];
+            }
+            trigger.classList.toggle('is-placeholder', !select.value);
+          }
         }
-        // Trail off past last knot
-        const last = knots[knots.length - 1];
-        d += ` C ${last.x} ${last.y + 40}, ${tW / 2} ${last.y + 60}, ${tW / 2} ${tH}`;
-
-        path.setAttribute('d', d);
-        const len = path.getTotalLength();
-        path.style.strokeDasharray = len;
-        path.style.strokeDashoffset = len;
-        return len;
-      }
-
-      let pathLength = 0;
-      // Debounced rebuild on resize
-      let resizeTimer;
-      function onResize() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => { pathLength = buildRope() || 0; }, 150);
-      }
-      window.addEventListener('resize', onResize);
-
-      // Initial build after layout settles
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          pathLength = buildRope() || 0;
-        });
       });
 
-      // Header reveal
-      const headerObs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { e.target.classList.add('revealed'); headerObs.unobserve(e.target); }
-        });
-      }, { threshold: 0.3 });
-      headerObs.observe(header);
-
-      // Item reveal — each observed independently
-      const itemObs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('revealed');
-            itemObs.unobserve(e.target);
+      // text after input (radio/checkbox labels)
+      document.querySelectorAll('[data-i18n-after]').forEach(el => {
+        const val = t[el.dataset.i18nAfter];
+        if (!val) return;
+        const input = el.querySelector('input');
+        if (input) {
+          // Find or create text node after input
+          let textNode = input.nextSibling;
+          if (textNode && textNode.nodeType === 3) {
+            textNode.textContent = ' ' + val;
           }
-        });
-      }, { threshold: 0.2 });
-      items.forEach(el => itemObs.observe(el));
+        }
+      });
 
-      // Scroll-driven rope drawing
-      function onScroll() {
-        if (!pathLength) return;
-        const rect = track.getBoundingClientRect();
-        const viewH = window.innerHeight;
-        const trackStart = rect.top;
-        const trackEnd = rect.bottom;
+      // Update html lang and title
+      document.documentElement.setAttribute('lang', lang === 'bs' ? 'bs' : lang);
+      const titles = { de: 'Fudoshin Karate-Do Club Wien', en: 'Fudoshin Karate-Do Club Vienna', tr: 'Fudoshin Karate-Do Kul\u00fcb\u00fc Viyana', bs: 'Fudoshin Karate-Do Klub Be\u010d' };
+      document.title = titles[lang] || titles.de;
 
-        // Progress: 0 when track top enters viewport, 1 when track bottom leaves
-        const totalScroll = rect.height + viewH;
-        const scrolled = viewH - trackStart;
-        const progress = Math.max(0, Math.min(1, scrolled / totalScroll));
+      // Sync sticker tooltip with tab text
+      const stickerEl = document.getElementById('the-sticker');
+      if (stickerEl && t['sticker.tab']) stickerEl.dataset.tooltip = t['sticker.tab'];
 
-        // Ease the progress slightly for organic feel
-        const eased = progress < 0.5
-          ? 2 * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-        path.style.strokeDashoffset = pathLength * (1 - eased);
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll(); // initial
-    })();
-
-    // ── 5. LANGUAGE TOGGLE + I18N — moved to js/i18n.js ──
-
+      // Persist
+      localStorage.setItem('fudoshin-lang', lang);
+    }
 
     // ── 6. CUSTOM SELECTS ────────────────────────────────────────────
     function initCustomSelects(scope) {
@@ -2813,7 +2929,7 @@
             <p><a href="mailto:office@fudoshin.at" style="border-bottom:1px solid var(--color-border);">office@fudoshin.at</a></p>
           </div>
         </div>
-        <form class="form-body" name="kontakt" method="POST" action="https://formsubmit.co/ajax/office@fudoshin.at">
+        <form class="form-body" name="kontakt" method="POST" action="https://formsubmit.co/ajax/5e22b81a08dbc507c27809f55303960b">
           <input type="hidden" name="_subject" value="Fudoshin Karate — Kontaktformular">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
@@ -2870,7 +2986,7 @@
             <p style="font-family:var(--font-display);font-size:2.5rem;line-height:1;"data-i18n-html="member.fee.amount">175€ <span style="font-size:1rem;opacity:0.5;">/ Semester</span></p>
           </div>
         </div>
-        <form class="form-body" name="mitglied" method="POST" action="https://formsubmit.co/ajax/office@fudoshin.at">
+        <form class="form-body" name="mitglied" method="POST" action="https://formsubmit.co/ajax/5e22b81a08dbc507c27809f55303960b">
           <input type="hidden" name="_subject" value="Fudoshin Karate — Mitgliedsanmeldung">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
@@ -2956,66 +3072,44 @@
         <button class="camp-modal__close" id="campModalClose" aria-label="Schließen" data-i18n-aria="modal.close.aria">&#10005;</button>
       </div>
       <div class="camp-modal__body">
-        <div class="camp-intro">
-          <p data-i18n="camp.intro">Eine Woche voller Karate, Bewegung und Spaß — für Kinder und Jugendliche aller Erfahrungsstufen.</p>
-          <p class="camp-intro__activities" data-i18n="camp.activities">Karate-Training · Spiele · Bewegung · Ausflüge</p>
-        </div>
-
-        <!-- Camp key details — card grid matching schedule pattern -->
-        <div class="camp-details">
-          <div class="camp-details__card">
-            <span class="camp-details__label" data-i18n="camp.table.dates.label">Datum</span>
-            <span class="camp-details__value camp-details__value--primary" data-i18n="camp.table.dates.value">6.–10. Juni 2026 (Mo–Fr)</span>
-          </div>
-          <div class="camp-details__card">
-            <span class="camp-details__label" data-i18n="camp.table.times.label">Uhrzeit</span>
-            <span class="camp-details__value camp-details__value--primary" data-i18n="camp.table.times.value">08:00–17:00 Uhr</span>
-          </div>
-          <div class="camp-details__card camp-details__card--interactive" id="campLocationCard" data-location="Ernst-Happel-Stadion" data-address="Sektor D, Meiereistraße 7, 1020 Wien" data-lat="48.2087" data-lng="16.4208">
-            <span class="camp-details__label" data-i18n="camp.table.location.label">Ort</span>
-            <span class="camp-details__value camp-details__value--primary" data-i18n="camp.table.location.value">Ernst-Happel-Stadion / Sektor D</span>
-          </div>
-          <div class="camp-details__card">
-            <span class="camp-details__label" data-i18n="camp.table.cost.label">Kosten</span>
-            <span class="camp-details__value camp-details__value--primary camp-details__value--price" data-i18n="camp.table.cost.value">295 € pro Teilnehmer</span>
+        <div class="form-info">
+          <p data-i18n="camp.intro">Eine Woche voller Karate, Spiel und Spaß — für Kinder und Jugendliche aller Erfahrungsstufen. Trainiert wird täglich von erfahrenen Trainern in einer freundlichen, motivierenden Atmosphäre.</p>
+          <div>
+            <p class="form-info__detail" data-i18n="camp.cost.label">Teilnahmegebühr</p>
+            <p style="font-family:var(--font-display);font-size:2.5rem;line-height:1;">220€</p>
           </div>
         </div>
 
-        <!-- Secondary info -->
-        <div class="camp-secondary">
-          <div class="camp-secondary__row">
-            <span class="camp-secondary__label" data-i18n="camp.table.ages.label">Alter</span>
-            <span class="camp-secondary__value" data-i18n="camp.table.ages.value">6–14 Jahre</span>
-          </div>
-          <div class="camp-secondary__row">
-            <span class="camp-secondary__label" data-i18n="camp.table.included.label">Inklusive</span>
-            <span class="camp-secondary__value" data-i18n="camp.table.included.value">Betreuung, Mittagessen &amp; Snacks</span>
-          </div>
-          <div class="camp-secondary__row">
-            <span class="camp-secondary__label" data-i18n="camp.table.bring.label">Mitbringen</span>
-            <span class="camp-secondary__value" data-i18n="camp.table.bring.value">Karate Gi oder Sportbekleidung, Hallenturnschuhe und Trinkflasche</span>
-          </div>
-          <div class="camp-secondary__row">
-            <span class="camp-secondary__label" data-i18n="camp.table.payment.label">Zahlung</span>
-            <span class="camp-secondary__value" data-i18n-html="camp.table.payment.value">Überweisung auf IBAN AT81 2011 1843 2757 9400<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)</span>
-          </div>
-          <div class="camp-secondary__row camp-secondary__row--note">
-            <span class="camp-secondary__value" data-i18n="camp.table.note.value">Die Teilnahme ist auch für Kinder ohne Karate-Erfahrung möglich und unabhängig von sportlichen Vorkenntnissen.</span>
-          </div>
-        </div>
+        <!-- Camp info table -->
+        <dl class="camp-info-table">
+          <dt data-i18n="camp.table.dates.label">Datum</dt>
+          <dd data-i18n="camp.table.dates.value">14.–18. Juli 2026 (Mo–Fr)</dd>
+          <dt data-i18n="camp.table.times.label">Uhrzeit</dt>
+          <dd data-i18n="camp.table.times.value">9:00–15:00 Uhr</dd>
+          <dt data-i18n="camp.table.ages.label">Alter</dt>
+          <dd data-i18n="camp.table.ages.value">6–14 Jahre</dd>
+          <dt data-i18n="camp.table.location.label">Ort</dt>
+          <dd data-i18n="camp.table.location.value">Volksschule Wolfgang-Schmälzlgasse, 1020 Wien</dd>
+          <dt data-i18n="camp.table.cost.label">Kosten</dt>
+          <dd data-i18n="camp.table.cost.value">220 € pro Teilnehmer</dd>
+          <dt data-i18n="camp.table.payment.label">Zahlung</dt>
+          <dd data-i18n-html="camp.table.payment.value">Überweisung auf IBAN AT81 2011 1843 2757 9400<br>(Erste Sparkasse, Fudoshin Karate-Do Club Wien)</dd>
+          <dt data-i18n="camp.table.included.label">Inklusive</dt>
+          <dd data-i18n="camp.table.included.value">Karate-Training, Spiele &amp; Bewegung, Mittagessen &amp; Snacks, Urkunde, Camp-T-Shirt</dd>
+          <dt data-i18n="camp.table.bring.label">Mitbringen</dt>
+          <dd data-i18n="camp.table.bring.value">Gi oder Sportkleidung, Trinkflasche, Hallenschuhe</dd>
+        </dl>
 
         <!-- Photo gallery -->
         <div class="camp-modal__gallery">
-          <img src="images/fudoshin-karate-do-wien_camp-01.jpg" alt="Fudoshin Sommer Camp">
-          <img src="images/fudoshin-karate-do-wien_camp-02.jpg" alt="Fudoshin Sommer Camp">
-          <img src="images/fudoshin-karate-do-wien_camp-03.jpg" alt="Fudoshin Sommer Camp">
-          <img src="images/fudoshin-karate-do-wien_camp-04.jpg" alt="Fudoshin Sommer Camp">
-          <img src="images/fudoshin-karate-do-wien_camp-05.jpg" alt="Fudoshin Sommer Camp">
-          <img src="images/fudoshin-karate-do-wien_camp-06.jpg" alt="Fudoshin Sommer Camp">
+          <img src="images/thumb/photo-04.jpg" data-full="images/full/photo-04.jpg" alt="Fudoshin Sommer Camp">
+          <img src="images/thumb/photo-06.jpg" data-full="images/full/photo-06.jpg" alt="Fudoshin Sommer Camp">
+          <img src="images/thumb/photo-09.jpg" data-full="images/full/photo-09.jpg" alt="Fudoshin Sommer Camp">
+          <img src="images/thumb/photo-12.jpg" data-full="images/full/photo-12.jpg" alt="Fudoshin Sommer Camp">
         </div>
 
         <!-- Registration form -->
-        <form class="form-body" name="sommercamp" method="POST" action="https://formsubmit.co/ajax/office@fudoshin.at">
+        <form class="form-body" name="sommercamp" method="POST" action="https://formsubmit.co/ajax/5e22b81a08dbc507c27809f55303960b">
           <input type="hidden" name="_subject" value="Fudoshin Karate — Sommercamp-Anmeldung">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
@@ -3066,7 +3160,7 @@
             </div>
             <div class="form-field form-grid--full form-field--check">
               <div class="check-group">
-                <label class="check-item" data-i18n-after="camp.form.terms"><input type="checkbox" name="bedingungen" value="ja" required=""> Ich bestätige die Anmeldung und überweise die Teilnahmegebühr von 295 € auf das angegebene Konto.</label>
+                <label class="check-item" data-i18n-after="camp.form.terms"><input type="checkbox" name="bedingungen" value="ja" required=""> Ich bestätige die Anmeldung und überweise die Teilnahmegebühr von 220 € auf das angegebene Konto.</label>
               </div>
             </div>
           </div>
@@ -3077,86 +3171,46 @@
   </div>
 
   <!-- ══════════════ STICKER ══════════════ -->
-
   <div class="sticker" id="the-sticker" data-shape="sharp" data-align="left" data-tooltip="Sommer Camp 2026">
-    <button class="sticker__close" id="sticker-close" aria-label="Schließen">✕</button>
     <div class="sticker__body">
       <span class="sticker__label" data-i18n="sticker.label">Sommer 2026</span>
       <div class="sticker__headline" data-i18n-html="sticker.headline">Sommer-<br>Camp</div>
-      <div class="sticker__detail" data-i18n-html="sticker.detail">6 — 10 Juni<br>Kinder &amp; Jugendliche</div>
-      <a href="#sommercamp" class="sticker__cta" id="sticker-cta" data-i18n="sticker.cta">Anmelden →</a>
+      <div class="sticker__detail" data-i18n-html="sticker.detail">14 — 18 Juli<br>Kinder &amp; Jugendliche</div>
+      <a href="#mitglied" class="sticker__cta" id="sticker-cta" data-i18n="sticker.cta">Anmelden →</a>
     </div>
     <button class="sticker__tab" id="sticker-tab">
       <span class="sticker__tab-text" data-i18n="sticker.tab">Sommer Camp 2026</span>
-      <i class="sticker__chevron">☀</i>
+      <i class="sticker__chevron">▲</i>
     </button>
   </div>
 
   <!-- ══════════════ /STICKER ══════════════ -->
 
   <script>
-    // ── TEAM secondary card expand ─────────────────
-    document.querySelectorAll('.team-card--small[data-expandable]').forEach(card => {
-      card.addEventListener('click', () => card.classList.toggle('is-expanded'));
-    });
-
-    // ── ACTIVITIES expandable cards ─────────────────
-    document.querySelectorAll('.aktivitaet-card').forEach(card => {
-      if (!card.querySelector('.aktivitaet-card__desc')) return;
-      card.addEventListener('click', e => {
-        if (e.target.closest('a')) return; // don't toggle if clicking a link
-        card.classList.toggle('is-open');
-      });
-    });
-
     // ── STICKER collapse + scroll-driven pill morph ─────────────────
     (function() {
-      const sticker  = document.getElementById('the-sticker');
-      const tab      = document.getElementById('sticker-tab');
-      const closeBtn = document.getElementById('sticker-close');
-      let userCollapsed = false;
+      const sticker = document.getElementById('the-sticker');
+      const tab     = document.getElementById('sticker-tab');
+      let userCollapsed = false; // true when user manually collapsed it
 
-      function collapseToPill() {
-        if (sticker.classList.contains('is-pill')) return;
-        sticker.classList.add('is-pill', 'is-collapsing');
-        userCollapsed = true;
-        sticker.addEventListener('transitionend', function rm() {
-          sticker.classList.remove('is-collapsing');
-          sticker.removeEventListener('transitionend', rm);
-        });
-      }
-
-      function expandFromPill() {
-        if (!sticker.classList.contains('is-pill')) return;
-        sticker.classList.add('is-expanding');
-        sticker.classList.remove('is-pill');
-        userCollapsed = false;
-        sticker.addEventListener('transitionend', function rm() {
-          sticker.classList.remove('is-expanding');
-          sticker.removeEventListener('transitionend', rm);
-        });
-      }
-
-      // Tab toggles between pill and expanded
       tab.addEventListener('click', () => {
-        if (sticker.classList.contains('is-pill')) expandFromPill();
-        else collapseToPill();
-      });
-
-      // Close button collapses to pill
-      if (closeBtn) closeBtn.addEventListener('click', collapseToPill);
-
-      // Click outside expanded sticker collapses it
-      document.addEventListener('click', e => {
-        if (!sticker.classList.contains('is-pill') && !sticker.contains(e.target)) {
-          collapseToPill();
-        }
-      });
-
-      // Escape collapses expanded sticker
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && !sticker.classList.contains('is-pill')) {
-          collapseToPill();
+        if (sticker.classList.contains('is-pill')) {
+          // Expand from pill — springy easing
+          sticker.classList.add('is-expanding');
+          sticker.classList.remove('is-pill');
+          userCollapsed = false;
+          sticker.addEventListener('transitionend', function rm() {
+            sticker.classList.remove('is-expanding');
+            sticker.removeEventListener('transitionend', rm);
+          });
+        } else {
+          // Collapse to pill
+          sticker.classList.add('is-pill', 'is-collapsing');
+          userCollapsed = true;
+          sticker.addEventListener('transitionend', function rm() {
+            sticker.classList.remove('is-collapsing');
+            sticker.removeEventListener('transitionend', rm);
+          });
         }
       });
 
@@ -3179,8 +3233,12 @@
               sticker.removeEventListener('transitionend', rm);
             });
           } else if (!shouldPill && !userCollapsed && sticker.classList.contains('is-pill')) {
-            expandFromPill();
-            userCollapsed = false; // allow scroll-driven behavior again
+            sticker.classList.add('is-expanding');
+            sticker.classList.remove('is-pill');
+            sticker.addEventListener('transitionend', function rm() {
+              sticker.classList.remove('is-expanding');
+              sticker.removeEventListener('transitionend', rm);
+            });
           }
         });
       }
@@ -3280,35 +3338,15 @@
       if (!anyOpen) document.body.style.overflow = '';
     }
 
-    var _reopenCampAfterMap = false;
     function closeMap() {
       mapModal.classList.remove('is-open');
       restoreOverflow();
-      if (_reopenCampAfterMap) {
-        _reopenCampAfterMap = false;
-        document.getElementById('campModal').classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-      }
     }
 
-    document.querySelectorAll('.schedule-card').forEach(card => {
-      var loc = card.querySelector('.schedule-card__location[data-lat]');
-      if (!loc) return;
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', () =>
-        openMap(loc.dataset.location, loc.dataset.address, parseFloat(loc.dataset.lat), parseFloat(loc.dataset.lng)));
+    document.querySelectorAll('.schedule-row__location[data-lat]').forEach(el => {
+      el.addEventListener('click', () =>
+        openMap(el.dataset.location, el.dataset.address, parseFloat(el.dataset.lat), parseFloat(el.dataset.lng)));
     });
-
-    // Camp location card — close camp modal, open map, reopen camp when map closes
-    var campLocCard = document.getElementById('campLocationCard');
-    if (campLocCard) {
-      campLocCard.addEventListener('click', function() {
-        document.getElementById('campModal').classList.remove('is-open');
-        _reopenCampAfterMap = true;
-        openMap(campLocCard.dataset.location, campLocCard.dataset.address,
-          parseFloat(campLocCard.dataset.lat), parseFloat(campLocCard.dataset.lng));
-      });
-    }
 
     document.querySelectorAll('.contact__map-link[data-lat]').forEach(el => {
       el.addEventListener('click', () =>
@@ -3623,28 +3661,18 @@
     });
   </script>
 
-  <!-- SHARED: i18n translations + language toggle + saved language restore -->
-  <script src="js/i18n.js"></script>
+  <script>
+    // ── RESTORE SAVED LANGUAGE ──────────────────────────────────────
+    (function() {
+      const savedLang = localStorage.getItem('fudoshin-lang');
+      if (savedLang && savedLang !== 'de' && translations[savedLang]) {
+        setLanguage(savedLang);
+        const lb = document.querySelector('.nav__lang-btn');
+        if (lb) lb.childNodes[0].textContent = savedLang === 'bs' ? 'BCMS' : savedLang.toUpperCase();
+      }
+    })();
+  </script>
 
   <script>requestAnimationFrame(() => document.body.classList.add('is-loaded'));</script>
-
-  <!-- TOKEN BRIDGE — design guide ↔ site sync -->
-  <script src="_guide/bridge.js"></script>
-  <a href="_guide/index.html" id="guidePill" style="
-    position:fixed; bottom:2rem; left:1.5rem;
-    z-index:800;
-    display:flex; align-items:center; gap:0.4rem;
-    padding:0.4rem 0.8rem;
-    background:var(--color-surface);
-    border:1px solid color-mix(in srgb, var(--color-border) 30%, transparent);
-    border-radius:3px;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:0.55rem; letter-spacing:0.06em;
-    text-transform:uppercase;
-    color:var(--color-text); text-decoration:none;
-    opacity:0.25;
-    transition:opacity 200ms ease, background 200ms ease;
-  " onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='0.25'"
-  >&#9881; Guide</a>
 
 </body></html>

@@ -92,18 +92,27 @@
       <li><a href="index.html#kontakt" data-i18n="nav.contact">Kontakt</a></li>
       <li><a href="index.html#mitglied" class="nav__cta" data-i18n="nav.cta">Mitglied werden</a></li>
     </ul>
-    <button class="nav__theme" id="themeToggle" aria-label="Theme wechseln">
+    <div class="nav__lang" id="langToggle" aria-haspopup="true">
+      <button class="nav__lang-btn" aria-expanded="false">DE</button>
+      <ul class="nav__lang-dropdown" role="menu">
+        <li><button data-lang="de" role="menuitem">DE</button></li>
+        <li><button data-lang="en" role="menuitem">EN</button></li>
+        <li><button data-lang="tr" role="menuitem">TR</button></li>
+        <li><button data-lang="bs" role="menuitem">BKS</button></li>
+      </ul>
+    </div>
+    <button class="nav__theme" id="themeToggle" aria-label="Theme wechseln" data-i18n-aria="nav.theme.aria">
       <span class="icon-moon">☽</span>
       <span class="icon-sun">☀</span>
     </button>
-    <button class="nav__hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false">
+    <button class="nav__hamburger" id="hamburger" aria-label="Menü öffnen" data-i18n-aria="nav.hamburger.aria" aria-expanded="false" aria-controls="nav-overlay">
       <span></span><span></span><span></span>
     </button>
   </nav>
 
   <!-- NAV — mobile overlay -->
-  <div class="nav__overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation">
-    <button class="nav__close" id="navClose" aria-label="Menü schließen">✕</button>
+  <div class="nav__overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation" data-i18n-aria="nav.overlay.aria">
+    <button class="nav__close" id="navClose" aria-label="Menü schließen" data-i18n-aria="nav.close.aria">✕</button>
     <a href="index.html#ueber" data-i18n="nav.about">Über uns</a>
     <a href="index.html#training" data-i18n="nav.schedule">Trainingszeiten</a>
     <a href="index.html#preise" data-i18n="nav.pricing">Preise</a>
@@ -236,22 +245,52 @@
   </div>
 
   <script>
-    // ── THEME ──
-    const storedTheme = localStorage.getItem('fudoshin-theme');
-    if (storedTheme) document.documentElement.setAttribute('data-theme', storedTheme);
-    document.getElementById('themeToggle').addEventListener('click', () => {
-      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', next);
+    // ── THEME TOGGLE ──
+    const html = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+
+    if (!localStorage.getItem('fudoshin-theme')) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    } else {
+      html.setAttribute('data-theme', localStorage.getItem('fudoshin-theme'));
+    }
+
+    const metaTheme = document.getElementById('metaThemeColor');
+    function updateThemeColor(theme) {
+      metaTheme.setAttribute('content', theme === 'dark' ? '#000000' : '#f7f7f7');
+    }
+    updateThemeColor(html.getAttribute('data-theme'));
+
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
       localStorage.setItem('fudoshin-theme', next);
+      updateThemeColor(next);
     });
 
-    // ── HAMBURGER ──
+    // ── MOBILE MENU ──
     const hamburger = document.getElementById('hamburger');
-    const overlay = document.getElementById('nav-overlay');
-    const navClose = document.getElementById('navClose');
-    hamburger.addEventListener('click', () => { overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; });
-    navClose.addEventListener('click', () => { overlay.classList.remove('is-open'); document.body.style.overflow = ''; });
-    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { overlay.classList.remove('is-open'); document.body.style.overflow = ''; }));
+    const overlay   = document.getElementById('nav-overlay');
+    const navClose  = document.getElementById('navClose');
+
+    const openMenu = () => {
+      overlay.classList.add('is-open');
+      hamburger.classList.add('is-open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeMenu = () => {
+      overlay.classList.remove('is-open');
+      hamburger.classList.remove('is-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+
+    hamburger.addEventListener('click', openMenu);
+    navClose.addEventListener('click', closeMenu);
+    overlay.querySelectorAll('a').forEach(l => l.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
     // ── SCROLL REVEAL ──
     const revealEls = document.querySelectorAll('.reveal, .reveal-group');
@@ -308,5 +347,10 @@
     lightbox.addEventListener('touchmove', e => { if (!isSwiping) return; touchDeltaX = e.touches[0].clientX - touchStartX; lightboxImg.style.transform = 'translateX(' + (touchDeltaX * 0.3) + 'px)'; }, { passive: true });
     lightbox.addEventListener('touchend', () => { lightboxImg.style.transform = ''; if (Math.abs(touchDeltaX) > 50) navigate(touchDeltaX > 0 ? -1 : 1); isSwiping = false; });
   </script>
+
+  <!-- SHARED: i18n translations + language toggle -->
+  <script src="js/i18n.js"></script>
+
+  <script>requestAnimationFrame(() => document.body.classList.add('is-loaded'));</script>
 </body>
 </html>
