@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerie — Fudoshin Karate-Do Club Wien</title>
+  <meta name="description" content="Fotos aus dem Training, Prüfungen und Veranstaltungen des Fudoshin Karate-Do Club Wien.">
+  <meta name="theme-color" id="metaThemeColor" content="#000000">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='22' fill='%23b53a3a' stroke='white' stroke-width='8'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ═══════════════════════════════════════════
+       GALLERY PAGE — cluster layout
+    ═══════════════════════════════════════════ */
+    .gallery-cluster {
+      grid-column: 1 / -1;
+      margin-bottom: 4rem;
+    }
+    .gallery-cluster__header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid color-mix(in srgb, var(--color-border) 20%, transparent);
+    }
+    .gallery-cluster__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .gallery-cluster__count {
+      font-size: 0.72rem;
+      opacity: 0.3;
+      letter-spacing: 0.08em;
+    }
+    .gallery-cluster__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--gap);
+    }
+    .gallery-cluster__item {
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .gallery-cluster__item img {
+      width: 100%;
+      aspect-ratio: 3/2;
+      object-fit: cover;
+      transition: transform 500ms var(--ease-out), filter 300ms ease;
+    }
+    .gallery-cluster__item:hover img {
+      transform: scale(1.03);
+      filter: brightness(1.1);
+    }
+    .gallery-cluster__item:active img {
+      transform: scale(0.96);
+      transition: transform 80ms ease;
+    }
+    /* Caption — hidden by default, activate with .gallery-cluster--captions on parent */
+    .gallery-cluster__caption {
+      display: none;
+      font-size: 0.7rem;
+      opacity: 0.4;
+      padding: 0.4rem 0;
+      letter-spacing: 0.03em;
+    }
+    .gallery-cluster--captions .gallery-cluster__caption {
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .gallery-cluster__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV — same as index.html, links point to index.html#section -->
+  <nav class="nav" role="navigation" aria-label="Hauptnavigation">
+    <a href="index.html" class="nav__logo">Fudoshin Karate-Do</a>
+    <ul class="nav__links">
+      <li><a href="index.html#ueber" data-i18n="nav.about">Über uns</a></li>
+      <li><a href="index.html#training" data-i18n="nav.schedule">Trainingszeiten</a></li>
+      <li><a href="index.html#preise" data-i18n="nav.pricing">Preise</a></li>
+      <li><a href="index.html#team" data-i18n="nav.team">Team</a></li>
+      <li><a href="galerie.html" class="nav__active">Galerie</a></li>
+      <li><a href="index.html#sommercamp" data-i18n="nav.camp">Sommercamp</a></li>
+      <li><a href="index.html#kontakt" data-i18n="nav.contact">Kontakt</a></li>
+      <li><a href="index.html#mitglied" class="nav__cta" data-i18n="nav.cta">Mitglied werden</a></li>
+    </ul>
+    <button class="nav__theme" id="themeToggle" aria-label="Theme wechseln">
+      <span class="icon-moon">☽</span>
+      <span class="icon-sun">☀</span>
+    </button>
+    <button class="nav__hamburger" id="hamburger" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- NAV — mobile overlay -->
+  <div class="nav__overlay" id="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation">
+    <button class="nav__close" id="navClose" aria-label="Menü schließen">✕</button>
+    <a href="index.html#ueber" data-i18n="nav.about">Über uns</a>
+    <a href="index.html#training" data-i18n="nav.schedule">Trainingszeiten</a>
+    <a href="index.html#preise" data-i18n="nav.pricing">Preise</a>
+    <a href="index.html#team" data-i18n="nav.team">Team</a>
+    <a href="galerie.html">Galerie</a>
+    <a href="index.html#sommercamp" data-i18n="nav.camp">Sommercamp</a>
+    <a href="index.html#kontakt" data-i18n="nav.contact">Kontakt</a>
+    <a href="index.html#mitglied" class="nav__cta-overlay" data-i18n="nav.cta">Mitglied werden</a>
+    <div class="nav__overlay-footer">
+      <span class="nav__overlay-footer-brand">Fudoshin Karate-Do · Wien</span>
+      <span class="nav__overlay-footer-meta">Shotokan · Seit 2010</span>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="container_all">
+    <div class="container_content">
+
+      <section class="section" id="galerie">
+        <div class="section_wrapper">
+          <h2 class="reveal">Galerie</h2>
+
+          <!-- CLUSTER: TRAINING -->
+          <div class="gallery-cluster reveal-group">
+            <div class="gallery-cluster__header">
+              <h3 class="gallery-cluster__title">Training</h3>
+              <span class="gallery-cluster__count">12 Fotos</span>
+            </div>
+            <div class="gallery-cluster__grid">
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_kata-line-wide.jpg" alt="Kata-Training in der Gruppe — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_kata-row-wide.jpg" alt="Zenkutsu-dachi Reihe — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_instructor-leading.jpg" alt="Trainer leitet das Training — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_group-kumite.jpg" alt="Kumite-Übung in der Gruppe — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_group-technique.jpg" alt="Techniktraining — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_kumite-sparring.jpg" alt="Kumite-Sparring — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_kick-portrait.jpg" alt="Mae-geri Übung — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_kick-line-portrait.jpg" alt="Kick-Übung an der Bank — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_group-kick-line.jpg" alt="Kick-Reihe im Training — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_seiza-meditation.jpg" alt="Seiza-Meditation im Dojo — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_training-walk.jpg" alt="Training im Dojo — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_kata-line-close.jpg" alt="Kata-Training Nahaufnahme — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+            </div>
+          </div>
+
+          <!-- CLUSTER: PRÜFUNG -->
+          <div class="gallery-cluster reveal-group">
+            <div class="gallery-cluster__header">
+              <h3 class="gallery-cluster__title">Gürtelprüfung 2025</h3>
+              <span class="gallery-cluster__count">8 Fotos</span>
+            </div>
+            <div class="gallery-cluster__grid">
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_prufung-hall-overview.jpg" alt="Gürtelprüfung Übersicht — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_prufung-kids-kata.jpg" alt="Kinder bei der Kata-Prüfung — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_prufung-kata-line.jpg" alt="Kata-Reihe bei der Prüfung — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_prufung-kids-wide.jpg" alt="Kinder-Prüfung Gruppenaufnahme — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_prufung-solo-kid.jpg" alt="Einzelprüfung Kind — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_prufung-certificate.jpg" alt="Urkundenverleihung — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_prufung-group-celebration.jpg" alt="Gruppenfeier nach der Prüfung — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+              <figure class="gallery-cluster__item"><img src="images/gallery/fudoshin-karate-do-wien_prufung-trainers-kids.jpg" alt="Trainer feiern mit Kindern — Fudoshin Karate-Do Wien" loading="lazy"><figcaption class="gallery-cluster__caption"></figcaption></figure>
+            </div>
+          </div>
+
+          <!-- CLUSTER: SELBSTVERTEIDIGUNG (placeholder) -->
+          <!--
+          <div class="gallery-cluster reveal-group">
+            <div class="gallery-cluster__header">
+              <h3 class="gallery-cluster__title">Selbstverteidigung</h3>
+              <span class="gallery-cluster__count">— Fotos folgen</span>
+            </div>
+            <div class="gallery-cluster__grid"></div>
+          </div>
+          -->
+
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- FOOTER — same as index.html -->
+  <footer class="footer reveal">
+    <div class="footer__brand">
+      <div class="footer__brand-header">
+        <h2>Fudoshin<br>Karate-Do</h2>
+        <img class="footer__brand-logo" src="images/thumb/photo-01.png" alt="Fudoshin Karate-Do Club Wien" loading="lazy">
+      </div>
+      <p data-i18n="footer.tagline">Shotokan Karate · Wien, Österreich</p>
+      <div class="footer__social">
+        <a href="https://www.facebook.com/groups/2902313330065879/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer__col">
+      <h3 data-i18n="footer.nav.title">Navigation</h3>
+      <ul>
+        <li><a href="index.html#ueber" data-i18n="nav.about">Über uns</a></li>
+        <li><a href="index.html#training" data-i18n="nav.schedule">Trainingszeiten</a></li>
+        <li><a href="index.html#preise" data-i18n="nav.pricing">Preise</a></li>
+        <li><a href="index.html#team" data-i18n="nav.team">Team</a></li>
+        <li><a href="index.html#aktivitaeten" data-i18n="nav.activities">Aktivitäten</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 data-i18n="footer.locations.title">Standorte</h3>
+      <ul>
+        <li>Pöchlarnstraße 14, 1200</li>
+        <li>Wolfgang-Schmälzl-Gasse 13, 1020</li>
+        <li>Karajangasse 14, 1200</li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h3 data-i18n="footer.credit.title">Website Design</h3>
+      <ul><li><a href="https://sethweiner.org" target="_blank" rel="noopener">Seth Weiner</a></li></ul>
+      <p class="footer__sportunion" data-i18n="footer.sportunion">Mitglied der Sportunion Wien</p>
+      <p class="footer__sponsor-cta"><a href="mailto:office@fudoshin.at?subject=Sponsoring-Anfrage" data-i18n="footer.sponsor">Sponsoring-Anfrage →</a></p>
+    </div>
+    <div class="footer__bottom">
+      <span data-i18n="footer.copyright">© 2026 Fudoshin Karate-Do Club Wien</span>
+      <span data-i18n-html="footer.legal"><a href="#">Impressum</a> · <a href="#">Datenschutz</a></span>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX — same as index.html -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto-Galerie">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Schließen">✕</button>
+    <button class="lightbox__nav lightbox__prev" id="lightboxPrev" aria-label="Vorheriges Bild">‹</button>
+    <button class="lightbox__nav lightbox__next" id="lightboxNext" aria-label="Nächstes Bild">›</button>
+    <img class="lightbox__img" id="lightboxImg" src="" alt="">
+    <div class="lightbox__counter" id="lightboxCounter"></div>
+  </div>
+
+  <script>
+    // ── THEME ──
+    const storedTheme = localStorage.getItem('fudoshin-theme');
+    if (storedTheme) document.documentElement.setAttribute('data-theme', storedTheme);
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('fudoshin-theme', next);
+    });
+
+    // ── HAMBURGER ──
+    const hamburger = document.getElementById('hamburger');
+    const overlay = document.getElementById('nav-overlay');
+    const navClose = document.getElementById('navClose');
+    hamburger.addEventListener('click', () => { overlay.classList.add('is-open'); document.body.style.overflow = 'hidden'; });
+    navClose.addEventListener('click', () => { overlay.classList.remove('is-open'); document.body.style.overflow = ''; });
+    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { overlay.classList.remove('is-open'); document.body.style.overflow = ''; }));
+
+    // ── SCROLL REVEAL ──
+    const revealEls = document.querySelectorAll('.reveal, .reveal-group');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('revealed'); observer.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── LIGHTBOX ──
+    const allImages = document.querySelectorAll('.gallery-cluster__item img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    let currentIdx = 0;
+
+    function openLightbox(idx) {
+      currentIdx = idx;
+      lightboxImg.src = allImages[idx].src;
+      lightboxImg.alt = allImages[idx].alt;
+      document.getElementById('lightboxCounter').textContent = (idx + 1) + ' / ' + allImages.length;
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightboxImg.src = '';
+      document.body.style.overflow = '';
+    }
+    function navigate(dir) {
+      currentIdx = (currentIdx + dir + allImages.length) % allImages.length;
+      lightboxImg.src = allImages[currentIdx].src;
+      lightboxImg.alt = allImages[currentIdx].alt;
+      document.getElementById('lightboxCounter').textContent = (currentIdx + 1) + ' / ' + allImages.length;
+    }
+
+    allImages.forEach((img, idx) => {
+      img.closest('.gallery-cluster__item').addEventListener('click', () => openLightbox(idx));
+    });
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    document.getElementById('lightboxPrev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lightboxNext').addEventListener('click', () => navigate(1));
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+    });
+
+    // Touch swipe
+    let touchStartX = 0, touchDeltaX = 0, isSwiping = false;
+    lightbox.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; touchDeltaX = 0; isSwiping = true; }, { passive: true });
+    lightbox.addEventListener('touchmove', e => { if (!isSwiping) return; touchDeltaX = e.touches[0].clientX - touchStartX; lightboxImg.style.transform = 'translateX(' + (touchDeltaX * 0.3) + 'px)'; }, { passive: true });
+    lightbox.addEventListener('touchend', () => { lightboxImg.style.transform = ''; if (Math.abs(touchDeltaX) > 50) navigate(touchDeltaX > 0 ? -1 : 1); isSwiping = false; });
+  </script>
+</body>
+</html>

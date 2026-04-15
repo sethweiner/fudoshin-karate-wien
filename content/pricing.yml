@@ -5,7 +5,7 @@ cards:
     highlighted: false
     features:
       - Alle Trainingseinheiten
-      - Gürtelprüfungen inklusive
+      - Gürtelprüfungen nicht inbegriffen
       - Zugang zu beiden Standorten
   - label: Jahresbeitrag
     price: 320€
@@ -13,7 +13,7 @@ cards:
     highlighted: false
     features:
       - Alle Trainingseinheiten
-      - Gürtelprüfungen inklusive
+      - Gürtelprüfungen nicht inbegriffen
       - Zugang zu beiden Standorten
       - Ersparnis gegenüber Einzelsemester
   - label: Familie / Geschwister
