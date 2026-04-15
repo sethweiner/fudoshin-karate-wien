@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scrollspy Pill — Variations</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg:       hsla(0, 0%, 0%, 1);
+    --color-fg:       hsla(0, 0%, 92%, 1);
+    --color-red:      hsla(0, 53%, 50%, 1);
+    --color-surface:  hsla(0, 0%, 6%, 1);
+    --color-mid:      hsla(0, 0%, 20%, 1);
+    --color-accent:   var(--color-red);
+    --font-display:   'Bebas Neue', sans-serif;
+    --font-body:      Arial, sans-serif;
+    --nav-h:          4rem;
+    --radius-sm:      4px;
+    --radius-md:      6px;
+    --radius-full:    50%;
+    --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-fg);
+    line-height: 1.6;
+  }
+
+  /* ── Mockup chrome ── */
+  .mockup-title {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-mid);
+    padding: 1rem 2rem;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .mockup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 2rem;
+  }
+  .mockup-cell {
+    position: relative;
+    background: var(--color-surface);
+    border: 1px solid var(--color-mid);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    min-height: 500px;
+  }
+  .mockup-cell__label {
+    position: absolute; top: 0.8rem; left: 0.8rem;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    z-index: 10;
+  }
+  .mockup-cell__desc {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, var(--color-bg));
+    padding: 3rem 1rem 1rem;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    line-height: 1.5;
+  }
+
+  /* ── Fake nav bar ── */
+  .fake-nav {
+    display: flex;
+    align-items: center;
+    height: var(--nav-h);
+    border-bottom: 1px solid var(--color-mid);
+    background: var(--color-bg);
+    position: relative;
+  }
+  .fake-nav__logo {
+    padding: 0 1.2rem;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-right: 1px solid color-mix(in srgb, var(--color-fg) 15%, transparent);
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .fake-nav__hamburger {
+    margin-left: auto;
+    display: flex; flex-direction: column;
+    gap: 4px; padding: 1rem;
+  }
+  .fake-nav__hamburger span {
+    display: block; width: 18px; height: 1px;
+    background: var(--color-fg);
+  }
+
+  /* ── Fake page content ── */
+  .fake-section {
+    padding: 2rem 1.5rem;
+    min-height: 120px;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-fg) 5%, transparent);
+  }
+  .fake-section__name {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.2;
+  }
+
+  /* ══════════════════════════════════════
+     VARIATION A+X: Top-left + Label+dots
+  ══════════════════════════════════════ */
+  .spy-ax {
+    position: absolute;
+    top: calc(var(--nav-h) + 0.5rem);
+    left: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 5;
+    opacity: 0.25;
+    transition: opacity 400ms ease;
+  }
+  .spy-ax__label {
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .spy-ax__dots {
+    display: flex; gap: 3px;
+  }
+  .spy-ax__dot {
+    width: 4px; height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--color-fg);
+    opacity: 0.2;
+  }
+  .spy-ax__dot.is-active {
+    opacity: 0.8;
+    background: var(--color-accent);
+  }
+
+  /* ══════════════════════════════════════
+     VARIATION A+Y: Top-left + All names
+  ══════════════════════════════════════ */
+  .spy-ay {
+    position: absolute;
+    top: calc(var(--nav-h) + 0.5rem);
+    left: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    z-index: 5;
+    opacity: 0.2;
+  }
+  .spy-ay__item {
+    font-family: var(--font-display);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.4;
+    transition: opacity 300ms ease;
+  }
+  .spy-ay__item.is-active {
+    opacity: 1;
+    color: var(--color-accent);
+  }
+
+  /* ══════════════════════════════════════
+     VARIATION B+X: Bottom-center + Label+dots
+  ══════════════════════════════════════ */
+  .spy-bx {
+    position: absolute;
+    bottom: 3.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 5;
+    opacity: 0.2;
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+  }
+  .spy-bx__label {
+    font-family: var(--font-display);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .spy-bx__dots {
+    display: flex; gap: 3px;
+  }
+  .spy-bx__dot {
+    width: 4px; height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--color-fg);
+    opacity: 0.2;
+  }
+  .spy-bx__dot.is-active {
+    opacity: 0.8;
+    background: var(--color-accent);
+  }
+
+  /* ══════════════════════════════════════
+     VARIATION B+Y: Bottom-center + All names
+  ══════════════════════════════════════ */
+  .spy-by {
+    position: absolute;
+    bottom: 3.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    z-index: 5;
+    opacity: 0.2;
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+    white-space: nowrap;
+  }
+  .spy-by__item {
+    font-family: var(--font-display);
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.35;
+    transition: opacity 300ms ease;
+  }
+  .spy-by__item.is-active {
+    opacity: 1;
+    color: var(--color-accent);
+  }
+
+  .intro {
+    padding: 2rem;
+    max-width: 700px;
+  }
+  .intro p { font-size: 0.9rem; opacity: 0.5; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+
+<div class="mockup-title">Scrollspy Pill — 4 Variations (ghost weight)</div>
+
+<div class="intro">
+  <p>Each cell simulates a scrolled page state. The scrollspy indicator shows "Team" as the active section. All use ghost/whisper weight — low opacity, small type, barely there.</p>
+</div>
+
+<div class="mockup-grid">
+
+  <!-- A+X: Top-left, Label + dots -->
+  <div class="mockup-cell">
+    <span class="mockup-cell__label">A + X</span>
+    <div class="fake-nav">
+      <span class="fake-nav__logo">Fudoshin Karate-Do</span>
+      <div class="fake-nav__hamburger"><span></span><span></span><span></span></div>
+    </div>
+    <div class="spy-ax">
+      <span class="spy-ax__label">Team</span>
+      <div class="spy-ax__dots">
+        <span class="spy-ax__dot"></span>
+        <span class="spy-ax__dot"></span>
+        <span class="spy-ax__dot"></span>
+        <span class="spy-ax__dot is-active"></span>
+        <span class="spy-ax__dot"></span>
+        <span class="spy-ax__dot"></span>
+        <span class="spy-ax__dot"></span>
+      </div>
+    </div>
+    <div class="fake-section"><span class="fake-section__name">Team</span></div>
+    <div class="fake-section"></div>
+    <div class="fake-section"></div>
+    <div class="mockup-cell__desc">Top-left beside logo. Current section name + progress dots. Compact, integrated into nav space.</div>
+  </div>
+
+  <!-- A+Y: Top-left, All names -->
+  <div class="mockup-cell">
+    <span class="mockup-cell__label">A + Y</span>
+    <div class="fake-nav">
+      <span class="fake-nav__logo">Fudoshin Karate-Do</span>
+      <div class="fake-nav__hamburger"><span></span><span></span><span></span></div>
+    </div>
+    <div class="spy-ay">
+      <span class="spy-ay__item">Über</span>
+      <span class="spy-ay__item">Training</span>
+      <span class="spy-ay__item">Preise</span>
+      <span class="spy-ay__item is-active">Team</span>
+      <span class="spy-ay__item">Aktivitäten</span>
+      <span class="spy-ay__item">Regeln</span>
+      <span class="spy-ay__item">Kontakt</span>
+    </div>
+    <div class="fake-section"><span class="fake-section__name">Team</span></div>
+    <div class="fake-section"></div>
+    <div class="fake-section"></div>
+    <div class="mockup-cell__desc">Top-left beside logo. All section names visible, active one accented. Mini breadcrumb trail.</div>
+  </div>
+
+  <!-- B+X: Bottom-center, Label + dots -->
+  <div class="mockup-cell">
+    <span class="mockup-cell__label">B + X</span>
+    <div class="fake-nav">
+      <span class="fake-nav__logo">Fudoshin Karate-Do</span>
+      <div class="fake-nav__hamburger"><span></span><span></span><span></span></div>
+    </div>
+    <div class="fake-section"><span class="fake-section__name">Team</span></div>
+    <div class="fake-section"></div>
+    <div class="fake-section"></div>
+    <div class="spy-bx">
+      <span class="spy-bx__label">Team</span>
+      <div class="spy-bx__dots">
+        <span class="spy-bx__dot"></span>
+        <span class="spy-bx__dot"></span>
+        <span class="spy-bx__dot"></span>
+        <span class="spy-bx__dot is-active"></span>
+        <span class="spy-bx__dot"></span>
+        <span class="spy-bx__dot"></span>
+        <span class="spy-bx__dot"></span>
+      </div>
+    </div>
+    <div class="mockup-cell__desc">Bottom-center floating pill. Label + dots. Out of content's way, subtle backdrop blur.</div>
+  </div>
+
+  <!-- B+Y: Bottom-center, All names -->
+  <div class="mockup-cell">
+    <span class="mockup-cell__label">B + Y</span>
+    <div class="fake-nav">
+      <span class="fake-nav__logo">Fudoshin Karate-Do</span>
+      <div class="fake-nav__hamburger"><span></span><span></span><span></span></div>
+    </div>
+    <div class="fake-section"><span class="fake-section__name">Team</span></div>
+    <div class="fake-section"></div>
+    <div class="fake-section"></div>
+    <div class="spy-by">
+      <span class="spy-by__item">Über</span>
+      <span class="spy-by__item">Training</span>
+      <span class="spy-by__item">Preise</span>
+      <span class="spy-by__item is-active">Team</span>
+      <span class="spy-by__item">Aktivitäten</span>
+      <span class="spy-by__item">Regeln</span>
+      <span class="spy-by__item">Kontakt</span>
+    </div>
+    <div class="mockup-cell__desc">Bottom-center floating pill. All section names, active accented. Full wayfinding at a glance.</div>
+  </div>
+
+</div>
+
+</body>
+</html>

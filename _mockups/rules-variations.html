@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>20 Rules — Layout Variations</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg:       hsla(0, 0%, 0%, 1);
+    --color-fg:       hsla(0, 0%, 92%, 1);
+    --color-red:      hsla(0, 53%, 50%, 1);
+    --color-surface:  hsla(0, 0%, 6%, 1);
+    --color-mid:      hsla(0, 0%, 20%, 1);
+    --color-accent:   var(--color-red);
+    --font-display:   'Bebas Neue', sans-serif;
+    --font-body:      Arial, sans-serif;
+    --radius-sm:      4px;
+    --radius-md:      6px;
+    --radius-full:    50%;
+    --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--font-body);
+    background: var(--color-bg);
+    color: var(--color-fg);
+    line-height: 1.6;
+  }
+
+  /* ── Chrome ── */
+  .page-title {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-mid);
+    padding: 1rem 2rem;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .variation-label {
+    padding: 3rem 2rem 1rem;
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-accent);
+    border-top: 1px solid var(--color-mid);
+  }
+  .variation-desc {
+    padding: 0 2rem 2rem;
+    font-size: 0.85rem;
+    opacity: 0.4;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  /* ── Shared header ── */
+  .rules-header {
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+  }
+  .rules-header__sub {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.25;
+    margin-bottom: 0.4rem;
+  }
+  .rules-header__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .rules-header__author {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    opacity: 0.3;
+    margin-top: 0.2rem;
+  }
+
+  /* ══════════════════════════════════════════
+     VARIATION A — Horizontal Carousel
+     4 pages of 5, scroll-snap, dots + arrows
+  ══════════════════════════════════════════ */
+  .va { padding: 0 2rem 4rem; max-width: 900px; margin: 0 auto; }
+
+  .va__viewport {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+  .va__viewport::-webkit-scrollbar { display: none; }
+
+  .va__page {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem 2rem;
+    min-height: 320px;
+  }
+
+  .va__item {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-fg) 6%, transparent);
+  }
+  .va__item:last-child { border-bottom: none; }
+
+  .va__num {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--color-accent);
+    opacity: 0.7;
+    flex-shrink: 0;
+    min-width: 2.2rem;
+    text-align: right;
+  }
+  .va__text {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    opacity: 0.7;
+  }
+
+  .va__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+  .va__arrow {
+    background: none;
+    border: 1px solid color-mix(in srgb, var(--color-fg) 20%, transparent);
+    color: var(--color-fg);
+    width: 2rem; height: 2rem;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .va__arrow:hover { border-color: var(--color-accent); }
+  .va__dots { display: flex; gap: 0.5rem; }
+  .va__dot {
+    width: 6px; height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--color-fg);
+    opacity: 0.12;
+    cursor: pointer;
+  }
+  .va__dot.is-active { opacity: 0.6; transform: scale(1.3); }
+
+  /* ══════════════════════════════════════════
+     VARIATION B — Dense Vertical Grid
+     2 columns, all 20 visible, index feel
+  ══════════════════════════════════════════ */
+  .vb { padding: 0 2rem 4rem; max-width: 900px; margin: 0 auto; }
+
+  .vb__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 3rem;
+  }
+
+  .vb__item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-fg) 5%, transparent);
+  }
+
+  .vb__num {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--color-accent);
+    opacity: 0.6;
+    flex-shrink: 0;
+    min-width: 1.8rem;
+    text-align: right;
+  }
+  .vb__text {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    opacity: 0.65;
+  }
+
+  /* ══════════════════════════════════════════
+     VARIATION C — Compact Scroll Strip
+     Continuous horizontal, no snap, ticker-like
+  ══════════════════════════════════════════ */
+  .vc { padding: 0 0 4rem; overflow: hidden; }
+
+  .vc__strip {
+    display: flex;
+    overflow-x: auto;
+    gap: 0;
+    padding: 2rem;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .vc__strip::-webkit-scrollbar { display: none; }
+
+  .vc__item {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    min-width: 180px;
+    max-width: 220px;
+    border-right: 1px solid color-mix(in srgb, var(--color-fg) 6%, transparent);
+    text-align: center;
+  }
+  .vc__item:last-child { border-right: none; }
+
+  .vc__num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--color-accent);
+    opacity: 0.5;
+    margin-bottom: 0.5rem;
+  }
+  .vc__text {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    opacity: 0.6;
+  }
+
+  .vc__hint {
+    text-align: center;
+    font-size: 0.7rem;
+    opacity: 0.2;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-title">Die 20 Regeln — 3 Layout Variations</div>
+
+<!-- ══════════ VARIATION A: HORIZONTAL CAROUSEL ══════════ -->
+<div class="variation-label">A — Horizontal Carousel</div>
+<div class="variation-desc">4 pages of 5 rules. Scroll-snap between pages. Dots + arrows. Each page is a tight vertical stack. Short horizontal travel, confident pacing. (Ref: Nytfire timeline)</div>
+
+<div class="va">
+  <div class="rules-header">
+    <p class="rules-header__sub">Die Grundsätze des Karate-Do</p>
+    <h2 class="rules-header__title">Die 20 Regeln</h2>
+    <p class="rules-header__author">Gichin Funakoshi</p>
+  </div>
+
+  <div class="va__viewport" id="vaViewport">
+    <div class="va__page">
+      <div class="va__item"><span class="va__num">01</span><span class="va__text">Karate beginnt und endet mit Respekt.</span></div>
+      <div class="va__item"><span class="va__num">02</span><span class="va__text">Im Karate gibt es keinen ersten Angriff.</span></div>
+      <div class="va__item"><span class="va__num">03</span><span class="va__text">Karate ist ein Helfer der Gerechtigkeit.</span></div>
+      <div class="va__item"><span class="va__num">04</span><span class="va__text">Erkenne zuerst dich selbst, dann den anderen.</span></div>
+      <div class="va__item"><span class="va__num">05</span><span class="va__text">Die Kunst des Geistes kommt vor der Kunst der Technik.</span></div>
+    </div>
+    <div class="va__page">
+      <div class="va__item"><span class="va__num">06</span><span class="va__text">Lerne deinen Geist zu kontrollieren und befreie ihn dann.</span></div>
+      <div class="va__item"><span class="va__num">07</span><span class="va__text">Unglück geschieht immer durch Unachtsamkeit.</span></div>
+      <div class="va__item"><span class="va__num">08</span><span class="va__text">Karate üben heißt nicht nur im Dojo üben.</span></div>
+      <div class="va__item"><span class="va__num">09</span><span class="va__text">Karate üben heißt ein Leben lang arbeiten.</span></div>
+      <div class="va__item"><span class="va__num">10</span><span class="va__text">Verbinde dein alltägliches Leben mit Karate, das ist der Zauber der Kunst.</span></div>
+    </div>
+    <div class="va__page">
+      <div class="va__item"><span class="va__num">11</span><span class="va__text">Karate ist wie heißes Wasser, das abkühlt, wenn du es nicht ständig erwärmst.</span></div>
+      <div class="va__item"><span class="va__num">12</span><span class="va__text">Denke nicht ans Gewinnen, doch denke darüber nach, wie du nicht verlierst.</span></div>
+      <div class="va__item"><span class="va__num">13</span><span class="va__text">Verändere deine Verteidigung je nach Gegner.</span></div>
+      <div class="va__item"><span class="va__num">14</span><span class="va__text">Der Kampf hängt von der Handhabung des Treffens und Nicht-Treffens ab.</span></div>
+      <div class="va__item"><span class="va__num">15</span><span class="va__text">Stelle dir deine Hand und deinen Fuß als Schwert vor.</span></div>
+    </div>
+    <div class="va__page">
+      <div class="va__item"><span class="va__num">16</span><span class="va__text">Wenn man das Tor der Jugend verlässt, hat man viele Gegner.</span></div>
+      <div class="va__item"><span class="va__num">17</span><span class="va__text">Das Einnehmen einer Haltung gibt es beim Anfänger, später ist der Körper die natürliche Haltung.</span></div>
+      <div class="va__item"><span class="va__num">18</span><span class="va__text">Die Kata darf nicht verändert werden, im Kampf jedoch gilt das Gegenteil.</span></div>
+      <div class="va__item"><span class="va__num">19</span><span class="va__text">Hart und weich, Spannung und Entspannung, langsam und schnell, alles in Verbindung mit der richtigen Atmung.</span></div>
+      <div class="va__item"><span class="va__num">20</span><span class="va__text">Denke immer nach und versuche dich ständig an Neuem.</span></div>
+    </div>
+  </div>
+
+  <div class="va__nav">
+    <button class="va__arrow" onclick="vaGo(-1)">←</button>
+    <div class="va__dots">
+      <span class="va__dot is-active" onclick="vaGoTo(0)"></span>
+      <span class="va__dot" onclick="vaGoTo(1)"></span>
+      <span class="va__dot" onclick="vaGoTo(2)"></span>
+      <span class="va__dot" onclick="vaGoTo(3)"></span>
+    </div>
+    <button class="va__arrow" onclick="vaGo(1)">→</button>
+  </div>
+</div>
+
+<!-- ══════════ VARIATION B: DENSE VERTICAL GRID ══════════ -->
+<div class="variation-label">B — Dense Vertical Grid</div>
+<div class="variation-desc">All 20 visible at once. 2-column layout, 10 per column. No scrolling, just density and scale contrast. Index / directory feel. (Ref: book directory)</div>
+
+<div class="vb">
+  <div class="rules-header">
+    <p class="rules-header__sub">Die Grundsätze des Karate-Do</p>
+    <h2 class="rules-header__title">Die 20 Regeln</h2>
+    <p class="rules-header__author">Gichin Funakoshi</p>
+  </div>
+
+  <div class="vb__grid">
+    <div class="vb__item"><span class="vb__num">01</span><span class="vb__text">Karate beginnt und endet mit Respekt.</span></div>
+    <div class="vb__item"><span class="vb__num">11</span><span class="vb__text">Karate ist wie heißes Wasser, das abkühlt, wenn du es nicht ständig erwärmst.</span></div>
+    <div class="vb__item"><span class="vb__num">02</span><span class="vb__text">Im Karate gibt es keinen ersten Angriff.</span></div>
+    <div class="vb__item"><span class="vb__num">12</span><span class="vb__text">Denke nicht ans Gewinnen, doch denke darüber nach, wie du nicht verlierst.</span></div>
+    <div class="vb__item"><span class="vb__num">03</span><span class="vb__text">Karate ist ein Helfer der Gerechtigkeit.</span></div>
+    <div class="vb__item"><span class="vb__num">13</span><span class="vb__text">Verändere deine Verteidigung je nach Gegner.</span></div>
+    <div class="vb__item"><span class="vb__num">04</span><span class="vb__text">Erkenne zuerst dich selbst, dann den anderen.</span></div>
+    <div class="vb__item"><span class="vb__num">14</span><span class="vb__text">Der Kampf hängt von der Handhabung des Treffens und Nicht-Treffens ab.</span></div>
+    <div class="vb__item"><span class="vb__num">05</span><span class="vb__text">Die Kunst des Geistes kommt vor der Kunst der Technik.</span></div>
+    <div class="vb__item"><span class="vb__num">15</span><span class="vb__text">Stelle dir deine Hand und deinen Fuß als Schwert vor.</span></div>
+    <div class="vb__item"><span class="vb__num">06</span><span class="vb__text">Lerne deinen Geist zu kontrollieren und befreie ihn dann.</span></div>
+    <div class="vb__item"><span class="vb__num">16</span><span class="vb__text">Wenn man das Tor der Jugend verlässt, hat man viele Gegner.</span></div>
+    <div class="vb__item"><span class="vb__num">07</span><span class="vb__text">Unglück geschieht immer durch Unachtsamkeit.</span></div>
+    <div class="vb__item"><span class="vb__num">17</span><span class="vb__text">Das Einnehmen einer Haltung gibt es beim Anfänger, später ist der Körper die natürliche Haltung.</span></div>
+    <div class="vb__item"><span class="vb__num">08</span><span class="vb__text">Karate üben heißt nicht nur im Dojo üben.</span></div>
+    <div class="vb__item"><span class="vb__num">18</span><span class="vb__text">Die Kata darf nicht verändert werden, im Kampf jedoch gilt das Gegenteil.</span></div>
+    <div class="vb__item"><span class="vb__num">09</span><span class="vb__text">Karate üben heißt ein Leben lang arbeiten.</span></div>
+    <div class="vb__item"><span class="vb__num">19</span><span class="vb__text">Hart und weich, Spannung und Entspannung, langsam und schnell, alles in Verbindung mit der richtigen Atmung.</span></div>
+    <div class="vb__item"><span class="vb__num">10</span><span class="vb__text">Verbinde dein alltägliches Leben mit Karate, das ist der Zauber der Kunst.</span></div>
+    <div class="vb__item"><span class="vb__num">20</span><span class="vb__text">Denke immer nach und versuche dich ständig an Neuem.</span></div>
+  </div>
+</div>
+
+<!-- ══════════ VARIATION C: COMPACT SCROLL STRIP ══════════ -->
+<div class="variation-label">C — Compact Scroll Strip</div>
+<div class="variation-desc">Continuous horizontal strip. No pagination, free scrolling with momentum. Each rule is a tight column card. Ticker / filmstrip feel. Swipe to explore. (Ref: flowing path)</div>
+
+<div class="vc">
+  <div class="rules-header">
+    <p class="rules-header__sub">Die Grundsätze des Karate-Do</p>
+    <h2 class="rules-header__title">Die 20 Regeln</h2>
+    <p class="rules-header__author">Gichin Funakoshi</p>
+  </div>
+
+  <div class="vc__strip">
+    <div class="vc__item"><span class="vc__num">01</span><span class="vc__text">Karate beginnt und endet mit Respekt.</span></div>
+    <div class="vc__item"><span class="vc__num">02</span><span class="vc__text">Im Karate gibt es keinen ersten Angriff.</span></div>
+    <div class="vc__item"><span class="vc__num">03</span><span class="vc__text">Karate ist ein Helfer der Gerechtigkeit.</span></div>
+    <div class="vc__item"><span class="vc__num">04</span><span class="vc__text">Erkenne zuerst dich selbst, dann den anderen.</span></div>
+    <div class="vc__item"><span class="vc__num">05</span><span class="vc__text">Die Kunst des Geistes kommt vor der Kunst der Technik.</span></div>
+    <div class="vc__item"><span class="vc__num">06</span><span class="vc__text">Lerne deinen Geist zu kontrollieren und befreie ihn dann.</span></div>
+    <div class="vc__item"><span class="vc__num">07</span><span class="vc__text">Unglück geschieht immer durch Unachtsamkeit.</span></div>
+    <div class="vc__item"><span class="vc__num">08</span><span class="vc__text">Karate üben heißt nicht nur im Dojo üben.</span></div>
+    <div class="vc__item"><span class="vc__num">09</span><span class="vc__text">Karate üben heißt ein Leben lang arbeiten.</span></div>
+    <div class="vc__item"><span class="vc__num">10</span><span class="vc__text">Verbinde dein alltägliches Leben mit Karate, das ist der Zauber der Kunst.</span></div>
+    <div class="vc__item"><span class="vc__num">11</span><span class="vc__text">Karate ist wie heißes Wasser, das abkühlt, wenn du es nicht ständig erwärmst.</span></div>
+    <div class="vc__item"><span class="vc__num">12</span><span class="vc__text">Denke nicht ans Gewinnen, doch denke darüber nach, wie du nicht verlierst.</span></div>
+    <div class="vc__item"><span class="vc__num">13</span><span class="vc__text">Verändere deine Verteidigung je nach Gegner.</span></div>
+    <div class="vc__item"><span class="vc__num">14</span><span class="vc__text">Der Kampf hängt von der Handhabung des Treffens und Nicht-Treffens ab.</span></div>
+    <div class="vc__item"><span class="vc__num">15</span><span class="vc__text">Stelle dir deine Hand und deinen Fuß als Schwert vor.</span></div>
+    <div class="vc__item"><span class="vc__num">16</span><span class="vc__text">Wenn man das Tor der Jugend verlässt, hat man viele Gegner.</span></div>
+    <div class="vc__item"><span class="vc__num">17</span><span class="vc__text">Das Einnehmen einer Haltung gibt es beim Anfänger, später ist der Körper die natürliche Haltung.</span></div>
+    <div class="vc__item"><span class="vc__num">18</span><span class="vc__text">Die Kata darf nicht verändert werden, im Kampf jedoch gilt das Gegenteil.</span></div>
+    <div class="vc__item"><span class="vc__num">19</span><span class="vc__text">Hart und weich, Spannung und Entspannung, langsam und schnell, alles in Verbindung mit der richtigen Atmung.</span></div>
+    <div class="vc__item"><span class="vc__num">20</span><span class="vc__text">Denke immer nach und versuche dich ständig an Neuem.</span></div>
+  </div>
+  <p class="vc__hint">← swipe to explore →</p>
+</div>
+
+<script>
+// Variation A carousel logic
+let vaPage = 0;
+const vaViewport = document.getElementById('vaViewport');
+const vaDots = document.querySelectorAll('.va__dot');
+
+function vaGoTo(i) {
+  vaPage = i;
+  vaViewport.children[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+  vaDots.forEach((d, j) => d.classList.toggle('is-active', j === i));
+}
+function vaGo(dir) {
+  const next = Math.max(0, Math.min(3, vaPage + dir));
+  vaGoTo(next);
+}
+</script>
+
+</body>
+</html>

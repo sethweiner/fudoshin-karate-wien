@@ -46,19 +46,26 @@
     .gallery-cluster__item {
       overflow: hidden;
       cursor: pointer;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      transition: border-color 400ms ease;
+    }
+    .gallery-cluster__item:hover {
+      border-color: var(--color-accent);
     }
     .gallery-cluster__item img {
       width: 100%;
       aspect-ratio: 3/2;
       object-fit: cover;
-      transition: transform 500ms var(--ease-out), filter 300ms ease;
+      display: block;
+      transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1), filter 600ms ease;
     }
     .gallery-cluster__item:hover img {
-      transform: scale(1.03);
-      filter: brightness(1.1);
+      transform: scale(1.06);
+      filter: brightness(1.05);
     }
     .gallery-cluster__item:active img {
-      transform: scale(0.96);
+      transform: scale(0.98);
       transition: transform 80ms ease;
     }
     /* Caption — hidden by default, activate with .gallery-cluster--captions on parent */
