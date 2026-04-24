@@ -3,6 +3,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fudoshin Karate-Do Club Wien</title>
+  <meta name="description" content="Fudoshin Karate-Do Club Wien — Shotokan Karate für Kinder, Jugendliche und Erwachsene in Wien. Jetzt Mitglied werden.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Fudoshin Karate-Do Club Wien">
+  <meta property="og:description" content="Shotokan Karate für Kinder, Jugendliche und Erwachsene in Wien.">
+  <meta property="og:image" content="https://fudoshin-karate-wien.netlify.app/images/header-01.jpg">
+  <meta property="og:url" content="https://fudoshin-karate-wien.netlify.app/">
   <meta name="theme-color" id="metaThemeColor" content="#000000">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='22' fill='%23b53a3a' stroke='white' stroke-width='8'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,6 +72,7 @@
       .nav__links a:active,
       .nav__overlay a:active,
       .nav__theme:active,
+      .nav__contact-icon:active,
       .nav__lang-btn:active,
       .nav__hamburger:active,
       .form-strip__cta:active,
@@ -268,6 +275,18 @@
     .nav__theme .icon-moon { display: block; }
     [data-theme="light"] .nav__theme .icon-sun  { display: block; }
     [data-theme="light"] .nav__theme .icon-moon { display: none; }
+
+    /* Contact icon */
+    .nav__contact-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: var(--nav-h);
+      border-left: 1px solid var(--color-border);
+      color: var(--color-fg);
+      flex-shrink: 0;
+      transition: background 200ms ease, var(--t-theme);
+    }
+    .nav__contact-icon svg { width: 1.1rem; height: 1.1rem; }
+    .nav__contact-icon:hover { background: var(--color-fg); color: var(--color-bg); }
 
     /* ── Language toggle ── */
     .nav__lang {
@@ -1210,7 +1229,7 @@
       margin-top: 0;
     }
     .team-card--small.is-expanded .team-small__bio {
-      opacity: 0.6; max-height: 30rem;
+      opacity: 0.6; max-height: 60rem;
       margin-top: 0.6rem;
     }
     .team-card--small[data-expandable] { cursor: pointer; }
@@ -1221,6 +1240,8 @@
     .team-card--small[data-expandable].is-expanded .team-small__name::after {
       content: ' −';
     }
+
+    .team-card--small .team-small__bio { text-align: left; }
 
     /* ═══════════════════════════════════════════
        FUNAKOSHI RULES — GRID
@@ -1573,7 +1594,9 @@
     .footer__col ul li a { font-size: 0.85rem; opacity: 0.5; transition: opacity 150ms ease; }
     .footer__col ul li a:hover { opacity: 1; }
     .footer__sportunion {
-      font-size: 0.7rem; opacity: 0.25; margin-top: 1rem;
+      font-size: 0.78rem; opacity: 0.55; margin-top: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
     }
     .footer__sponsor-cta {
       margin-top: 0.3rem;
@@ -1957,6 +1980,7 @@
       <span class="icon-moon">☽</span>
       <span class="icon-sun">☀</span>
     </button>
+    <a href="#kontakt" class="nav__contact-icon" aria-label="Kontakt" data-i18n-aria="nav.contact.aria"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
     <div class="nav__lang" id="langToggle" aria-haspopup="true">
       <button class="nav__lang-btn" aria-expanded="false">DE</button>
       <ul class="nav__lang-dropdown" role="menu">
@@ -2009,21 +2033,26 @@
           <div class="grid reveal-group">
             <div class="wrapper_text" style="grid-column:1/-1; max-width:48rem;">
               <h3 class="h3_subtitle" data-i18n="about.concept.title">Fudoshin — 不動心</h3>
-              <p data-i18n="about.concept.p1">Fudoshin (不動心) ist ein zentraler Begriff im Karate und bedeutet wörtlich „unbewegter Geist". Es beschreibt einen mentalen Zustand, in dem man ruhig und gefasst bleibt, sich nicht von Angst, Druck oder Emotionen beeinflussen lässt und auch in stressigen Situationen klar und konzentriert handelt — nicht gefühllos zu sein, sondern innerlich stabil zu bleiben, egal ob im Training, im Wettkampf oder im Alltag. Einfach gesagt: Fudoshin ist die Fähigkeit, auch unter Druck einen klaren Kopf zu bewahren und kontrolliert zu reagieren.</p>
+              <p data-i18n-html="about.concept.p1">Fudoshin (不動心) ist ein wichtiger Begriff im Karate und bedeutet wörtlich „unbewegter Geist". Im Karate-Kontext beschreibt Fudōshin einen mentalen Zustand, in dem man ruhig und gefasst bleibt, sich nicht von Angst, Druck oder Emotionen beeinflussen lässt und auch in stressigen Situationen klar und konzentriert handelt.<br><br>Es geht also nicht darum, „gefühllos" zu sein, sondern innerlich stabil zu bleiben, egal ob im Training, im Wettkampf oder im Alltag.<br><br>Einfach gesagt: Fudoshin ist die Fähigkeit, auch unter Druck einen klaren Kopf zu bewahren und kontrolliert zu reagieren.</p>
             </div>
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.history.title">Geschichte des Vereins</h3>
-              <p data-i18n="about.history.p1">Seit 2020 steht Fudoshin für authentisches, traditionelles Shotokan-Karate, kombiniert mit moderner Trainingsmethodik und echter Leidenschaft für die Kampfkunst. Ob Kinder, Jugendliche oder Erwachsene – bei uns findet jeder seinen Einstieg und seinen eigenen Weg im Karate. Unser Training wird von pädagogisch ausgebildeten Instruktoren sowie erfahrenen Dan-Trägern geleitet, die ihr Wissen mit Kompetenz, Disziplin und Begeisterung weitergeben. Mehr als nur Karate: Wir stärken Körper und Geist, fördern Selbstvertrauen und vermitteln Werte wie Respekt, Durchhaltevermögen und Achtsamkeit. Zusätzlich bieten wir Selbstverteidigungskurse für alle Altersgruppen und Geschlechter, praxisnah, effektiv und alltagstauglich. Starte jetzt deinen Weg mit uns!</p>
+              <p data-i18n-html="about.history.p1">Seit 2020 steht Fudoshin für authentisches, traditionelles Shotokan-Karate, kombiniert mit moderner Trainingsmethodik und echter Leidenschaft für die Kampfkunst.<br><br>Ob Kinder, Jugendliche oder Erwachsene – bei uns findet jeder seinen Einstieg und seinen eigenen Weg im Karate.<br><br>Unser Training wird von pädagogisch ausgebildeten Instruktoren sowie erfahrenen Dan-Trägern geleitet, die ihr Wissen mit Kompetenz, Disziplin und Begeisterung weitergeben.<br><br><strong>Mehr als nur Karate:</strong> Wir stärken Körper und Geist, fördern Selbstvertrauen und vermitteln Werte wie Respekt, Durchhaltevermögen und Achtsamkeit.<br><br>Zusätzlich bieten wir Selbstverteidigungskurse für alle Altersgruppen und Geschlechter, praxisnah, effektiv und alltagstauglich.<br><br>Starte jetzt deinen Weg mit uns!</p>
             </div>
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.values.title">Werte &amp; pädagogischer Ansatz</h3>
-              <p data-i18n="about.values.p1">Unser Ansatz ist geduldig und direkt. Wir korrigieren die Technik früh und oft, denn gute Gewohnheiten lassen sich leichter aufbauen, als schlechte abzulegen. Wir halten Kinder und Erwachsene an die gleichen Maßstäbe von Aufmerksamkeit und Respekt — angepasst an das, was vernünftig ist, aber nie aus Bequemlichkeit herabgesetzt. Fortschritt wird hier in Monaten und Jahren gemessen, nicht in Gürteln.</p>
-              <p data-i18n="about.values.p2">Karate lehrt, was es verlangt: Aufmerksamkeit, Geduld und Ehrlichkeit darüber, wo man steht. Wir versuchen, die Voraussetzungen dafür zu schaffen — ein ernsthaftes Trainingsumfeld, klare Anleitung und beständige Erwartungen. Die Werte ergeben sich aus der Praxis, nicht umgekehrt.</p>
+              <p data-i18n-html="about.values.p1">Unser Training basiert auf einem klaren, ehrlichen und nachhaltigen Ansatz. Wir arbeiten geduldig, aber direkt: Techniken werden früh und regelmäßig korrigiert, denn gute Gewohnheiten entstehen leichter, als schlechte zu verlernen.</p>
+              <p data-i18n-html="about.values.p2">Für Kinder, Jugendliche und Erwachsene gelten bei uns die gleichen Grundprinzipien: <strong>Respekt, Fokus und Aufmerksamkeit</strong>. Diese Maßstäbe werden altersgerecht vermittelt, aber niemals aus Bequemlichkeit reduziert.</p>
+              <p data-i18n-html="about.values.p3">Fortschritt messen wir nicht in Gürteln, sondern in Entwicklung – über Monate und Jahre hinweg.</p>
+              <p data-i18n-html="about.values.p4">Karate lehrt, was es verlangt: <strong>Konzentration, Geduld, Achtsamkeit und Selbstbeherrschung</strong>. Gleichzeitig fördern wir <strong>Höflichkeit, Ehrlichkeit und Freude an der Bewegung</strong>. Unser Training stärkt nicht nur die Technik, sondern auch die <strong>Gesundheit</strong> und das innere Gleichgewicht.</p>
+              <p data-i18n-html="about.values.p5">Wir schaffen die Voraussetzungen dafür: ein ernsthaftes Trainingsumfeld, klare Anleitung und beständige Erwartungen. Die Werte entstehen aus der Praxis, nicht umgekehrt.</p>
             </div>
             <div class="wrapper_text">
               <h3 class="h3_subtitle" data-i18n="about.style.title">Welche Stilrichtung?</h3>
-              <p data-i18n-html="about.style.p1">Wir unterrichten traditionelles <strong>Shotokan-Karate</strong> — einen Stil, der auf Präzision, Disziplin und korrekter Technik aufgebaut ist. Das Training fördert körperliche und geistige Fitness und entwickelt mit der Zeit Eigenschaften, die darüber hinausgehen: Respekt, Beständigkeit und die Fähigkeit, unter Druck ruhig zu bleiben.</p>
-              <p data-i18n-html="about.style.p2">Karate lehrt nicht, wie man Konflikte sucht — sondern wie man sie erkennt, vermeidet und im Notfall beendet. Diese Unterscheidung ist Teil der Disziplin.</p>
+              <p data-i18n-html="about.style.p1">Unser Karate basiert auf der traditionellen <strong>Shotokan-Stilrichtung</strong> – klar, kraftvoll und strukturiert. Charakteristisch sind tiefe Stände, präzise Techniken und eine starke Verbindung von Körper und Geist.</p>
+              <p data-i18n-html="about.style.p2">Bei Fudoshin verstehen wir Shotokan nicht nur als Technik, sondern als langfristigen Weg. Im Zentrum stehen Stabilität, Kontrolle und bewusste Bewegung. Jede Technik wird mit Fokus, Konzentration und sauberer Ausführung trainiert.</p>
+              <p data-i18n-html="about.style.p3">„Fudoshin" bedeutet <em><strong>unerschütterlicher Geist</strong></em>. Dieses Prinzip prägt unser Training: ruhig bleiben unter Druck, klar handeln und sich kontinuierlich weiterentwickeln – auf der Matte und im Alltag.</p>
+              <p data-i18n-html="about.style.p4">So verbinden wir traditionelle Werte mit einem modernen, durchdachten Trainingsansatz.</p>
             </div>
           </div>
         </div>
@@ -2112,38 +2141,25 @@
           <h2 class="reveal" data-i18n="pricing.title">Preise</h2>
           <div class="preise-grid reveal-group">
             <div class="preise-card">
-              <span class="preise-card__label" data-i18n="pricing.s.label">Semester</span>
+              <span class="preise-card__label" data-i18n="pricing.s.label">Einzelmitglied</span>
               <div class="preise-card__price">175€</div>
               <p class="preise-card__unit" data-i18n="pricing.s.unit">pro Semester</p>
               <ul class="preise-card__features">
                 <li data-i18n="pricing.s.f1">Alle Trainingseinheiten</li>
-                <li data-i18n="pricing.s.f2">Gürtelprüfungen inklusive</li>
-                <li data-i18n="pricing.s.f3">Zugang zu beiden Standorten</li>
-              </ul>
-            </div>
-            <div class="preise-card preise-card--highlight">
-              <span class="preise-card__label" data-i18n="pricing.a.label">Jahresbeitrag</span>
-              <div class="preise-card__price">320€</div>
-              <p class="preise-card__unit" data-i18n="pricing.a.unit">pro Jahr · 2 Semester</p>
-              <ul class="preise-card__features">
-                <li data-i18n="pricing.a.f1">Alle Trainingseinheiten</li>
-                <li data-i18n="pricing.a.f2">Gürtelprüfungen inklusive</li>
-                <li data-i18n="pricing.a.f3">Zugang zu beiden Standorten</li>
-                <li data-i18n="pricing.a.f4">Ersparnis gegenüber Einzelsemester</li>
+                <li data-i18n="pricing.s.f2">Zugang zu beiden Standorten</li>
               </ul>
             </div>
             <div class="preise-card">
-              <span class="preise-card__label" data-i18n="pricing.f.label">Familie / Geschwister</span>
-              <div class="preise-card__price">−20%</div>
-              <p class="preise-card__unit" data-i18n="pricing.f.unit">Rabatt ab 2 Personen</p>
+              <span class="preise-card__label" data-i18n="pricing.a.label">Familienmitglied</span>
+              <div class="preise-card__price">125€</div>
+              <p class="preise-card__unit" data-i18n="pricing.a.unit">ab der 2. Person</p>
               <ul class="preise-card__features">
-                <li data-i18n="pricing.f.f1">Gilt für Geschwister</li>
-                <li data-i18n="pricing.f.f2">Gilt für Eltern-Kind-Kombination</li>
-                <li data-i18n="pricing.f.f3">Auf Anfrage</li>
+                <li data-i18n="pricing.a.f1">Alle Trainingseinheiten</li>
+                <li data-i18n="pricing.a.f2">Zugang zu beiden Standorten</li>
               </ul>
             </div>
           </div>
-          <p class="preise-note" data-i18n="pricing.note">* Einmalige Aufnahmegebühr wird eingeführt. Kostenlose Schnupperstunde vor Anmeldung möglich.</p>
+          <p class="preise-note" data-i18n="pricing.note">Prüfungsgebühr nicht inbegriffen – wird bei Anmeldung zur Prüfung separat bezahlt.</p>
           <div class="preise-cta">
             <button class="preise-cta__btn" data-open-modal="member" data-i18n="pricing.cta">Jetzt anmelden →</button>
           </div>
@@ -2160,23 +2176,29 @@
               <img src="images/fudoshin-karate-do-wien_emir-catic.jpg" alt="Emir Catic — Fudoshin Karate-Do Wien">
               <h2 class="heading-4">Emir Catic</h2>
               <p class="heading-3" data-i18n="team.emir.role">Staatlich geprüfter Karate-Instruktor · 3. Dan</p>
-              <p data-i18n="team.emir.bio">Emir ist seit 2021 als Karate-Instruktor tätig und trägt den 3. Dan Schwarzgurt. In seinem Training stehen Technik, Disziplin, Respekt und Freude an der Bewegung im Mittelpunkt. Beruflich arbeitet er seit mehreren Jahren als Freizeitpädagoge und bringt umfangreiche Erfahrung in der Arbeit mit Kindern, Jugendlichen und Gruppen mit — eine Kompetenz, die seinen Unterrichtsstil direkt prägt. Neben Shotokan-Karate hat er Erfahrung im Ju-Jitsu und Brasilianischen Jiu-Jitsu gesammelt und dadurch sein Verständnis für unterschiedliche Kampfsportarten erweitert. Durch regelmäßige Teilnahme an nationalen und internationalen Seminaren bildet er sich kontinuierlich weiter. Sein Ziel ist qualitativ hochwertiges Karate-Training für Kinder, Jugendliche und Erwachsene.</p>
+              <p data-i18n-html="team.emir.bio">Emir ist seit 2021 als Karate-Instruktor tätig und ist Träger des 3. Dan-Schwarzgurts. In seinem Training stehen Technik, Disziplin, Respekt und Freude an der Bewegung im Mittelpunkt.<br><br>Beruflich arbeitet er seit mehreren Jahren als Freizeitpädagoge und verfügt über umfangreiche Erfahrung in der Arbeit mit Kindern, Jugendlichen und Gruppen. Diese pädagogische Kompetenz prägt auch seinen Unterricht im Karate.<br><br>Neben dem Shotokan-Karate hat er auch Erfahrung im Ju-Jitsu sowie im Brasilianischen Jiu-Jitsu gesammelt und dadurch sein Verständnis für unterschiedliche Kampfsportarten erweitert.<br><br>Durch regelmäßige Teilnahme an nationalen und internationalen Seminaren bildet er sich kontinuierlich weiter, um sein Wissen und seine Fähigkeiten stetig zu vertiefen.<br><br>Sein Ziel ist es, qualitativ hochwertiges Karate-Training für Kinder, Jugendliche und Erwachsene anzubieten. 🥋</p>
             </div>
             <div class="team-card">
               <img src="images/fudoshin-karate-do-wien_samir-sijamija.jpg" alt="Samir Sijamija — Fudoshin Karate-Do Wien">
               <h2 class="heading-4">Samir Sijamija</h2>
               <p class="heading-3" data-i18n="team.samir.role">Staatlich geprüfter Karate-Instruktor · 4. Dan</p>
-              <p data-i18n="team.samir.bio">Samir trainiert traditionelles Shotokan-Karate seit den 1980er-Jahren und trägt den 4. Dan Schwarzgurt. Seine Laufbahn begann in Bosnien, wo er bis 1992 intensiv trainierte und an zahlreichen nationalen und internationalen Meisterschaften teilnahm. Neben Karate sammelte er auch Erfahrung im Kickboxen und Judo, wodurch er sein Verständnis für Kampfkunst und Bewegung erweitern konnte. Nach seiner Übersiedlung nach Österreich setzte er sein Training fort und unterrichtet seit 2000 Karate bei der Sportunion Döbling, wo er bis heute als Trainer tätig ist. Er ist ausgebildeter Karate-Instruktor (Sportakademie Linz) und arbeitet als Pädagoge an einer Schule. Seine pädagogische Erfahrung prägt seinen Unterrichtsstil, der auf Geduld, Motivation und persönlicher Entwicklung basiert — unabhängig vom Alter oder Erfahrungsniveau der Schüler.</p>
+              <p data-i18n-html="team.samir.bio">Samir trainiert traditionelles Shotokan-Karate seit den 1980er-Jahren und trägt den 4. Dan Schwarzgurt. Seine Karate-Laufbahn begann in Bosnien, wo er bis 1992 intensiv trainierte und an zahlreichen nationalen und internationalen Meisterschaften teilnahm. Neben Karate sammelte er auch Erfahrung im Kickboxen und Judo, wodurch er sein Verständnis für Kampfkunst und Bewegung zusätzlich erweitern konnte.<br><br>Nach seiner Übersiedlung nach Österreich setzte er sein Training fort und begann im Jahr 2000, Karate zu unterrichten. In seinem Dojo legt Samir besonderen Wert auf den Aufbau solider Grundlagen, Disziplin und eine respektvolle Trainingsatmosphäre, unabhängig vom Alter oder Erfahrungsniveau der Schüler.<br><br>Samir ist ausgebildeter Karate-Instruktor (Ausbildung an der Sportakademie Linz) und seit 2000 Trainer bei der Sportunion Döbling. Neben seiner Tätigkeit als Karate-Trainer arbeitet er auch als Pädagoge an einer Schule.<br><br>Seine pädagogische Erfahrung hilft ihm besonders im Umgang mit Kindern und Jugendlichen und prägt seinen Unterrichtsstil, der auf Geduld, Motivation und persönlicher Entwicklung basiert. 🥋</p>
             </div>
           </div>
           <!-- Secondary trainers -->
           <div class="team-grid--secondary reveal-group">
             <div class="team-card--small" data-expandable>
-              <img src="images/fudoshin-karate-do-wien_helena-erzog.jpg" alt="Helena Erzog — Fudoshin Karate-Do Wien">
+              <img src="images/fudoshin-karate-do-wien_felix-mueller.jpg" alt="Dr. Felix Müller — Fudoshin Karate-Do Wien">
+              <span class="team-small__name">Dr. Felix Müller</span>
+              <span class="team-small__role" data-i18n="team.mueller.role">3. Dan</span>
+              <span class="team-small__since" data-i18n="team.mueller.since">Karate seit 1993</span>
+              <span class="team-small__bio" data-i18n-html="team.mueller.bio">Felix trainiert seit 1993 traditionelles Shotokan-Karate und trägt den 3. Dan. Seine Karate-Laufbahn begann in Berlin, wo er unter anderem bei Ronald Dorau, Uwe Waskow und weiteren erfahrenen Lehrern trainierte. Bereits in dieser Zeit sammelte er auch erste Erfahrungen als Trainer für Kinder und junge Erwachsene.<br><br>Einen prägenden Einfluss auf sein Karate hatte Václav Liška aus Budweis. In den darauffolgenden Jahren trainierte Felix in Köln und Umgebung bei verschiedenen Lehrern und war selbst aktiv als Trainer tätig.<br><br>Seit rund vier Jahren ist er im Karate bei der Sportunion Döbling aktiv.<br><br>Felix lässt sich bewusst auch von anderen Stilrichtungen inspirieren. Sein Verständnis von Karate wird durch Erfahrungen mit Capoeira, südchinesischem Kung-Fu und Yoga ergänzt, was sich in einem offenen, vielseitigen und bewegungsbewussten Trainingsstil widerspiegelt.</span>
+            </div>
+            <div class="team-card--small">
+              <img src="images/fudoshin-karate-do-wien_helena-erzog.jpg" alt="Helena Erzog — Fudoshin Karate-Do Wien" style="object-position:40% 10%">
               <span class="team-small__name">Helena Erzog</span>
               <span class="team-small__role" data-i18n="team.helena.role">Übungsleiterin · 1. Dan</span>
               <span class="team-small__since" data-i18n="team.helena.since">Karate seit 2015</span>
-              <span class="team-small__bio" data-i18n="team.helena.bio">Helena trainiert seit 2015 traditionelles Shotokan-Karate und trägt den 1. Dan Schwarzgurt. Als Übungsleiterin unterstützt sie das Trainerteam mit Engagement und Einfühlungsvermögen — besonders im Training mit Kindern und Anfängern.</span>
             </div>
             <div class="team-card--small">
               <img src="images/fudoshin-karate-do-wien_gerhard-fritzer.jpg" alt="Gerhard Fritzer — Fudoshin Karate-Do Wien">
@@ -2191,26 +2213,19 @@
               <span class="team-small__since" data-i18n="team.ffritzer.since">Karate seit 2012</span>
             </div>
             <div class="team-card--small">
-              <img src="images/fudoshin-karate-do-wien_mehmed-sijamija.jpg" alt="Mehmed Sijamija — Fudoshin Karate-Do Wien">
+              <img src="images/fudoshin-karate-do-wien_mehmed-sijamija.jpg" alt="Mehmed Sijamija — Fudoshin Karate-Do Wien" style="object-position:top">
               <span class="team-small__name">Mehmed Sijamija</span>
               <span class="team-small__role" data-i18n="team.mehmed.role">Übungsleiter · 1. Dan</span>
               <span class="team-small__since" data-i18n="team.mehmed.since">Karate seit 1997</span>
             </div>
             <div class="team-card--small">
-              <img src="images/fudoshin-karate-do-wien_grujica-peric.jpg" alt="Grujica Peric — Fudoshin Karate-Do Wien">
+              <img src="images/fudoshin-karate-do-wien_grujica-peric.jpg" alt="Grujica Peric — Fudoshin Karate-Do Wien" style="object-position:40% 10%">
               <span class="team-small__name">Grujica Peric</span>
               <span class="team-small__role" data-i18n="team.peric.role">4. Dan</span>
               <span class="team-small__since" data-i18n="team.peric.since">Karate seit 1983</span>
             </div>
-            <div class="team-card--small" data-expandable>
-              <img src="images/fudoshin-karate-do-wien_felix-mueller.jpg" alt="Dr. Felix Müller — Fudoshin Karate-Do Wien">
-              <span class="team-small__name">Dr. Felix Müller</span>
-              <span class="team-small__role" data-i18n="team.mueller.role">3. Dan</span>
-              <span class="team-small__since" data-i18n="team.mueller.since">Karate seit 1993</span>
-              <span class="team-small__bio" data-i18n="team.mueller.bio">Felix trainiert seit 1993 traditionelles Shotokan-Karate und trägt den 3. Dan. Seine Laufbahn begann in Berlin, wo er u.a. bei Ronald Dorau und Uwe Waskow trainierte und erste Erfahrungen als Trainer sammelte. Einen prägenden Einfluss hatte Václav Liška aus Budweis. Seit rund vier Jahren ist er bei der Sportunion Döbling aktiv. Felix lässt sich bewusst von anderen Stilrichtungen inspirieren — Capoeira, südchinesisches Kung-Fu und Yoga ergänzen sein Karate und prägen einen offenen, vielseitigen Trainingsstil.</span>
-            </div>
             <div class="team-card--small">
-              <img src="images/fudoshin-karate-do-wien_adam-ghanem.jpg" alt="Adam Ghanem — Fudoshin Karate-Do Wien">
+              <img src="images/fudoshin-karate-do-wien_adam-ghanem.jpg" alt="Adam Ghanem — Fudoshin Karate-Do Wien" style="object-position:40% 10%">
               <span class="team-small__name">Adam Ghanem</span>
               <span class="team-small__role" data-i18n="team.ghanem.role">Übungsleiter · 1. Kyu</span>
               <span class="team-small__since" data-i18n="team.ghanem.since">Karate seit 2015</span>
@@ -2303,6 +2318,7 @@
         <a href="https://www.facebook.com/groups/2902313330065879/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
         <a href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
       </div>
+      <p class="footer__sportunion" data-i18n="footer.sportunion">Mitglied der Sportunion Wien</p>
     </div>
     <div class="footer__col">
       <h3 data-i18n="footer.nav.title">Navigation</h3>
@@ -2325,7 +2341,6 @@
     <div class="footer__col">
       <h3 data-i18n="footer.credit.title">Website Design</h3>
       <ul><li><a href="https://sethweiner.org" target="_blank" rel="noopener">Seth Weiner</a></li></ul>
-      <p class="footer__sportunion" data-i18n="footer.sportunion">Mitglied der Sportunion Wien</p>
       <p class="footer__sponsor-cta"><a href="mailto:office@fudoshin.at?subject=Sponsoring-Anfrage" data-i18n="footer.sponsor">Sponsoring-Anfrage →</a></p>
     </div>
     <div class="footer__bottom">
@@ -2733,6 +2748,10 @@
             <p class="form-info__detail" data-i18n="contact.email.label">E-Mail</p>
             <p><a href="mailto:office@fudoshin.at" style="border-bottom:1px solid var(--color-border);">office@fudoshin.at</a></p>
           </div>
+          <div>
+            <p class="form-info__detail" data-i18n="contact.phone.label">Telefon</p>
+            <p><a href="tel:+436801280502" style="border-bottom:1px solid var(--color-border);" data-i18n="contact.phone.number">+43 680 1280502</a></p>
+          </div>
         </div>
         <form class="form-body" name="kontakt" method="POST" action="https://formsubmit.co/ajax/office@fudoshin.at">
           <input type="hidden" name="_subject" value="Fudoshin Karate — Kontaktformular">
@@ -2846,9 +2865,8 @@
               <label for="m-beitrag" data-i18n="member.form.fee.label">Gewünschter Beitrag</label>
               <select id="m-beitrag" data-i18n-options="member.form.fee" name="beitrag">
                 <option value="" disabled="" selected="">Bitte wählen</option>
-                <option value="Semester (175€)">Semester (175€)</option>
-                <option value="Jahresbeitrag (320€)">Jahresbeitrag (320€)</option>
-                <option value="Familie / Geschwister (−20%)">Familie / Geschwister (−20%)</option>
+                <option value="Einzelmitglied (175€)">Einzelmitglied (175€)</option>
+                <option value="Familienmitglied (125€)">Familienmitglied (125€)</option>
               </select>
             </div>
             <div class="form-field form-grid--full form-field--check">
@@ -2886,7 +2904,7 @@
         <div class="camp-details">
           <div class="camp-details__card">
             <span class="camp-details__label" data-i18n="camp.table.dates.label">Datum</span>
-            <span class="camp-details__value camp-details__value--primary" data-i18n="camp.table.dates.value">6.–10. Juni 2026 (Mo–Fr)</span>
+            <span class="camp-details__value camp-details__value--primary" data-i18n="camp.table.dates.value">6.–10. Juli 2026</span>
           </div>
           <div class="camp-details__card">
             <span class="camp-details__label" data-i18n="camp.table.times.label">Uhrzeit</span>
@@ -2907,6 +2925,10 @@
           <div class="camp-secondary__row">
             <span class="camp-secondary__label" data-i18n="camp.table.ages.label">Alter</span>
             <span class="camp-secondary__value" data-i18n="camp.table.ages.value">6–14 Jahre</span>
+          </div>
+          <div class="camp-secondary__row">
+            <span class="camp-secondary__label" data-i18n="camp.table.deadline.label">Anmeldeschluss</span>
+            <span class="camp-secondary__value" data-i18n="camp.table.deadline.value">20. Juni 2026</span>
           </div>
           <div class="camp-secondary__row">
             <span class="camp-secondary__label" data-i18n="camp.table.included.label">Inklusive</span>
@@ -3548,24 +3570,5 @@
   <script src="js/i18n.js"></script>
 
   <script>requestAnimationFrame(() => document.body.classList.add('is-loaded'));</script>
-
-  <!-- TOKEN BRIDGE — design guide ↔ site sync -->
-  <script src="_guide/bridge.js"></script>
-  <a href="_guide/index.html" id="guidePill" style="
-    position:fixed; bottom:2rem; left:1.5rem;
-    z-index:800;
-    display:flex; align-items:center; gap:0.4rem;
-    padding:0.4rem 0.8rem;
-    background:var(--color-surface);
-    border:1px solid color-mix(in srgb, var(--color-border) 30%, transparent);
-    border-radius:3px;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:0.55rem; letter-spacing:0.06em;
-    text-transform:uppercase;
-    color:var(--color-text); text-decoration:none;
-    opacity:0.25;
-    transition:opacity 200ms ease, background 200ms ease;
-  " onmouseenter="this.style.opacity='0.8'" onmouseleave="this.style.opacity='0.25'"
-  >&#9881; Guide</a>
 
 </body></html>

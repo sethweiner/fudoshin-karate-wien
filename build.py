@@ -135,8 +135,18 @@ def build_activities(data):
         if desc:
             desc_html = f"""
               <div class="aktivitaet-card__desc" data-i18n="{dkey}">{htmlmod.escape(desc)}</div>"""
-        cards.append(f"""            <div class="aktivitaet-card">
-              <figure><img src="{item["image_thumb"]}" data-full="{item["image_full"]}" alt="{htmlmod.escape(item["alt"])}"></figure>
+        is_camp = key == "activities.camps"
+        card_attrs = ' data-camp' if is_camp else ''
+        figure_html = (
+            f"""<div class="aktivitaet-card__img-wrap">
+                <img src="{item["image_thumb"]}" data-full="{item["image_full"]}" alt="{htmlmod.escape(item["alt"])}">
+                <a href="#sommercamp" class="aktivitaet-card__badge" data-i18n="sticker.cta">Anmelden →</a>
+              </div>"""
+            if is_camp
+            else f"""<figure><img src="{item["image_thumb"]}" data-full="{item["image_full"]}" alt="{htmlmod.escape(item["alt"])}"></figure>"""
+        )
+        cards.append(f"""            <div class="aktivitaet-card"{card_attrs}>
+              {figure_html}
               <h2 class="heading-4 _2" data-i18n="{key}">{htmlmod.escape(item["title"])}</h2>{desc_html}
             </div>""")
 

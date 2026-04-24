@@ -55,6 +55,7 @@
       .nav__links a:active,
       .nav__overlay a:active,
       .nav__theme:active,
+      .nav__contact-icon:active,
       .nav__lang-btn:active,
       .nav__hamburger:active,
       .form-strip__cta:active,
@@ -257,6 +258,18 @@
     .nav__theme .icon-moon { display: block; }
     [data-theme="light"] .nav__theme .icon-sun  { display: block; }
     [data-theme="light"] .nav__theme .icon-moon { display: none; }
+
+    /* Contact icon */
+    .nav__contact-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: var(--nav-h);
+      border-left: 1px solid var(--color-border);
+      color: var(--color-fg);
+      flex-shrink: 0;
+      transition: background 200ms ease, var(--t-theme);
+    }
+    .nav__contact-icon svg { width: 1.1rem; height: 1.1rem; }
+    .nav__contact-icon:hover { background: var(--color-fg); color: var(--color-bg); }
 
     /* ── Language toggle ── */
     .nav__lang {
@@ -1199,7 +1212,7 @@
       margin-top: 0;
     }
     .team-card--small.is-expanded .team-small__bio {
-      opacity: 0.6; max-height: 30rem;
+      opacity: 0.6; max-height: 60rem;
       margin-top: 0.6rem;
     }
     .team-card--small[data-expandable] { cursor: pointer; }
@@ -1210,6 +1223,8 @@
     .team-card--small[data-expandable].is-expanded .team-small__name::after {
       content: ' −';
     }
+
+    .team-card--small .team-small__bio { text-align: left; }
 
     /* ═══════════════════════════════════════════
        FUNAKOSHI RULES — GRID
@@ -1562,7 +1577,9 @@
     .footer__col ul li a { font-size: 0.85rem; opacity: 0.5; transition: opacity 150ms ease; }
     .footer__col ul li a:hover { opacity: 1; }
     .footer__sportunion {
-      font-size: 0.7rem; opacity: 0.25; margin-top: 1rem;
+      font-size: 0.78rem; opacity: 0.55; margin-top: 1rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
     }
     .footer__sponsor-cta {
       margin-top: 0.3rem;
