@@ -493,7 +493,7 @@ var translations = {
     'camp.form.submit': 'Submit registration →',
     'sticker.label': 'Summer 2026',
     'sticker.headline': 'Summer<br>Camp',
-    'sticker.detail': '6 — 10 June<br>Children &amp; Youth',
+    'sticker.detail': '6 — 10 July<br>Children &amp; Youth',
     'sticker.cta': 'Register →',
     'sticker.tab': 'Summer Camp 2026'
   },
@@ -743,7 +743,7 @@ var translations = {
     'camp.form.submit': 'Kaydı gönder →',
     'sticker.label': 'Yaz 2026',
     'sticker.headline': 'Yaz<br>Kampı',
-    'sticker.detail': '6 — 10 Haziran<br>Çocuklar &amp; Gençler',
+    'sticker.detail': '6 — 10 Temmuz<br>Çocuklar &amp; Gençler',
     'sticker.cta': 'Kayıt ol →',
     'sticker.tab': 'Yaz Kampı 2026'
   },
@@ -993,7 +993,7 @@ var translations = {
     'camp.form.submit': 'Pošalji prijavu →',
     'sticker.label': 'Ljeto 2026',
     'sticker.headline': 'Ljetni<br>Kamp',
-    'sticker.detail': '6 — 10 Juni<br>Djeca &amp; Omladina',
+    'sticker.detail': '6 — 10 Jula<br>Djeca &amp; Omladina',
     'sticker.cta': 'Prijavi se →',
     'sticker.tab': 'Ljetni Kamp 2026'
   },
