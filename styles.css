@@ -1265,95 +1265,196 @@
       grid-column: 1 / -1;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
+      position: relative;
     }
 
     /* Individual cell */
     .rules-grid__item {
+      position: relative;
       padding: 1.2rem 1.4rem;
       border: 1px solid color-mix(in srgb, var(--color-border) 12%, transparent);
       display: flex; flex-direction: column; gap: 0.4rem;
       opacity: 0; transform: translateY(10px);
-      transition: opacity 500ms ease, transform 500ms ease;
+      transition: opacity 400ms ease, transform 400ms ease,
+                  background 350ms ease, border-color 300ms ease,
+                  border-radius 500ms var(--ease-out), padding 420ms var(--ease-out);
     }
     .rules-grid__item.revealed { opacity: 1; transform: none; }
-    .rules-grid__item:hover {
+    /* Higher specificity than nth-child border rules — no !important needed */
+    .rules-grid .rules-grid__item:hover {
       background: color-mix(in srgb, var(--color-surface) 80%, transparent);
-      border-color: var(--color-accent) !important;
+      border-color: var(--color-accent);
+      transition-delay: 0ms;
     }
-    .rules-grid__item:hover .rules-grid__num { opacity: 1; }
-    .rules-grid__item:hover .rules-grid__text { opacity: 1; }
+    .rules-grid .rules-grid__item:hover .rules-grid__num { color: var(--color-fg); opacity: 1; }
+    .rules-grid .rules-grid__item:hover .rules-grid__text { color: var(--color-accent); opacity: 1; }
 
-    /* Click-expand: 1 cell → 4 cells (2×2) */
-    .rules-grid__item.is-expanded {
-      grid-column: span 2;
-      grid-row: span 2;
-      border-color: var(--color-accent) !important;
-      border-width: 2px;
+    /* Dashed connector — draws left-to-right per row on scroll reveal */
+    .rules-grid__item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: repeating-linear-gradient(
+        to right,
+        color-mix(in srgb, var(--color-accent) 35%, transparent) 0,
+        color-mix(in srgb, var(--color-accent) 35%, transparent) 3px,
+        transparent 3px, transparent 9px
+      );
+      transform-origin: left;
+      transform: scaleX(0);
+      opacity: 0;
+      transition: transform 520ms ease, opacity 400ms ease, background 200ms ease;
+    }
+    .rules-grid.revealed .rules-grid__item::before {
+      transform: scaleX(1);
+      opacity: 1;
+      transition-delay: var(--d, 0ms);
+    }
+    .rules-grid__item:hover::before {
+      background: repeating-linear-gradient(
+        to right,
+        var(--color-accent) 0, var(--color-accent) 3px,
+        transparent 3px, transparent 9px
+      );
+      opacity: 1;
+    }
+
+    /* Active cell — color swap + border highlight, no layout change */
+    .rules-grid .rules-grid__item.is-expanded {
+      border-color: var(--color-accent);
       background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+      transition-delay: 0ms;
     }
-    .rules-grid__item.is-expanded .rules-grid__num {
-      opacity: 1;
-      animation: ruleReveal 500ms var(--ease-out) both;
+    .rules-grid .rules-grid__item.is-expanded .rules-grid__num { color: var(--color-fg); opacity: 1; }
+    .rules-grid .rules-grid__item.is-expanded .rules-grid__text { color: var(--color-accent); opacity: 1; }
+
+    /* Floating overlay — 2×2 panel, scales in from item center, zero grid reflow */
+    .rules-grid__overlay {
+      position: absolute;
+      z-index: 10;
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.6rem 1.8rem;
+      background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid color-mix(in srgb, var(--color-accent) 55%, transparent);
+      border-radius: var(--radius-sm);
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 260ms var(--ease-out), transform 320ms var(--ease-out);
+      cursor: pointer;
     }
-    .rules-grid__item.is-expanded .rules-grid__text {
-      opacity: 1;
-      animation: ruleReveal 500ms var(--ease-out) 80ms both;
+    .rules-grid__overlay.is-visible { opacity: 1; transform: scale(1); }
+    .rules-grid__overlay__num {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 4.5vw, 5.5rem);
+      line-height: 1;
+      color: var(--color-fg);
     }
-    @keyframes ruleReveal {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: none; }
+    .rules-grid__overlay__text {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.2vw, 4.2rem);
+      line-height: 1.05;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      color: var(--color-accent);
     }
 
     /* Varied border weights — organic rhythm */
     .rules-grid__item:nth-child(1),
     .rules-grid__item:nth-child(7),
     .rules-grid__item:nth-child(13),
-    .rules-grid__item:nth-child(20) { border-width: 2px; border-color: color-mix(in srgb, var(--color-border) 25%, transparent); }
+    .rules-grid__item:nth-child(20) { border-color: color-mix(in srgb, var(--color-border) 25%, transparent); }
     .rules-grid__item:nth-child(3),
     .rules-grid__item:nth-child(10),
-    .rules-grid__item:nth-child(16) { border-width: 1.5px; border-color: color-mix(in srgb, var(--color-accent) 20%, transparent); }
+    .rules-grid__item:nth-child(16) { border-color: color-mix(in srgb, var(--color-accent) 20%, transparent); }
 
-    /* Staggered reveal */
-    .rules-grid__item:nth-child(1)  { transition-delay:  0ms; }
-    .rules-grid__item:nth-child(2)  { transition-delay: 40ms; }
-    .rules-grid__item:nth-child(3)  { transition-delay: 80ms; }
-    .rules-grid__item:nth-child(4)  { transition-delay: 120ms; }
-    .rules-grid__item:nth-child(5)  { transition-delay: 60ms; }
-    .rules-grid__item:nth-child(6)  { transition-delay: 100ms; }
-    .rules-grid__item:nth-child(7)  { transition-delay: 140ms; }
-    .rules-grid__item:nth-child(8)  { transition-delay: 180ms; }
-    .rules-grid__item:nth-child(9)  { transition-delay: 120ms; }
-    .rules-grid__item:nth-child(10) { transition-delay: 160ms; }
-    .rules-grid__item:nth-child(11) { transition-delay: 200ms; }
-    .rules-grid__item:nth-child(12) { transition-delay: 240ms; }
-    .rules-grid__item:nth-child(13) { transition-delay: 180ms; }
-    .rules-grid__item:nth-child(14) { transition-delay: 220ms; }
-    .rules-grid__item:nth-child(15) { transition-delay: 260ms; }
-    .rules-grid__item:nth-child(16) { transition-delay: 300ms; }
-    .rules-grid__item:nth-child(17) { transition-delay: 240ms; }
-    .rules-grid__item:nth-child(18) { transition-delay: 280ms; }
-    .rules-grid__item:nth-child(19) { transition-delay: 320ms; }
-    .rules-grid__item:nth-child(20) { transition-delay: 360ms; }
+    /* Row-wave stagger — 100ms between rows, 15ms intra-row micro-stagger */
+    /* --d drives item entrance, dashed line, num, and text all from one value */
+    .rules-grid__item:nth-child(1)  { --d:   0ms; }
+    .rules-grid__item:nth-child(2)  { --d:  15ms; }
+    .rules-grid__item:nth-child(3)  { --d:  30ms; }
+    .rules-grid__item:nth-child(4)  { --d:  45ms; }
+    .rules-grid__item:nth-child(5)  { --d: 100ms; }
+    .rules-grid__item:nth-child(6)  { --d: 115ms; }
+    .rules-grid__item:nth-child(7)  { --d: 130ms; }
+    .rules-grid__item:nth-child(8)  { --d: 145ms; }
+    .rules-grid__item:nth-child(9)  { --d: 200ms; }
+    .rules-grid__item:nth-child(10) { --d: 215ms; }
+    .rules-grid__item:nth-child(11) { --d: 230ms; }
+    .rules-grid__item:nth-child(12) { --d: 245ms; }
+    .rules-grid__item:nth-child(13) { --d: 300ms; }
+    .rules-grid__item:nth-child(14) { --d: 315ms; }
+    .rules-grid__item:nth-child(15) { --d: 330ms; }
+    .rules-grid__item:nth-child(16) { --d: 345ms; }
+    .rules-grid__item:nth-child(17) { --d: 400ms; }
+    .rules-grid__item:nth-child(18) { --d: 415ms; }
+    .rules-grid__item:nth-child(19) { --d: 430ms; }
+    .rules-grid__item:nth-child(20) { --d: 445ms; }
+    /* Override reveal-group's per-child delay so --d controls item timing */
+    .rules-grid.revealed > .rules-grid__item { transition-delay: var(--d, 0ms); }
 
-    /* Number */
+    /* Number — stage 1: pops in first with spring scale */
     .rules-grid__num {
       font-family: var(--font-display);
       font-size: clamp(1.6rem, 2vw, 2rem);
       line-height: 1;
       color: var(--color-accent);
+      opacity: 0;
+      transform: scale(0.75);
+      transition: opacity 220ms ease, transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                  font-size 520ms var(--ease-out), color 280ms ease;
+    }
+    .rules-grid.revealed .rules-grid__num {
       opacity: 0.6;
-      transition: opacity 400ms ease;
+      transform: none;
+      transition-delay: var(--d, 0ms);
     }
 
-    /* Rule text — display font */
+    /* Rule text — stage 2: slides up 80ms after num */
     .rules-grid__text {
       font-family: var(--font-display);
       font-size: clamp(1rem, 1.3vw, 1.3rem);
       line-height: 1.25;
       text-transform: uppercase;
       letter-spacing: 0.01em;
+      color: var(--color-text);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 350ms ease, transform 350ms ease,
+                  font-size 520ms var(--ease-out), color 280ms ease;
+    }
+    .rules-grid.revealed .rules-grid__text {
       opacity: 0.75;
-      transition: opacity 400ms ease;
+      transform: none;
+      transition-delay: calc(var(--d, 0ms) + 80ms);
+    }
+
+    /* Snake path SVG overlay */
+    .rules-path-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+    .rules-path {
+      fill: none;
+      stroke: var(--color-accent);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0;
+      transition: stroke-dashoffset 1400ms cubic-bezier(0.4, 0, 0.2, 1), opacity 300ms ease;
+    }
+    .rules-grid.revealed .rules-path {
+      opacity: 0.45;
     }
 
     /* Responsive */
@@ -1624,6 +1725,9 @@
       .team-grid--secondary { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.8rem; }
       .photo-grid { grid-template-columns: repeat(2, 1fr); }
       .preise-grid { grid-template-columns: 1fr; }
+      .footer { grid-template-columns: 1fr 1fr; }
+      .footer__brand { grid-column: 1 / -1; }
+      .footer__bottom { flex-wrap: wrap; gap: 0.4rem; }
     }
 
     /* ═══════════════════════════════════════════

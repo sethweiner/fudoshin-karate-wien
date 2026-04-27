@@ -1,5 +1,6 @@
 days:
   - day: "Dienstag"
+    hidden: true
     location_name: "Pöchlarnstraße 14"
     location_address: "Pöchlarnstraße 14, 1200 Wien"
     location_display: "Pöchlarnstraße 14, 1200 Wien"
@@ -26,6 +27,7 @@ days:
         time: "17:30–18:30"
 
   - day: "Donnerstag"
+    hidden: true
     location_name: "Pöchlarnstraße 14"
     location_address: "Pöchlarnstraße 14, 1200 Wien"
     location_display: "Pöchlarnstraße 14, 1200 Wien"

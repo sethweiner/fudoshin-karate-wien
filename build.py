@@ -63,8 +63,9 @@ def build_schedule(data):
             f'</div>'
             for j, s in enumerate(d["slots"], 1)
         )
+        hidden_attr = ' style="display:none"' if d.get("hidden") else ""
         cards.append(f"""
-            <div class="schedule-card">
+            <div class="schedule-card"{hidden_attr}>
               <div class="schedule-card__header">
                 <span class="schedule-card__day" data-i18n="schedule.d{i}.day">{htmlmod.escape(d["day"])}</span>
                 <span class="schedule-card__location" data-location="{htmlmod.escape(d["location_name"])}" data-address="{htmlmod.escape(d["location_address"])}" data-lat="{d["lat"]}" data-lng="{d["lng"]}">
